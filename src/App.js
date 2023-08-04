@@ -9,18 +9,22 @@ import Receptionist from "./components/receptionist/Receptionist";
 import Nurse from "./components/nurse/Nurse";
 import React from "react";
 import ResetPassword from "./pages/ResetPassword";
+import Home from "./pages/Home";
+import Lab from "./components/labtechnician/Lab";
 
 function App() {
   return (
     <div>
     <BrowserRouter>
       <Routes>
+        <Route path="/"  element={< Home/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/doctor" element={<Doctor />} />
         <Route path="/nurse" element={<Nurse />} />
         <Route path="/receptionist" element={<Receptionist />} />
         <Route path="/changepassword" element={<ResetPassword />}/>
+        <Route path="/labtech" element={<Lab/>}/>
       </Routes>
     </BrowserRouter>
     <ToastContainer />

@@ -133,7 +133,8 @@ const Login = () => {
           if (res.data.role === "Admin") {
             navigate("/admin");
             localStorage.setItem("access_token", res.data.access_token);
-          } else if (res.data.role === "Doctor") {
+          } 
+          else if (res.data.role === "Doctor") {
             navigate("/doctor");
             localStorage.setItem("access_token", res.data.access_token);
           } else if (res.data.role === "Nurse") {
@@ -142,7 +143,12 @@ const Login = () => {
           } else if (res.data.role === "Receptionist") {
             navigate("/receptionist");
             localStorage.setItem("access_token", res.data.access_token);
-          } else {
+          } 
+          else if (res.data.role === "LabTechnician") {
+            navigate("/labtech");
+            localStorage.setItem("access_token", res.data.access_token);
+          } 
+          else {
             // console.log(data);
             toast.error("Invalid role");
           }
