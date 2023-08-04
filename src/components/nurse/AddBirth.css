@@ -1,0 +1,56 @@
+.date-picker-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.date-picker-input {
+  width: 100%;
+  padding-right: 30px; /* Adjust the value to create space for the icon */
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.date-picker-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.date-picker-icon svg {
+  width: 20px;
+  height: 20px;
+  color: #6c757d;
+}
+/* AddBirth.css */
+
+.date-input-container {
+  position: relative;
+}
+
+.date-picker-input {
+  padding-right: 32px; /* Space for the calendar icon */
+}
+
+.calendar-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #aaa;
+  cursor: pointer;
+}
+
+/* Adjust the icon size if needed */
+.calendar-icon svg {
+  font-size: 20px;
+}
+/* .css-d9ml5t-MuiDrawer-docked .MuiDrawer-paper {
+  box-sizing: border-box;
+  width: 240px;
+  background-color: blue;
+} */

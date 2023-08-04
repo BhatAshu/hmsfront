@@ -1,0 +1,8 @@
+/* AddModal.css */
+
+/* Set the max-height of the dropdown to control its height */
+.doctor-select {
+    max-height: 200px; /* Adjust the height as needed */
+    overflow-y: auto !important; /* Enable scrolling */
+  }
+  
