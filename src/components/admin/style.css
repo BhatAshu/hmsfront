@@ -1,4 +1,4 @@
-.modal-right {
+.modal-right{
     display: flex;
     flex-direction: column;
     margin-top: 10%;
@@ -37,12 +37,10 @@
   .c1 {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 25px;
   }
   
   .role-card {
-    /* width: calc(50% - 10px);  */
     width:280px;
     height: 260px;
     margin-bottom: 10px;
@@ -197,6 +195,80 @@
   background-color: #f9f9f9;
   color: #777;
 }
+
+
+
+
+
+/* Staff Dashboard calender and notification icon */
+
+
+.calendar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.mui-calendar {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  max-width: 300px;
+}
+
+
+.circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #6dbef0;
+  margin: -21px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  pointer-events: none; 
+  z-index: 1; 
+}
+
+.role-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calendar-and-notification {
+  display: flex;
+  align-items: flex-end;
+}
+
+.notification-container {
+  margin-left: 10px;
+}
+
+/* ... (your existing styles) */
+
+.role-counts {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.role-count {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* ... (your existing styles) */
+
+
+
+
+
 
 
 

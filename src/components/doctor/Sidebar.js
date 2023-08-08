@@ -31,8 +31,8 @@ import Patients from "./Patients";
 import Bloodbank from "./Bloodbank";
 import BloodDonor from "./BloodDonor";
 import DispatchBlood from "./DispatchBlood";
-import BirthReport from "./BirthReport";
-import DeathReport from "./DeathReport";
+// import BirthReport from "./BirthReport";
+// import DeathReport from "./DeathReport";
 
 const drawerWidth = 240;
 
@@ -123,15 +123,20 @@ function ResponsiveDrawer(props) {
             iconComponent: <MedicalServicesIcon />,
             role: "Blood Bank",
           },
+          // {
+          //   text: "Birth Report",
+          //   iconComponent: <ChildCareIcon />,
+          //   role: "Birth Report",
+          // },
+          // {
+          //   text: "Death Report",
+          //   iconComponent: <RemoveCircleIcon />,
+          //   role: "Death Report",
+          // },
           {
-            text: "Birth Report",
-            iconComponent: <ChildCareIcon />,
-            role: "Birth Report",
-          },
-          {
-            text: "Death Report",
-            iconComponent: <RemoveCircleIcon />,
-            role: "Death Report",
+            text: "Test Requsest",
+            iconComponent: <MedicalServicesIcon />,
+            role: "TestRequest",
           },
           {
             text: "Profile",
@@ -253,11 +258,13 @@ function ResponsiveDrawer(props) {
           <DispatchBlood />
         ) : selectedRole === "Blood Bank" ? (
           <Bloodbank />
-        ) : selectedRole === "Birth Report" ? (
-          <BirthReport />
-        ) : selectedRole === "Death Report" ? (
-          <DeathReport />
-        ) : (
+        )
+        //  : selectedRole === "Birth Report" ? (
+        //   <BirthReport />
+        // ) : selectedRole === "Death Report" ? (
+        //   <DeathReport />
+        // ) 
+        : (
           <>
             {!selectedRole && (
               <>

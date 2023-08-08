@@ -11,6 +11,9 @@ import React from "react";
 import ResetPassword from "./pages/ResetPassword";
 import Home from "./pages/Home";
 import Lab from "./components/labtechnician/Lab";
+import LoginUser from "./pages/LoginUser";
+import Signup from "./pages/Signup";
+import Button from "./components/labtechnician/Button";
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
         <Route path="/receptionist" element={<Receptionist />} />
         <Route path="/changepassword" element={<ResetPassword />}/>
         <Route path="/labtech" element={<Lab/>}/>
+        <Route path="loginuser" element={<LoginUser />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="/bb" element={<Button />}/>
       </Routes>
     </BrowserRouter>
     <ToastContainer />

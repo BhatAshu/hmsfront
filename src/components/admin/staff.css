@@ -1,0 +1,62 @@
+/* Style for the main container */
+.c1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Style for role counts */
+  .role-counts {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px 0;
+  }
+  
+  /* Style for role count cards */
+  .role-count {
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  /* Style for calendar and notification section */
+  .calendar-and-notification {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for calendar container */
+  .calendar-container {
+    flex: 2;
+    margin-right: 10px;
+  }
+  
+  /* Style for notification container */
+  .notification-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  /* Style for role card container */
+  .role-card-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  /* Style for individual role card */
+  .role-card {
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  /* Additional styling for other elements as needed */
+  

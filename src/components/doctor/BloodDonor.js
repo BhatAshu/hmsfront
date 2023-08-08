@@ -107,7 +107,7 @@ function BloodDonor() {
 
     useEffect(() => {
       axios
-        .get("http://localhost:5000/api/hbms/view_blood", header)
+        .get("http://localhost:5000/api/hbms/list_blood", header)
         .then((response) => {
           const responseData = response.data;
           setblooddonor(responseData); // Update the state variable with the received data

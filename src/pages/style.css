@@ -231,6 +231,15 @@ nav ul li.login-button {
 .login-button {
   cursor: pointer;
   position: relative;
+    text-align: center;
+    background-color: white;
+    color: black;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    height: 34px;
+    padding: 4px;
+    border-radius: 9px;
 }
 
 .login-options {
@@ -242,8 +251,6 @@ nav ul li.login-button {
   border: 1px solid #CCC;
   border-radius: 5px;
   padding: 10px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   width: 200px;
 }
@@ -270,6 +277,12 @@ footer {
   color: #FFF;
   padding: 10px;
   text-align: center;
+}
+button:not(:disabled) {
+  cursor: pointer;
+  background-color: transparent;
+  color: blue;
+  text-decoration: underline;
 }
 
 /* Responsive styles */

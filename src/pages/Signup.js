@@ -1,80 +1,135 @@
 import React, { useState } from "react";
-import {  useNavigate } from "react-router-dom";
-import "./style.css";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Typography,
+  makeStyles,
+  Container,
+  InputAdornment,
+  IconButton,
+} from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { FaUser,FaEnvelope } from "react-icons/fa";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
+import ForgetPasswordForm from "./ResetPassword";
+import "./HomePage.css";
+import { useNavigate } from "react-router-dom";
 
-const CustomSelect = ({ value, onChange, options }) => {
-  return (
-    <div className="custom-select-container">
-      <select className="custom-select" value={value} onChange={onChange} required>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
+const useStyles = makeStyles((theme) => ({
+  container: {
+    backgroundImage:
+      'url("https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9jdG9yc3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"), linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2))',
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    width: "100%",
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 const Signup = () => {
-  const [isEmail, setisEmail] = useState("");
-  const [isPassword, setisPassword] = useState("");
-  const [isValid, setisValid] = useState({
-    emailValid: false,
-    passwordValid: false,
-  });
-  const [selectedRole, setSelectedRole] = useState("");
   const navigate = useNavigate();
+  const classes = useStyles();
+  const [isFirstname, setisFirstname] = useState("");
+  const [isLastname, setisLastname] = useState("");
+  const [isEmail, setisEmail] = useState("");
+  const [isPhone, setisPhone] = useState("");
+  const [isGender, setisGender] = useState("");
+  const [isBloodgroup, setisBloodgroup] = useState("");
+  const [isPassword, setisPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
+
+  const handleFirstnameChange = (e) => {
+    setisFirstname(e.target.value);
+  };
+
+  const handleLastnameChange = (e) => {
+    setisLastname(e.target.value);
+  };
 
   const handleEmailChange = (e) => {
-    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e.target.value)) {
-      setisValid({ ...isValid, emailValid: true });
-    } else {
-      setisValid({ ...isValid, emailValid: false });
-    }
     setisEmail(e.target.value);
   };
 
+  const handlePhoneChange = (e) => {
+    setisPhone(e.target.value);
+  };
+
+  const handleGenderChange = (e) => {
+    setisGender(e.target.value);
+  };
+
+  const handleBloodgroupChange = (e) => {
+    setisBloodgroup(e.target.value);
+  };
+
   const handlePasswordChange = (e) => {
-    if (e.target.type === "password") {
-      if (
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-          e.target.value
-        )
-      ) {
-        setisValid({ ...isValid, passwordValid: true });
-      } else {
-        setisValid({ ...isValid, passwordValid: false });
-      }
-    }
     setisPassword(e.target.value);
   };
 
-  const handleRoleChange = (e) => {
-    setSelectedRole(e.target.value);
+  const handleShowPasswordClick = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleForgotPasswordClick = () => {
+    setShowForgotPasswordForm(true);
   };
 
-  const handlesubmit = (e) => {
-    e.preventDefault();
+  const handleForgotPasswordEmailChange = (e) => {
+    setForgotPasswordEmail(e.target.value);
+  };
 
+  const handleForgotPasswordSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const data = {
+      firstname: isFirstname,
+      lastname: isLastname,
       email: isEmail,
+      phone: isPhone,
+      gender: isGender,
+      bloodgroup: isBloodgroup,
       password: isPassword,
-      role: selectedRole, 
     };
 
     axios
-      .post("http://localhost:4000/api/user/sign_up", data)
+      .post("http://localhost:5000/api/hbms/sign_up", data)
       .then((res) => {
-        console.log(res);
+        //   console.log(res);
         if (res.status === 200) {
-            navigate("/login");
-          } 
-        else{
-          toast.success(res.data);
+          navigate("/loginuser");
+          localStorage.setItem("access_token", res.data.access_token);
+        } else {
+          // console.log(res.data);
+          toast.error(res.data);
         }
       })
       .catch((err) => {
@@ -83,70 +138,175 @@ const Signup = () => {
   };
 
   return (
-    <div className="login">
-    <div className="login-container">
-      <div className="form-column">
-        <div className="usericon">
-      < FaUser size="30px"/>
-      </div>
-      <h2>
-      Sign-Up
-        </h2>
-        <form onSubmit={handlesubmit}>
-        <div className="form-group">
-            <CustomSelect
-              value={selectedRole}
-              onChange={handleRoleChange}
-              options={[
-                { value: "", label: "Select role" },
-                // { value: "admin", label: "Admin" },
-                { value: "Doctor", label: "Doctor" },
-                { value: "Nurse", label: "Nurse" },
-                { value: "Receptionist", label: "Receptionist" },
-              ]}
-            />
-          </div>
-          <div className="form-group">
-            <div className="input-icon">
-              <FaUser />
-              <FaEnvelope />
-              <input
+    <div className={classes.container}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign Up
+          </Typography>
+          {!showForgotPasswordForm ? (
+            <form className={classes.form} onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="firstname"
+                    label="Firstname"
+                    name="firstname"
+                    autoComplete="firstname"
+                    value={isFirstname}
+                    onChange={handleFirstnameChange}
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="lastname"
+                    label="Last Name "
+                    name="lastname"
+                    autoComplete="lastname"
+                    value={isLastname}
+                    onChange={handleLastnameChange}
+                    autoFocus
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    value={isEmail}
+                    onChange={handleEmailChange}
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="phone"
+                    label="Phone"
+                    name="phone"
+                    autoComplete="phone"
+                    value={isPhone}
+                    onChange={handlePhoneChange}
+                    autoFocus
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="gender"
+                    label="gender"
+                    name="gender"
+                    autoComplete="gender"
+                    value={isGender}
+                    onChange={handleGenderChange}
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="bloodgroup"
+                    label="bloodgroup"
+                    name="bloodgroup"
+                    autoComplete="bloodgroup"
+                    value={isBloodgroup}
+                    onChange={handleBloodgroupChange}
+                    autoFocus
+                  />
+                </Grid>
+              </Grid>
+              <TextField
+                variant="outlined"
+                margin="normal"
                 required
-                type="email"
-                placeholder="Email"
-                onChange={handleEmailChange}
-                className="white-placeholder"
+                fullWidth
+                name="password"
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                id="password"
+                autoComplete="current-password"
+                value={isPassword}
+                onChange={handlePasswordChange}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        onClick={handleShowPasswordClick}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
-            </div>
-            {isEmail && !isValid.emailValid && (
-              <p>Please enter a valid email address</p>
-            )}
-          </div>
-          <div className="form-group">
-            <input
-              required
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              value={isPassword}
-              onChange={handlePasswordChange}
-              className="white-placeholder"
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link
+                    href="/loginuser"
+                    variant="body2"
+
+                    // onClick={handleForgotPasswordClick}
+                  >
+                    Already a user?{" "}
+                    <span style={{ fontWeight: "bold" }}>LOGIN</span>
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+          ) : (
+            <ForgetPasswordForm
+              forgotPasswordEmail={forgotPasswordEmail}
+              onEmailChange={handleForgotPasswordEmailChange}
+              onForgotPasswordSubmit={handleForgotPasswordSubmit}
+              onCancel={() => setShowForgotPasswordForm(false)}
             />
-            {isPassword && !isValid.passwordValid && (
-              <p>
-                Please enter a minimum of eight characters, at least one
-                letter, one number, and one special character.
-              </p>
-            )}
-          </div>
-          <button type="submit">Signup</button>
-        </form>
+          )}
         </div>
-      </div>
+      </Container>
     </div>
   );
 };
 
-
 export default Signup;
-

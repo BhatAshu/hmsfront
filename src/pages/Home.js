@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './style.css';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [showLoginOptions, setShowLoginOptions] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const toggleLoginOptions = () => {
     setShowLoginOptions((prevState) => !prevState);
@@ -11,6 +13,14 @@ const Home = () => {
 
   const toggleModal = () => {
     setShowModal((prevState) => !prevState);
+  };
+
+  const handleStaffLoginClick = () => {
+    navigate('/login'); 
+  };
+
+  const handleUserLoginClick = () => {
+    navigate('/loginuser'); // Navigate to the user login page
   };
 
 
@@ -23,14 +33,14 @@ const Home = () => {
             <li>About Us</li>
             <li>Services</li>
             <li>Contact Us</li>
-          </ul>
+            </ul>
           <div className="login-button" onClick={toggleLoginOptions}>
             Login
             {showLoginOptions && (
               <div className="login-options">
                 <p>Login as:</p>
-                <button onClick={toggleModal}>Staff</button>
-                <button onClick={toggleModal}>User</button>
+                <button onClick={handleStaffLoginClick} className="plain-button">Staff</button>
+                <button onClick={handleUserLoginClick} className="plain-button">User</button>
               </div>
             )}
           </div>
@@ -40,9 +50,9 @@ const Home = () => {
       {showModal && (
         <div className="modal">
           <div className="login-options">
-                <p onClick={toggleModal}><a href="#">Login as Staff</a></p>
-                <p onClick={toggleModal}><a href="#">Login as User</a></p>
-              </div>
+            <p onClick={toggleModal}><a href="#">Login as Staff</a></p>
+            <p onClick={toggleModal}><a href="#">Login as User</a></p>
+          </div>
         </div>
       )}
 

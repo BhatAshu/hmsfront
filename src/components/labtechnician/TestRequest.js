@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { IconButton } from "@mui/material";
 import {
   TableContainer,
   Paper,
@@ -11,27 +10,16 @@ import {
   TableBody,
 } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
-import DeleteIcon from "@mui/icons-material/Delete";
-import handleDelete from "./HandleDelete";
-import EditModal from "./EditModal";
-import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
-import jwtDecode from "jwt-decode";
-import PatientDetailsModal from "./PatientDetails";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material"; 
 
 function Patients() {
+  const initialPatientStatus = {}; 
+  const [patientStatus, setPatientStatus] = useState(initialPatientStatus);
   const [patients, setPatients] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [editModal, setEditModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
-  const [doctorId, setDoctorId] = useState(null);
-  const [selectedPatient, setSelectedPatient] = useState(null); 
-  const [patientDetailsModalOpen, setPatientDetailsModalOpen] = useState(false); 
-
-  const handlePatientClick = (patient) => {
-    setSelectedPatient(patient);
-    setPatientDetailsModalOpen(true);
-  };
 
   const [data, setData] = useState({
     id: "",
@@ -99,6 +87,20 @@ function Patients() {
     },
   };
 
+  const handleStatusChange = (event, patientId) => {
+    const newStatus = event.target.value;
+  
+
+    setPatientStatus((prevStatus) => ({
+      ...prevStatus,
+      [patientId]: newStatus,
+    }));
+  
+    localStorage.setItem(patientId, newStatus);
+  };
+  
+  
+
   const deleteIconStyle = {
     width: "100%",
     height: "100%",
@@ -135,119 +137,89 @@ function Patients() {
   }
 
   const handleAdd = () => {
-    setAddModal(true); 
+    setAddModal(true); // Show the "Add" modal
   };
 
-  const fetchDoctorId = () => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      console.log(decodedToken);
-      setDoctorId(decodedToken.user_id);
-    }
-  };
   useEffect(() => {
-    fetchDoctorId();
-  }, []);
-
-  useEffect(() => {
-    if (doctorId) {
-      axios
-        .get("http://localhost:5000/api/hbms/list_patient", header)
-        .then((response) => {
-          const responseData = response.data;
-          const filteredPatients = responseData.filter(
-            (patient) => patient.doctorId === doctorId
-          );
-          console.log(filteredPatients);
-          setPatients(filteredPatients);
-        })
-        .catch((error) => {
-          console.log(error);
+    axios
+      .get("http://localhost:5000/api/hbms/list_lab", header)
+      .then((response) => {
+        const responseData = response.data;
+        const statusObject = {};
+        responseData.forEach((patient) => {
+          statusObject[patient.id] = localStorage.getItem(patient.id) || "inactive";
         });
-    }
-  }, [doctorId]);
+        setPatientStatus(statusObject);
+        setPatients(responseData);
+      })
+      .catch((error) => {
+        console.log("Error fetching patients:", error);
+      });
+  }, []);
+  
+  
+  
 
   return (
     <div sx={tableContainerStyle}>
       <TableContainer component={Paper}>
-        {/* <button onClick={handleAdd} className="bu1">
-          Add Patients
-        </button> */}
         <Table>
           <TableHead sx={{ backgroundColor: "black" }}>
             <TableRow>
               <TableCell sx={{ color: "white" }}>Name</TableCell>
               <TableCell sx={{ color: "white" }}>Email</TableCell>
-              <TableCell sx={{ color: "white" }}>Phone</TableCell>
-              <TableCell sx={{ color: "white" }}>Gender</TableCell>
-              <TableCell sx={{ color: "white" }}>Chief Complaint</TableCell>
               <TableCell sx={{ color: "white" }}>Age</TableCell>
-              {/* <TableCell sx={{ color: "white" }}>Bloodgroup</TableCell> */}
-              <TableCell sx={{ color: "white" }}>AppointedTime</TableCell>
-              <TableCell sx={{ color: "white" }}>Address</TableCell>
-              <TableCell sx={{ color: "white" }}>Prescribe</TableCell>
-              <TableCell sx={{ color: "white" }}>Action</TableCell>
+              <TableCell sx={{ color: "white" }}>Chief Complaint</TableCell>
+              <TableCell sx={{ color: "white" }}>Bloodgroup</TableCell>
+              <TableCell sx={{ color: "white" }}>Message</TableCell>
+              <TableCell sx={{ color: "white" }}>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {patients.map((patient, index) => (
               <TableRow key={index}>
-                <TableCell>
-                  <span
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handlePatientClick(patient)} 
-                  >
-                    {patient.firstname}
-                  </span>
-                </TableCell>
+                <TableCell>{patient.firstname}</TableCell>
                 <TableCell>{patient.email}</TableCell>
-                <TableCell>{patient.phone}</TableCell>
-                <TableCell>{patient.gender}</TableCell>
-                <TableCell>{patient.chiefcomplaint}</TableCell>
                 <TableCell>{patient.age}</TableCell>
-                {/* <TableCell>{patient.bloodgroup}</TableCell> */}
-                <TableCell>{patient.timeofregistration}</TableCell>
-                <TableCell>{patient.address}</TableCell>
+                <TableCell>{patient.chiefcomplaint}</TableCell>
+                <TableCell>{patient.bloodgroup}</TableCell>
                 <TableCell>{patient.message}</TableCell>
                 <TableCell>
+                  <FormControl fullWidth>
+                    <InputLabel id={`status-label-${patient.id}`}>
+                      Status
+                    </InputLabel>
+                    <Select
+                      labelId={`status-label-${patient.id}`}
+                      id={`status-select-${patient.id}`}
+                      value={patientStatus[patient.id]
+                      }
+                      label="Status"
+                      onChange={(event) =>
+                        handleStatusChange(event, patient.id)
+                      }
+                    >
+                      <MenuItem value="inactive">Inactive</MenuItem>
+                      <MenuItem value="active">Active</MenuItem>
+                      <MenuItem value="completed">Completed</MenuItem>
+                    </Select>
+                  </FormControl>
+                </TableCell>
+                {/* <TableCell>
                   <IconButton
                     sx={editButtonStyle}
-                    onClick={() =>
-                      handleEdit(
-                        patient.id,
-                        patient.name,
-                        patient.email,
-                        patient.phone,
-                        patient.gender,
-                        patient.chiefcomplaint,
-                        patient.age,
-                        patient.bloodgroup,
-                        patient.timeofregistration,
-                        patient.address,
-                        patient.message
-                      )
-                    }
                   >
-                    <EventNoteOutlinedIcon />
+                    <EventNoteOutlinedIcon  />
                   </IconButton>
-                  <IconButton
-                    sx={deleteButtonStyle}
-                    onClick={() => handleDelete(patient.id, "patient")}
-                  >
+                  <IconButton sx={deleteButtonStyle}  >
                     <DeleteIcon sx={deleteIconStyle} />
                   </IconButton>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <PatientDetailsModal
-        open={patientDetailsModalOpen}
-        onClose={() => setPatientDetailsModalOpen(false)}
-        patient={selectedPatient}
-      />
       <TablePagination
         rowsPerPageOptions={[5, 10, 15]}
         component="div"
@@ -257,13 +229,13 @@ function Patients() {
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
       />
-      <EditModal
+      {/* <EditModal
         editModal={editModal}
         handleEdit={handleEdit}
         onClose={() => setEditModal(false)}
         data={data}
         setData={setData}
-      />
+      /> */}
     </div>
   );
 }
