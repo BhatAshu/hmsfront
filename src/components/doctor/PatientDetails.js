@@ -3,52 +3,42 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField"
+import OtherInformationModal from "./SendLab";
 
 const modalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "85%", // Increase modal width
-    maxWidth: "600px", // Increase maximum modal width
-    bgcolor: "white",
-    boxShadow: 24,
-    p: 4,
-    borderRadius: "8px",
-  };
-  const buttonContainerStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-    marginTop: "15px", // Add margin between button container and content
-  };
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "85%", // Increase modal width
+  maxWidth: "600px", // Increase maximum modal width
+  bgcolor: "white",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: "8px",
+};
+const buttonContainerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  marginTop: "15px", // Add margin between button container and content
+};
 const PatientDetailsModal = ({ open, onClose, patient }) => {
   const [activeSection, setActiveSection] = useState(null);
-  const [testRequestFields, setTestRequestFields] = useState({
-    name: "",
-    age: "",
-    chiefComplaint: "",
-    bloodGroup: "",
-    textarea: "",
-  });
+  const [otherInfoModalOpen, setOtherInfoModalOpen] = useState(false);
   if (!patient) {
     return null; // Return early if patient is null or undefined
   }
+
+  const toggleOtherInfoModal = () => {
+    setOtherInfoModalOpen(!otherInfoModalOpen);
+  };
+
   const handleClose = () => {
     onClose();
   };
   const handleButtonClick = (section) => {
     setActiveSection(section);
   };
-
-  const handleTestRequestChange = (field, value) => {
-    setTestRequestFields((prevFields) => ({
-      ...prevFields,
-      [field]: value,
-    }));
-  };
-
-
   const renderContent = () => {
     switch (activeSection) {
       case "patientDetails":
@@ -71,70 +61,33 @@ const PatientDetailsModal = ({ open, onClose, patient }) => {
             </Typography>
           </div>
         );
-        case "medicalInformation":
-          return (
-            <div>
-              <Typography variant="body1">
-                <strong>BloodGroup:</strong> {patient.bloodgroup}
-              </Typography>
-              <Typography variant="body1">
-                <strong>ChiefComplaint:</strong> {patient.chiefcomplaint}
-              </Typography>
-              {/* Add more medical information fields as needed */}
-            </div>
-          );
-          case "testRequest":
+      case "medicalInformation":
         return (
           <div>
-            <div>
-              <TextField
-                label="Name"
-                value={patient.firstname}
-                fullWidth
-                margin="normal"
-                disabled
-              />
-              <TextField
-                label="Age"
-                value={patient.age}
-                fullWidth
-                margin="normal"
-                disabled
-              />
-            </div>
-            <TextField
-                label="ChiefComplaint"
-                value={patient.chiefcomplaint}
-                fullWidth
-                margin="normal"
-                disabled
-              />
-            {/* <TextField
-              label="Chief Complaint"
-              value={testRequestFields.chiefComplaint}
-              onChange={(e) =>
-                handleTestRequestChange("chiefComplaint", e.target.value)
-              }
-              fullWidth
-              margin="normal"
-            /> */}
-             <TextField
-                label="BloodGroup"
-                value={patient.bloodgroup}
-                fullWidth
-                margin="normal"
-                disabled
-              />
-            <TextField
-              label="Textarea"
-              value={testRequestFields.textarea}
-              onChange={(e) =>
-                handleTestRequestChange("textarea", e.target.value)
-              }
-              fullWidth
-              margin="normal"
-              multiline
-              rows={4}
+            <Typography variant="body1">
+              <strong>BloodGroup:</strong> {patient.bloodgroup}
+            </Typography>
+            <Typography variant="body1">
+              <strong>ChiefComplaint:</strong> {patient.chiefcomplaint}
+            </Typography>
+            {/* Add more medical information fields as needed */}
+          </div>
+        );
+      // ... (other cases)
+      case "otherInformation":
+        return (
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={toggleOtherInfoModal}
+            >
+              Open Other Information Modal
+            </Button>
+            <OtherInformationModal
+              open={otherInfoModalOpen}
+              onClose={toggleOtherInfoModal}
+              patient={patient}
             />
           </div>
         );
@@ -146,7 +99,7 @@ const PatientDetailsModal = ({ open, onClose, patient }) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={modalStyle}>
-      <Typography variant="h5" gutterBottom color="black">
+        <Typography variant="h5" gutterBottom color="black">
           {patient.firstname} Details
         </Typography>
         <div style={buttonContainerStyle}>
@@ -170,18 +123,17 @@ const PatientDetailsModal = ({ open, onClose, patient }) => {
           </Button>
           <Button
             variant={
-              activeSection === "testRequest" ? "contained" : "outlined"
+              activeSection === "otherInformation" ? "contained" : "outlined"
             }
-            onClick={() => handleButtonClick("testRequest")}
+            onClick={() => handleButtonClick("otherInformation")}
             sx={{ marginBottom: 2 }}
           >
-            TestRequest
+            Other Information
           </Button>
-          {/* <Button onClick={handleButtonClick}>TestRequest</Button> */}
           <Button onClick={handleButtonClick}>Attachment</Button>
         </div>
         <Button onClick={handleClose} color="secondary">
-          Back
+          Close
         </Button>
         <Box mt={2}>{renderContent()}</Box>
       </Box>

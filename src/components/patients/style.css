@@ -1,0 +1,44 @@
+/* style.css */
+
+/* Center the profile details */
+/* .profile-details {
+	border: 1px solid #121111;
+    border-radius: 87px;
+    padding: 52px;
+  } */
+  
+  /* Style the profile information */
+  .profile-info {
+	border: 1px solid #121111;
+    border-radius: 87px;
+    padding: 52px;
+	width: 50%;
+  }
+  
+  /* Style the profile headings */
+  h2 {
+	color: #090909;
+	font-size: 50px;
+	margin-bottom: 20px;
+  }
+  
+  /* Style the profile details */
+  p {
+	font-size: 30px;
+	margin: 5px 0;
+  }
+  
+  /* Add some spacing between profile details */
+  .profile-info p:not(:last-child) {
+	margin-bottom: 10px;
+  }
+  
+  /* Loading state */
+  .loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-size: 1.2rem;
+  }
+  

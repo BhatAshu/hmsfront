@@ -14,6 +14,11 @@ import Lab from "./components/labtechnician/Lab";
 import LoginUser from "./pages/LoginUser";
 import Signup from "./pages/Signup";
 import Button from "./components/labtechnician/Button";
+import Report from './components/receptionist/Report'
+import PatientForm from './pages/PatientForm';
+import DLogin from "./pages/Design";
+
+
 
 function App() {
   return (
@@ -31,6 +36,9 @@ function App() {
         <Route path="loginuser" element={<LoginUser />} />
         <Route path="signup" element={<Signup />} />
         <Route path="/bb" element={<Button />}/>
+        <Route path="/report" element={<Report />} />
+        <Route path="/patientform" element={<PatientForm/>} />
+        <Route path="/design" element={< DLogin/>}/>
       </Routes>
     </BrowserRouter>
     <ToastContainer />

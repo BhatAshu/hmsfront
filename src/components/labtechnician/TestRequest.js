@@ -155,7 +155,7 @@ function Patients() {
       .catch((error) => {
         console.log("Error fetching patients:", error);
       });
-  }, []);
+  }, [patients]);
   
   
   

@@ -19,6 +19,7 @@ import jwtDecode from "jwt-decode";
 import PatientDetailsModal from "./PatientDetails";
 
 function Patients() {
+  
   const [patients, setPatients] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);

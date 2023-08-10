@@ -51,7 +51,7 @@ function Patients() {
           <TableBody>
             {patients.map((patient, index) => (
               <TableRow key={index}>
-                <TableCell>{patient.name}</TableCell>
+                <TableCell>{patient.firstname}</TableCell>
                 <TableCell>{patient.email}</TableCell>
                 <TableCell>{patient.phone}</TableCell>
                 <TableCell>{patient.gender}</TableCell>

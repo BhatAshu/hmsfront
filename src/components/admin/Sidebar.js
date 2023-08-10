@@ -90,6 +90,11 @@ function ResponsiveDrawer(props) {
             role: "Receptionist",
           },
           {
+            text: "LabTechnician",
+            iconComponent: <FaUserCheck />,
+            role: "LabTechnician",
+          },
+          {
             text: "Patients",
             iconComponent: <FaUserPlus />,
             role: "Patients",
@@ -154,7 +159,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <FaUserCog sx={{ marginRight: "0.5rem" }} />
+            <FaUserCog  />
             <span sx={{ ml: "8px" }}>Admin Dashboard</span>
           </Typography>
         </Toolbar>

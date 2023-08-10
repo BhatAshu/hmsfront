@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -12,51 +13,65 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import LogoutIcon from "@mui/icons-material/Logout";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
-import EventIcon from "@mui/icons-material/Event";
-import {
-  FaUserNurse,
-  FaUserCog,
-  FaUserMd,
-  FaUserCheck,
-  FaUserCircle,
-} from "react-icons/fa";
-import React, { useState, useEffect } from "react";
-import StaffDashboard from "../admin/StaffDashboard";
-import ProfileModal from "./ProfileModal";
-import Interns from "./Intern";
-import Report from "./Report";
 import { useNavigate } from "react-router-dom";
-import Patients from "./Patients";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { FaUserCheck } from "react-icons/fa";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import EventNoteIcon from "@mui/icons-material/EventNote";
+import DescriptionIcon from "@mui/icons-material/Description";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+
+// import HandlePatient from "./HandlePatient";
+import Profile from "./Profile";
+import AddStaff from "../admin/AddStaff";
+// import Interns from "./Interns";
 
 const drawerWidth = 240;
 
 const buttonStyles = {
   width: "100%",
   color: "black",
-  borderRadius: "15px 15px",
-  backgroundColor: "lightsteelblue",
+  borderRadius: "10px",
+  backgroundColor: "whitesmoke",
   "&:hover": {
-    backgroundColor: "cornflowerblue",
+    backgroundColor: "lightblue",
   },
 };
+const iconStyles = {
+  fontSize: "1.5rem",
+};
 
-function ResponsiveDrawer(props) {
+const drawerHeaderStyles = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "16px",
+};
+
+const mainContentStyles = {
+  flexGrow: 1,
+  p: 3,
+  width: { sm: `calc(100% - ${drawerWidth}px)` },
+};
+
+function PatientSidebar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState("");
-  const [isProfileModalOpen, setProfileModalOpen] = useState(false);
-
   const navigate = useNavigate();
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleRoleClick = (role) => {
+  const handlePatient = (role) => {
     setSelectedRole(role);
-    setProfileModalOpen(role === "Profile");
     if (role === "Logout") {
       handleLogout();
     }
@@ -65,13 +80,20 @@ function ResponsiveDrawer(props) {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     navigate("/login");
-    console.log("Logout clicked");
   };
 
-  const header = {
-    headers: {
-      auth: localStorage.getItem("access_token"),
-    },
+  const fieldColors = {
+    Appointments: "#2196F3",
+    "Medical Records": "#673AB7",
+    Prescriptions: "#FF5722",
+    Billing: "#4CAF50",
+    Profile: "#FFC107",
+    "Health Tracking": "#9C27B0",
+    Logout: "#F44336",
+  };
+
+  const getIconColor = (field) => {
+    return fieldColors[field] || "#000000"; // Default color if field color is not defined
   };
 
   const drawer = (
@@ -90,37 +112,23 @@ function ResponsiveDrawer(props) {
         }}
       >
         {[
-          {
-            text: "Appointment",
-            iconComponent: <EventIcon />,
-            role: "Appointment",
-          },
-          { text: "Patient", iconComponent: <FaUserNurse />, role: "Patients" },
-          {
-            text: "Report Generate",
-            iconComponent: <LocalHospitalIcon />,
-            role: "Report",
-          },
-          {
-            text: "Interns",
-            iconComponent: <FaUserNurse />,
-            role: "Interns",
-          },
-          {
-            text: "Profile",
-            iconComponent: <FaUserCircle />,
-            role: "Profile",
-          },
-          {
-            text: "Logout",
-            iconComponent: <LogoutIcon />,
-            role: "Logout",
-          },
+          { text: "Appointments", iconComponent: <EventNoteIcon />, role: "Appointments" },
+          { text: "Medical Records", iconComponent: <DescriptionIcon />, role: "Medical Records" },
+          { text: "Prescriptions", iconComponent: <LocalHospitalIcon />, role: "Prescriptions" },
+          { text: "Billing", iconComponent: <AccountBalanceIcon />, role: "Billing" },
+          { text: "Profile", iconComponent: <AccountCircleIcon />, role: "Profile" },
+          { text: "Health Tracking", iconComponent: <LocalDrinkIcon />, role: "Health Tracking" },
+          { text: "Logout", iconComponent: <LogoutIcon />, role: "Logout" },
         ].map(({ text, iconComponent, role }) => (
           <ListItem key={text} disablePadding>
             <ListItemButton
-              sx={text !== "Logout" ? buttonStyles : buttonStyles}
-              onClick={() => handleRoleClick(role)} // Update the onClick handler
+              sx={{
+                ...buttonStyles,
+                "& .MuiListItemIcon-root": {
+                  color: getIconColor(role),
+                },
+              }}
+              onClick={() => handlePatient(role)}
             >
               <ListItemIcon>{iconComponent}</ListItemIcon>
               <ListItemText primary={text} />
@@ -131,9 +139,6 @@ function ResponsiveDrawer(props) {
     </div>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -142,6 +147,8 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          backgroundColor: "whitesmoke",
+          color: "black",
         }}
       >
         <Toolbar>
@@ -155,14 +162,18 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <FaUserCog sx={{ marginRight: "0.5rem" }} />
-            <span sx={{ ml: "8px" }}>Receptionist Dashboard</span>
+            <FaUserCheck sx={{ marginRight: "0.5rem" }} />
+            Patient
           </Typography>
         </Toolbar>
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{
+          width: { sm: drawerWidth },
+          flexShrink: { sm: 0 },
+          bgcolor: "whitesmoke",
+        }}
         aria-label="mailbox folders"
       >
         <Drawer
@@ -171,11 +182,11 @@ function ResponsiveDrawer(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
+            "& .MuiDrawer-Paper": {
               boxSizing: "border-box",
               width: drawerWidth,
             },
@@ -187,7 +198,7 @@ function ResponsiveDrawer(props) {
           variant="permanent"
           sx={{
             display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
+            "& .MuiDrawer-Paper": {
               boxSizing: "border-box",
               width: drawerWidth,
             },
@@ -197,29 +208,26 @@ function ResponsiveDrawer(props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-        }}
-      >
+      <Box component="main" sx={mainContentStyles}>
         <Toolbar />
-        {selectedRole === "Patients" ? (
-          <Patients />
-        ) : selectedRole === "Profile" ? (
-          <ProfileModal />
-        ) : selectedRole === "Interns" ? (
-          <Interns />
-        ) : selectedRole === "Report" ? (
-          <Report />
+        {selectedRole === "Profile" ? (
+          <Profile />
+        // ) : selectedRole === "Appointments" ? (
+        //   <HandlePatient />
+        // ) : selectedRole === "Medical Records" ? (
+        //   <MedicalRecords /> 
+        // ) : selectedRole === "Prescriptions" ? (
+        //   <Prescriptions />
+        // ) : selectedRole === "Billing" ? (
+        //   <Billing />
+        // ) : selectedRole === "Health Tracking" ? (
+        //   <HealthTracking /> 
         ) : (
           <>
             {!selectedRole && (
               <>
                 <Typography paragraph></Typography>
-                <StaffDashboard />
+                <AddStaff />
               </>
             )}
           </>
@@ -229,12 +237,8 @@ function ResponsiveDrawer(props) {
   );
 }
 
-ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
+PatientSidebar.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export default PatientSidebar;

@@ -21,6 +21,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import AddModal from "./AddModal";
 import "./style.css";
 import ProfileModal from "./ProfileModal";
+import Lab from "../labtechnician/Lab";
 
 const HandleRoleClick = ({ role }) => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const HandleRoleClick = ({ role }) => {
   const [doctors, setDoctors] = useState([]);
   const [nurses, setNurses] = useState([]);
   const [receptionists, setReceptionists] = useState([]);
+  const [technicians, setLabtechnician] = useState([]);
   const [data, setData] = useState({
     id: "",
     username: "",
@@ -138,10 +140,17 @@ const handleRowsPerPageChange = (event) => {
 
         .then((response) => setNurses(response.data))
         .catch((error) => console.error(error));
-    } else if (role === "Receptionist") {
+    } 
+    else if (role === "Receptionist") {
       axios
         .get("http://localhost:5000/api/hbms/viewuser", header)
         .then((response) => setReceptionists(response.data))
+        .catch((error) => console.error(error));
+    } 
+    else if (role === "LabTechnician") {
+      axios
+        .get("http://localhost:5000/api/hbms/viewuser", header)
+        .then((response) => setLabtechnician(response.data))
         .catch((error) => console.error(error));
     } 
   };
@@ -168,7 +177,7 @@ const handleRowsPerPageChange = (event) => {
   
   useEffect(() => {
     fetchData();
-  }, [doctors, nurses, receptionists]);
+  }, [doctors, nurses, receptionists,technicians]);
 
   const toggle = () => setModal(!modal);
 
@@ -467,6 +476,98 @@ const handleRowsPerPageChange = (event) => {
         />
       </div>
     );
+    } else if (selectedRole === "LabTechnician") {
+      const labTechniciansFiltered = technicians.filter((technician) => technician.role === "LabTechnician");
+      return (
+        <div sx={tableContainerStyle}>
+          <TableContainer component={Paper}>
+          <div>
+              <button onClick={() => handleAdd()} className="bu1">
+                Add LabTechnician
+              </button>
+            </div>
+            <Table>
+              <TableHead sx={{ backgroundColor: "black" }}>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>Username</TableCell>
+                  <TableCell sx={{ color: "white" }}>Email</TableCell>
+                  <TableCell sx={{ color: "white" }}>Phone</TableCell>
+                  <TableCell sx={{ color: "white" }}>Address</TableCell>
+                  <TableCell sx={{ color: "white", width: 150 }}>Image</TableCell>
+                  <TableCell sx={{ color: "white" }}>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+              {labTechniciansFiltered.map((technician) => (
+                  <TableRow key={technician.id}>
+                    <TableCell>{technician.username}</TableCell>
+                    <TableCell>{technician.email}</TableCell>
+                    <TableCell>{technician.phone}</TableCell>
+                    <TableCell>{technician.address}</TableCell>
+                    <TableCell>
+                      {technician.image ? (
+                        <div>
+                          <ModalImage
+                            small={`http://localhost:5000${technician.image}`}
+                            large={`http://localhost:5000${technician.image}`}
+                            alt="Profile"
+                          />
+                        </div>
+                      ) : (
+                        "No image available"
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <IconButton
+                        sx={editButtonStyle}
+                        onClick={() =>
+                          handleEdit(
+                            technician.id,
+                            technician.username,
+                            technician.email,
+                            technician.phone,
+                            technician.address,
+                            technician.image
+                          )
+                        }
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        sx={deleteButtonStyle}
+                        onClick={() => handleDelete(technician.id, "technician")}
+                      >
+                        <DeleteIcon sx={deleteIconStyle} />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 15]}
+            component="div"
+            count={labTechniciansFiltered.length}
+            rowsPerPage={5}
+            page={0}
+            onPageChange={() => {}}
+            onRowsPerPageChange={() => {}}
+          />
+          <AddModal
+            modal={addModal}
+            toggle={() => setAddModal(!addModal)}
+            onClose={() => setAddModal(false)}
+          />
+          <EditModal
+            editModal={editModal}
+            handleEdit={handleEdit}
+            onClose={() => setEditModal(false)}
+            data={data}
+            setData={setData}
+          />
+        </div>
+      );
   }else if (selectedRole === "Profile") {
    return <ProfileModal/>
   }
