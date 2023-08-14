@@ -28,11 +28,11 @@ const PatientForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 	try {
-		const response = await axios.post("http://localhost:3000/api/hbms/patient_form", formData);
+		const response = await axios.post("http://localhost:5000/api/hbms/patient_form", formData);
   
 		if (response.status === 201) {
 		  // Registration successful, redirect to the patient page
-		  navigate("/patient");
+		  navigate("/home");
 		} else {
 		  console.log(response.data);
 		  toast.success(response.data.message);

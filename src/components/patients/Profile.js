@@ -16,7 +16,7 @@ function Profile() {
       const decodedToken = jwt_decode(token);
       const userId = decodedToken.user_id;
 
-      const response = await axios.get(`http://localhost:3000/api/hbms/profile_patient/${userId}`, {
+      const response = await axios.get(`http://localhost:5000/api/hbms/profile_patient//${userId}`, {
         headers: {
           auth: token,
         },
@@ -45,11 +45,6 @@ function Profile() {
           <p>Phone: {profile.phone}</p>
           <p>Gender: {profile.gender}</p>
           <p>Age: {profile.age}</p>
-          <p>Chief Complaint: {profile.chiefcomplaint}</p>
-          <p>Blood Group: {profile.bloodgroup}</p>
-          <p>Time of Registration: {profile.timeofregistration}</p>
-          <p>Sugar Level: {profile.sugarlevel}</p>
-          <p>Blood Pressure: {profile.bloodpressure}</p>
           <p>Address: {profile.address}</p>
         </div>
       </div>

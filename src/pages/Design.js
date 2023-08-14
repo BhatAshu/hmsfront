@@ -1,223 +1,121 @@
-import React, { useState } from "react";
-import { Radio } from "antd";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Drawer } from "antd";
-import axios from "axios";
-import "./sss.css"
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
-const notify = (text) => toast(text);
 
-const DLogin = () => {
-    const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [Loading, setLoading] = useState(false);
-  const [placement, SetPlacement] = useState("Nurse");
-  const [formvalue, setFormvalue] = useState({
-    ID: "",
-    password: "",
-  });
+const pages = ['Book An Appointment', 'Track Medical', 'Profile'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-  const [ForgetPassword, setForgetPassword] = useState({
-    type: "",
-    email: "",
-  });
+function ResponsiveAppBar() {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const [forgetLoading, setForgetLoading] = useState(false);
-
-  const showDrawer = () => {
-    setOpen(true);
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
 
-  const onClose = () => {
-    setOpen(false);
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
   };
 
-  const Handlechange = (e) => {
-    setFormvalue({ ...formvalue, [e.target.name]: e.target.value });
-  };
-
-  const HandleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    if (formvalue.ID !== "" && formvalue.password !== "") {
-      try {
-        const response = await axios.post("/api/login", {
-          ID: formvalue.ID,
-          password: formvalue.password,
-        });
-
-        if (response.data.message === "Successful") {
-          notify("Login Successful");
-          setLoading(false);
-          return navigate("/dashboard");
-        } else {
-          setLoading(false);
-          notify("Wrong credentials");
-        }
-      } catch (error) {
-        setLoading(false);
-        notify("Something went Wrong, Please Try Again");
-      }
-    }
-  };
-
-  const placementChange = (e) => {
-    SetPlacement(e.target.value);
-  };
-
-  const HandleForgetPassword = (e) => {
-    setForgetPassword({ ...ForgetPassword, [e.target.name]: e.target.value });
-  };
-
-  const HandleChangePassword = async () => {
-    if (ForgetPassword.type === "") {
-      return notify("Please Fill all Details");
-    }
-    setForgetLoading(true);
-
-    try {
-      const response = await axios.post("/api/forgot-password", ForgetPassword);
-
-      if (response.data.message === "User not found") {
-        setForgetLoading(false);
-        return notify("User Not Found");
-      }
-
-      setForgetPassword({
-        type: "",
-        email: "",
-      });
-      onClose();
-      setForgetLoading(false);
-      return notify("Account Details Sent");
-    } catch (error) {
-      setForgetLoading(false);
-      return notify("Something went Wrong, Please Try Again");
-    }
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   return (
-    <>
-      <ToastContainer />
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <LocalHospitalIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            MEDIFACE
+          </Typography>
 
-      <div className="mainLoginPage">
-        <div className="leftside"></div>
-        <div className="rightside">
-          <h1>Login</h1>
-          <div>
-            <Radio.Group
-              value={placement}
-              onChange={placementChange}
-              className={"radiogroup"}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "flex-end",
+            }}
+          >
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  marginLeft: 2,
+                }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
             >
-              <Radio.Button value="Nurse" className={"radiobutton"}>
-                Nurse
-              </Radio.Button>
-              <Radio.Button value="Doctor" className={"radiobutton"}>
-                Doctor
-              </Radio.Button>
-              <Radio.Button value="Admin" className={"radiobutton"}>
-                Admin
-              </Radio.Button>
-            </Radio.Group>
-          </div>
-          <div className="Profileimg"></div>
-          <div>
-            <p>ID - 100</p>
-            <p>Password - masai</p>
-            <form onSubmit={HandleSubmit}>
-              <h3>{placement} ID</h3>
-              <input
-                type="number"
-                name="ID"
-                value={formvalue.ID}
-                onChange={Handlechange}
-                required
-              />
-              <h3>Password</h3>
-              <input
-                type="password"
-                name="password"
-                value={formvalue.password}
-                onChange={Handlechange}
-                required
-              />
-              <button type="submit">
-                {Loading ? "Loading..." : "Submit"}
-              </button>
-              <p style={{ marginTop: "10px" }}>
-                Forget Password?{" "}
-                <span
-                  style={{ color: "blue", cursor: "pointer" }}
-                  onClick={showDrawer}
-                >
-                  Get it on Email !
-                </span>
-              </p>
-
-              <Drawer title="Forget Password" placement="left" onClose={onClose} open={open}>
-                <div>
-                  <label style={{ fontSize: "18px" }}>Choose Type</label>
-                  <select
-                    name="type"
-                    value={ForgetPassword.type}
-                    onChange={HandleForgetPassword}
-                    required
-                  >
-                    <option value="">User Type</option>
-                    <option value="nurse">Nurse</option>
-                    <option value="doctor">Doctor</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
-                <div>
-                  <label style={{ display: "block", fontSize: "18px" }}>Enter Email</label>
-                  <input
-                    type="email"
-                    placeholder="example@mail.com"
-                    name="email"
-                    value={ForgetPassword.email}
-                    onChange={HandleForgetPassword}
-                    required
-                    style={{
-                      width: "100%",
-                      height: "3rem",
-                      borderRadius: "5px",
-                      border: "none",
-                      backgroundColor: "#bce0fb",
-                      fontSize: "18px",
-                      marginTop: "10px",
-                      paddingLeft: "10px",
-                    }}
-                  />
-                </div>
-                <button
-                  style={{
-                    width: "50%",
-                    margin: " 20px auto",
-                    display: "flex",
-                    padding: "10px",
-                    fontSize: "18px",
-                    backgroundColor: "#ff9f9f",
-                    border: "none",
-                    borderRadius: "7px",
-                    cursor: "pointer",
-                    justifyContent: "center",
-                  }}
-                  onClick={HandleChangePassword}
-                >
-                  {forgetLoading ? "Loading..." : " Send Mail"}
-                </button>
-              </Drawer>
-            </form>
-          </div>
-        </div>
-      </div>
-    </>
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
-};
+}
 
-export default DLogin;
+export default ResponsiveAppBar;

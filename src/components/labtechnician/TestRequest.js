@@ -10,16 +10,26 @@ import {
   TableBody,
 } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material"; 
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import PatientDetailsModal from "./PatientDetails";
 
 function Patients() {
-  const initialPatientStatus = {}; 
+  const initialPatientStatus = {};
   const [patientStatus, setPatientStatus] = useState(initialPatientStatus);
   const [patients, setPatients] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [editModal, setEditModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null); 
+  const [patientDetailsModalOpen, setPatientDetailsModalOpen] = useState(false); 
+  // Function to handle the name click
+
+
+  const handleNameClick = (patient) => {
+    setSelectedPatient(patient);
+    setPatientDetailsModalOpen(true);
+  };
 
   const [data, setData] = useState({
     id: "",
@@ -89,17 +99,14 @@ function Patients() {
 
   const handleStatusChange = (event, patientId) => {
     const newStatus = event.target.value;
-  
 
     setPatientStatus((prevStatus) => ({
       ...prevStatus,
       [patientId]: newStatus,
     }));
-  
+
     localStorage.setItem(patientId, newStatus);
   };
-  
-  
 
   const deleteIconStyle = {
     width: "100%",
@@ -108,7 +115,7 @@ function Patients() {
 
   function handleEdit(
     id,
-    name,
+    username,
     email,
     phone,
     gender,
@@ -123,7 +130,7 @@ function Patients() {
     setData({
       ...data,
       id: id,
-      name: name,
+      username: username,
       email: email,
       phone: phone,
       gender: gender,
@@ -147,7 +154,8 @@ function Patients() {
         const responseData = response.data;
         const statusObject = {};
         responseData.forEach((patient) => {
-          statusObject[patient.id] = localStorage.getItem(patient.id) || "inactive";
+          statusObject[patient.id] =
+            localStorage.getItem(patient.id) || "inactive";
         });
         setPatientStatus(statusObject);
         setPatients(responseData);
@@ -156,9 +164,6 @@ function Patients() {
         console.log("Error fetching patients:", error);
       });
   }, [patients]);
-  
-  
-  
 
   return (
     <div sx={tableContainerStyle}>
@@ -178,7 +183,14 @@ function Patients() {
           <TableBody>
             {patients.map((patient, index) => (
               <TableRow key={index}>
-                <TableCell>{patient.firstname}</TableCell>
+               <TableCell>
+                  <span
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleNameClick(patient)} 
+                  >
+                    {patient.username}
+                  </span>
+                </TableCell>
                 <TableCell>{patient.email}</TableCell>
                 <TableCell>{patient.age}</TableCell>
                 <TableCell>{patient.chiefcomplaint}</TableCell>
@@ -192,8 +204,7 @@ function Patients() {
                     <Select
                       labelId={`status-label-${patient.id}`}
                       id={`status-select-${patient.id}`}
-                      value={patientStatus[patient.id]
-                      }
+                      value={patientStatus[patient.id]}
                       label="Status"
                       onChange={(event) =>
                         handleStatusChange(event, patient.id)
@@ -228,6 +239,11 @@ function Patients() {
         page={page}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
+      />
+      <PatientDetailsModal
+        open={patientDetailsModalOpen}
+        onClose={() => setPatientDetailsModalOpen(false)}
+        patient={selectedPatient}
       />
       {/* <EditModal
         editModal={editModal}

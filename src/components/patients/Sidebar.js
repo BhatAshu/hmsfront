@@ -26,7 +26,7 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 
 // import HandlePatient from "./HandlePatient";
 import Profile from "./Profile";
-import AddStaff from "../admin/AddStaff";
+// import AddStaff from "../admin/AddStaff";
 // import Interns from "./Interns";
 
 const drawerWidth = 240;
@@ -227,7 +227,7 @@ function PatientSidebar(props) {
             {!selectedRole && (
               <>
                 <Typography paragraph></Typography>
-                <AddStaff />
+                {/* <AddStaff /> */}
               </>
             )}
           </>

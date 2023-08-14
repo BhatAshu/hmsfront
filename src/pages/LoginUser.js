@@ -17,7 +17,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import ForgetPasswordForm from "./ResetPassword";
-import "./HomePage.css";
+import "./style.css";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -94,14 +94,25 @@ const LoginUser = () => {
 		.post("http://localhost:5000/api/hbms/log_user", data)
 		.then((res) => {
 		//   console.log(res);
-		 if (res.status === 200) {
-			navigate("/");
-			localStorage.setItem("access_token",res.data.access_token);
-		  } else {
-			// console.log(res.data);
-            toast.error(res.data);
-		  }
-		})
+		//  if (res.status === 200) {
+		// 	navigate("/patientform");
+		// 	localStorage.setItem("access_token",res.data.access_token);
+		//   } 
+    if (res.status === 200) {
+      console.log(res.data);
+      localStorage.setItem("access_token", res.data.access_token);
+      const registrationComplete = localStorage.getItem("registrationComplete");
+      
+      if (registrationComplete === "true") {
+        navigate("/patientform"); // Redirect to registration form
+      } else {
+        navigate("/home"); // Redirect to home page
+      }
+    } else {
+      console.log(res.data);
+      toast.success(res.data);
+    }
+  })
 		.catch((err) => {
 		  console.log(err);
 		});
