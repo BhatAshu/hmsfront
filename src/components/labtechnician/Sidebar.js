@@ -27,7 +27,7 @@ import React, { useState, useEffect } from "react";
 // import StaffDashboard from "../admin/StaffDashboard";
 import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router-dom";
-import TestRequest from "./TestRequest";
+import BloodTest from "./BloodTest";
 
 const drawerWidth = 240;
 
@@ -104,9 +104,24 @@ function ResponsiveDrawer(props) {
         {[
           { text: "Patient", iconComponent: <PeopleIcon />, role: "Patients" },
           {
-            text: "TestRequest",
+            text: "BloodTest",
             iconComponent: <BloodtypeIcon />,
-            role: "TestRequest",
+            role: "BloodTest",
+          },
+          {
+            text: "BloodPressureTest",
+            iconComponent: <BloodtypeIcon />,
+            role: "BloodPressureTest",
+          },
+          {
+            text: "BloodSugarTest.",
+            iconComponent: <BloodtypeIcon />,
+            role: "BloodSugarTest",
+          },
+          {
+            text: "UrineTest",
+            iconComponent: <BloodtypeIcon />,
+            role: "UrineTest",
           },
           {
             text: "Patients",
@@ -244,8 +259,8 @@ function ResponsiveDrawer(props) {
         }}
       >
         <Toolbar />
-        {selectedRole === "TestRequest" ? (
-          <TestRequest />
+        {selectedRole === "BloodTest" ? (
+          <BloodTest />
         ) 
         // : selectedRole === "Profile" ? (
         //   <ProfileModal />
