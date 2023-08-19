@@ -22,7 +22,8 @@ import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    backgroundImage: 'url("https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9jdG9yc3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"), linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2))',
+    backgroundImage:
+      'url("https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9jdG9yc3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"), linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2))',
     backgroundSize: "cover",
     backgroundPosition: "center",
     display: "flex",
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginUser = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const classes = useStyles();
   const [isEmail, setisEmail] = useState("");
   const [isPassword, setisPassword] = useState("");
@@ -80,8 +81,7 @@ const LoginUser = () => {
 
   const handleForgotPasswordSubmit = (e) => {
     e.preventDefault();
-  }
-
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -89,36 +89,37 @@ const LoginUser = () => {
       email: isEmail,
       password: isPassword,
     };
-  
+
     axios
-		.post("http://localhost:5000/api/hbms/log_user", data)
-		.then((res) => {
-		//   console.log(res);
-		//  if (res.status === 200) {
-		// 	navigate("/patientform");
-		// 	localStorage.setItem("access_token",res.data.access_token);
-		//   } 
-    if (res.status === 200) {
-      console.log(res.data);
-      localStorage.setItem("access_token", res.data.access_token);
-      const registrationComplete = localStorage.getItem("registrationComplete");
-      
-      if (registrationComplete === "true") {
-        navigate("/patientform"); // Redirect to registration form
-      } else {
-        navigate("/home"); // Redirect to home page
-      }
-    } else {
-      console.log(res.data);
-      toast.success(res.data);
-    }
-  })
-		.catch((err) => {
-		  console.log(err);
-		});
-	}	
-
-
+      .post("http://localhost:5000/api/hbms/log_user", data)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res.data);
+          const loginData = { firstname: res.data.firstname };
+          localStorage.setItem("access_token", res.data.access_token);
+          localStorage.setItem("loginDataF", res.data.firstname);
+          localStorage.setItem("loginDataL", res.data.lastname);
+          localStorage.setItem("loginDataE", res.data.email);
+          localStorage.setItem("loginDataP", res.data.phone);
+          localStorage.setItem("loginDataG", res.data.gender);
+          localStorage.setItem("loginDataB", res.data.bloodgroup);
+          const registrationComplete = localStorage.getItem(
+            "registrationComplete"
+          );
+          if (registrationComplete === "true") {
+            navigate("/patientform");
+          } else {
+            navigate("/home");
+          }
+        } else {
+          console.log(res.data);
+          toast.success(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className={classes.container}>
@@ -183,17 +184,15 @@ const LoginUser = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-					
                   <Link
                     href="/signup"
                     variant="body2"
-					
+
                     // onClick={handleForgotPasswordClick}
                   >
-                   Don't have an account? <span style={{ fontWeight: "bold" }}>Sign Up</span>
+                    Don't have an account?{" "}
+                    <span style={{ fontWeight: "bold" }}>Sign Up</span>
                   </Link>
-					
-				
                 </Grid>
               </Grid>
             </form>

@@ -17,7 +17,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import ForgetPasswordForm from "./ResetPassword";
-import "./HomePage.css";
+import "./style.css";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%",
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -123,13 +123,13 @@ const Signup = () => {
     axios
       .post("http://localhost:5000/api/hbms/sign_up", data)
       .then((res) => {
-        //   console.log(res);
         if (res.status === 200) {
-          navigate("/loginuser");
+          // localStorage.setItem("signupData", JSON.stringify(data));
           localStorage.setItem("access_token", res.data.access_token);
+          navigate("/loginuser");
         } else {
-          // console.log(res.data);
-          toast.error(res.data);
+          console.log(res.data);
+          toast.success(res.data);
         }
       })
       .catch((err) => {
@@ -205,7 +205,7 @@ const Signup = () => {
                     required
                     fullWidth
                     id="phone"
-                    label="Phone"
+                    label="Phone Address"
                     name="phone"
                     autoComplete="phone"
                     value={isPhone}
@@ -222,7 +222,7 @@ const Signup = () => {
                     required
                     fullWidth
                     id="gender"
-                    label="gender"
+                    label="gender Address"
                     name="gender"
                     autoComplete="gender"
                     value={isGender}
@@ -237,7 +237,7 @@ const Signup = () => {
                     required
                     fullWidth
                     id="bloodgroup"
-                    label="bloodgroup"
+                    label="bloodgroup Address"
                     name="bloodgroup"
                     autoComplete="bloodgroup"
                     value={isBloodgroup}
@@ -286,8 +286,6 @@ const Signup = () => {
                   <Link
                     href="/loginuser"
                     variant="body2"
-
-                    // onClick={handleForgotPasswordClick}
                   >
                     Already a user?{" "}
                     <span style={{ fontWeight: "bold" }}>LOGIN</span>

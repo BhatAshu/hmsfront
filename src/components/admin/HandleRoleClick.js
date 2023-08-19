@@ -212,6 +212,7 @@ const handleRowsPerPageChange = (event) => {
                 <TableCell sx={{ color: "white" }}>Name</TableCell>
                 <TableCell sx={{ color: "white" }}>Email</TableCell>
                 <TableCell sx={{ color: "white" }}>Phone</TableCell>
+                <TableCell sx={{ color: "white" }}>Department</TableCell>
                 <TableCell sx={{ color: "white" }}>Address</TableCell>
                 <TableCell sx={{ color: "white", width: 150 }}>Image</TableCell>
                 <TableCell sx={{ color: "white" }}>Action</TableCell>
@@ -223,6 +224,7 @@ const handleRowsPerPageChange = (event) => {
                   <TableCell>{doctor.username}</TableCell>
                   <TableCell>{doctor.email}</TableCell>
                   <TableCell>{doctor.phone}</TableCell>
+                  <TableCell>{doctor.specialist}</TableCell>
                   <TableCell>{doctor.address}</TableCell>
                   <TableCell>
                     {doctor.image ? (

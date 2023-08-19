@@ -109,31 +109,6 @@ function ResponsiveDrawer(props) {
         {[
           { text: "Patient", iconComponent: <PeopleIcon />, role: "Patients" },
           {
-            text: "Blood Donor",
-            iconComponent: <BloodtypeIcon />,
-            role: "Blood Donor",
-          },
-          {
-            text: "Dispatch Blood",
-            iconComponent: <SendIcon />,
-            role: "Dispatch Blood",
-          },
-          {
-            text: "Blood Bank",
-            iconComponent: <MedicalServicesIcon />,
-            role: "Blood Bank",
-          },
-          // {
-          //   text: "Birth Report",
-          //   iconComponent: <ChildCareIcon />,
-          //   role: "Birth Report",
-          // },
-          // {
-          //   text: "Death Report",
-          //   iconComponent: <RemoveCircleIcon />,
-          //   role: "Death Report",
-          // },
-          {
             text: "Test Requsest",
             iconComponent: <MedicalServicesIcon />,
             role: "TestRequest",
@@ -252,19 +227,7 @@ function ResponsiveDrawer(props) {
           <Patients />
         ) : selectedRole === "Profile" ? (
           <ProfileModal />
-        ) : selectedRole === "Blood Donor" ? (
-          <BloodDonor />
-        ) : selectedRole === "Dispatch Blood" ? (
-          <DispatchBlood />
-        ) : selectedRole === "Blood Bank" ? (
-          <Bloodbank />
-        )
-        //  : selectedRole === "Birth Report" ? (
-        //   <BirthReport />
-        // ) : selectedRole === "Death Report" ? (
-        //   <DeathReport />
-        // ) 
-        : (
+        ) : (
           <>
             {!selectedRole && (
               <>

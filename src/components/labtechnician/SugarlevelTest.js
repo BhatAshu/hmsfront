@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import PatientDetailsModal from "./UrineTestDetails";
+import PatientDetailsModal from "./SugarlevelDetails";
 
 function Patients() {
   const initialPatientStatus = {};
@@ -144,12 +144,12 @@ function Patients() {
   }
 
   const handleAdd = () => {
-    setAddModal(true); 
+    setAddModal(true); // Show the "Add" modal
   };
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/hbms/list_urinetest", header)
+      .get("http://localhost:5000/api/hbms/list_sugartest", header)
       .then((response) => {
         const responseData = response.data;
         const statusObject = {};

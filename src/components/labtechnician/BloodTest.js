@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import PatientDetailsModal from "./PatientDetails";
+import PatientDetailsModal from "./BloodtestDetails";
 
 function Patients() {
   const initialPatientStatus = {};
@@ -149,7 +149,7 @@ function Patients() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/hbms/list_lab", header)
+      .get("http://localhost:5000/api/hbms/list_bloodtestlab", header)
       .then((response) => {
         const responseData = response.data;
         const statusObject = {};
@@ -176,7 +176,7 @@ function Patients() {
               <TableCell sx={{ color: "white" }}>Age</TableCell>
               <TableCell sx={{ color: "white" }}>Chief Complaint</TableCell>
               <TableCell sx={{ color: "white" }}>Bloodgroup</TableCell>
-              <TableCell sx={{ color: "white" }}>Message</TableCell>
+              {/* <TableCell sx={{ color: "white" }}>Message</TableCell> */}
               <TableCell sx={{ color: "white" }}>Status</TableCell>
             </TableRow>
           </TableHead>
@@ -195,7 +195,7 @@ function Patients() {
                 <TableCell>{patient.age}</TableCell>
                 <TableCell>{patient.chiefcomplaint}</TableCell>
                 <TableCell>{patient.bloodgroup}</TableCell>
-                <TableCell>{patient.message}</TableCell>
+                {/* <TableCell>{patient.message}</TableCell> */}
                 <TableCell>
                   <FormControl fullWidth>
                     <InputLabel id={`status-label-${patient.id}`}>

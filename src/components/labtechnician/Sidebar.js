@@ -28,6 +28,9 @@ import React, { useState, useEffect } from "react";
 import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router-dom";
 import BloodTest from "./BloodTest";
+import UrineTest from "./UrineTest";
+import BloodPressureTest from "./BPTest";
+import BloodSugarTest from "./SugarlevelTest";
 
 const drawerWidth = 240;
 
@@ -102,7 +105,7 @@ function ResponsiveDrawer(props) {
         }}
       >
         {[
-          { text: "Patient", iconComponent: <PeopleIcon />, role: "Patients" },
+          // { text: "Patient", iconComponent: <PeopleIcon />, role: "Patients" },
           {
             text: "BloodTest",
             iconComponent: <BloodtypeIcon />,
@@ -114,7 +117,7 @@ function ResponsiveDrawer(props) {
             role: "BloodPressureTest",
           },
           {
-            text: "BloodSugarTest.",
+            text: "BloodSugarTest",
             iconComponent: <BloodtypeIcon />,
             role: "BloodSugarTest",
           },
@@ -123,11 +126,11 @@ function ResponsiveDrawer(props) {
             iconComponent: <BloodtypeIcon />,
             role: "UrineTest",
           },
-          {
-            text: "Patients",
-            iconComponent: <SendIcon />,
-            role: "Patients",
-          },
+          // {
+          //   text: "Patients",
+          //   iconComponent: <SendIcon />,
+          //   role: "Patients",
+          // },
           {
             text: "Profile",
             iconComponent: <AccountCircleIcon />,
@@ -187,7 +190,7 @@ function ResponsiveDrawer(props) {
           </IconButton>
           <Typography variant="h6" noWrap component="div">
             <FaUserCog sx={{ marginRight: "0.5rem" }} />
-            <span sx={{ ml: "8px" }}>Doctor Dashboard</span>
+            <span sx={{ ml: "8px" }}>Lab Technician Dashboard</span>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -262,13 +265,16 @@ function ResponsiveDrawer(props) {
         {selectedRole === "BloodTest" ? (
           <BloodTest />
         ) 
-        // : selectedRole === "Profile" ? (
-        //   <ProfileModal />
-        // ) : selectedRole === "Blood Donor" ? (
-        //   <BloodDonor />
-        // ) : selectedRole === "Dispatch Blood" ? (
-        //   <DispatchBlood />
-        // ) : selectedRole === "Blood Bank" ? (
+        : selectedRole === "UrineTest" ? (
+          <UrineTest />
+        ) 
+        : selectedRole === "BloodPressureTest" ? (
+          <BloodPressureTest />
+        ) 
+        : selectedRole === "BloodSugarTest" ? (
+          <BloodSugarTest />
+        ) 
+        // : selectedRole === "Blood Bank" ? (
         //   <Bloodbank />
         // ) : selectedRole === "Birth Report" ? (
         //   <BirthReport />

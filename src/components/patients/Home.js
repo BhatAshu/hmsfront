@@ -11,16 +11,17 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import Profile from "./Profile";
 
 const pages = ["Book An Appointment", "Track Medical", "Profile"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Dashboard"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -37,12 +38,27 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("loginDataF");
+    localStorage.removeItem("loginDataL");
+    localStorage.removeItem("loginDataE");
+    localStorage.removeItem("loginDataP");
+    localStorage.removeItem("loginDataG");
+    localStorage.removeItem("loginDataB");
+    setIsLoggedIn(false); 
+    console.log("Logout");
+    navigate("/loginuser"); 
+  };
+
   const [userData, setUserData] = React.useState(null); // State to store user data
 
   const fetchUserProfile = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/hbms/profile_patient");
+      const response = await fetch(
+        "http://localhost:5000/api/hbms/profile_patient"
+      );
       const data = await response.json();
       setUserData(data); // Set user data in the state
     } catch (error) {
@@ -88,27 +104,27 @@ function ResponsiveAppBar() {
               justifyContent: "flex-end",
             }}
           >
-             {pages.map((page) => (
-          <Button
-            key={page}
-            onClick={handleCloseNavMenu}
-            component={Link} // Use Link component for navigation
-            to={
-                page === "Book An Appointment"
-                  ? "/patientform"
-                  : page === "Profile"
-                  ? "/userprofile"
-                  : "/"
-              }
-            sx={{
-              my: 2,
-              color: "white",
-              display: "block",
-              marginLeft: 2,
-            }}
-          >
-            {page}
-          </Button>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                component={Link} // Use Link component for navigation
+                to={
+                  page === "Book An Appointment"
+                    ? "/patientform"
+                    : page === "Profile"
+                    ? "/userprofile"
+                    : "/"
+                }
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  marginLeft: 2,
+                }}
+              >
+                {page}
+              </Button>
             ))}
           </Box>
 
@@ -134,7 +150,7 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+               {settings.map((setting) => (
                  <MenuItem key={setting} onClick={setting === "Profile" ? handleProfileClick : handleCloseUserMenu}>
                 {setting === "Profile" ? (
                   <Typography textAlign="center">{setting}</Typography>
@@ -143,6 +159,24 @@ function ResponsiveAppBar() {
                 )}
               </MenuItem>
               ))}
+              {isLoggedIn ? (
+                settings.map((setting) => (
+                  <MenuItem
+                    key={setting}
+                    onClick={
+                      setting === "Profile"
+                        ? handleProfileClick
+                        : handleCloseUserMenu
+                    }
+                  >
+                    <Typography textAlign="center"></Typography>
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem onClick={handleLogout}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>

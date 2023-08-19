@@ -1,69 +1,40 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./menu.css";
-import { TbUserCheck } from "react-icons/tb";
-import { FaBars, FaTimes } from "react-icons/fa";
-import { IconContext } from "react-icons/lib";
-import { NavLink, useNavigate } from "react-router-dom";
-// import { Button } from "@material-ui/core";
+import React from "react";
+import { MenuList } from "../data/data";
+import Layout from "../components/Layout/Layout";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 
-function Menu() {
-  const [click, setClick] = useState(false);
-
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
-
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("access_token");
-    navigate("/login");
-  };
-
+const Menu = () => {
   return (
-    <>
-      <IconContext.Provider value={{ color: "#fff" }}>
-        <nav className="navbar">
-          <div className="navbar-container container">
-            <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-              <TbUserCheck color="black" />
-            </Link>
-            <div className="menu-icon" onClick={handleClick}>
-              {click ? <FaTimes /> : <FaBars />}
-            </div>
-            <ul className={click ? "nav-menu active" : "nav-menu"}>
-              {/* <li className="nav-item">
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    "nav-links" + (isActive ? " activated" : "")
-                  }
-                  onClick={closeMobileMenu}
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) =>
-                    "nav-links" + (isActive ? " activated" : "")
-                  }
-                  onClick={closeMobileMenu}
-                >
-                  About
-                </NavLink>
-              </li> */}
-              <li className="nav-item">
-                <button className="nav-button" onClick={handleLogout}>
-                  Logout
-                </button>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </IconContext.Provider>
-    </>
+    <Layout>
+      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+        {MenuList.map((menu) => (
+          <Card sx={{ maxWidth: "390px", display: "flex", m: 2 }}>
+            <CardActionArea>
+              <CardMedia
+                sx={{ minHeight: "400px" }}
+                component={"img"}
+                src={menu.image}
+                alt={menu.name}
+              />
+              <CardContent>
+                <Typography variant="h5" gutterBottom component={"div"}>
+                  {menu.name}
+                </Typography>
+                <Typography variant="body2">{menu.description}</Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
+      </Box>
+    </Layout>
   );
-}
+};
 
 export default Menu;

@@ -23,13 +23,18 @@ import Report1 from "./components/receptionist/Report";
 import Team from "./components/zzzzz/Team";
 import Overview from "./components/zzzzz/Overview";
 import Product from "./components/zzzzz/Product";
+import Home1 from "./pages/Home1";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Menu from "./pages/Menu";
+import Pagenotfound from "./pages/Pagenotfound";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/doctor" element={<Doctor />} />
@@ -49,6 +54,11 @@ function App() {
           <Route path="/report1" element={<Report1 />} />
           <Route path="/product" element={<Product />} />
           <Route path="/team" element={<Team />} />
+          <Route path="/" element={<Home1 />} />
+          <Route path="/about" element={<About />} />
+          {/* <Route path="/contact" element={<Contact />} /> */}
+          <Route path="/menu" element={<Menu />} />
+          <Route path="*" element={<Pagenotfound />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
