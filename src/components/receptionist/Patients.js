@@ -54,7 +54,7 @@ function Patients() {
 
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset the page when the number of rows per page changes
+    setPage(0); 
   };
 
   const tableContainerStyle = {
@@ -103,7 +103,7 @@ function Patients() {
 
   function handleEdit(
     id,
-    name,
+    username,
     email,
     phone,
     gender,
@@ -117,7 +117,7 @@ function Patients() {
     setData({
       ...data,
       id: id,
-      name: name,
+      username: username,
       email: email,
       phone: phone,
       gender: gender,
@@ -186,7 +186,7 @@ function Patients() {
           <TableBody>
             {patients.map((patient, index) => (
               <TableRow key={index}>
-                <TableCell>{patient.firstname}</TableCell>
+                <TableCell>{patient.username}</TableCell>
                 <TableCell>{patient.email}</TableCell>
                 <TableCell>{patient.phone}</TableCell>
                 <TableCell>{patient.gender}</TableCell>
@@ -201,7 +201,7 @@ function Patients() {
                     onClick={() =>
                       handleEdit(
                         patient.id,
-                        patient.firstname,
+                        patient.username,
                         patient.email,
                         patient.phone,
                         patient.gender,

@@ -1,361 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import {
-//   Button,
-//   Modal,
-//   ModalHeader,
-//   ModalBody,
-//   ModalFooter,
-//   Label,
-// } from "reactstrap";
-// import "react-toastify/dist/ReactToastify.css";
-// import { toast } from "react-toastify";
-// import "react-phone-input-2/lib/style.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import PhoneInput from "react-phone-input-2";
-// import "react-phone-input-2/lib/style.css";
-// import "../admin/style.css"
-// import { MDBTextArea } from "mdb-react-ui-kit";
-// const imageMimeType = /image\/(jpg|jpeg)/i;
-
-
-// function PatientDetails({
-//   editModal,
-//   handleEdit,
-//   onClose,
-//   // data,
-//   // setData,
-//   existingImage,
-//   patient,
-// }) {
-//   const [file, setFile] = useState(null);
-//   const [fileDataURL, setFileDataURL] = useState(null);
-//   useEffect(() => {
-//     if (editModal) {
-//       setFileDataURL(existingImage ? URL.createObjectURL(existingImage) : null);
-//     }
-//   }, [editModal, existingImage]);
-
-//   const [formData, setFormData] = useState({
-//     title: "",
-//     image: null,
-//   });
-//   const [data, setData] = useState({
-//     username: patient?.username || "", // Make sure to provide default values or fetch data as needed
-//     bloodgroup:  patient?.bloodgroup || "",
-//     collecteddate: patient?.collecteddate || "",
-//     hemoglobin: patient?.hemoglobin || "",
-//     whiteBloodCellCount: patient?.whiteBloodCellCount || "",
-//     plateletCount: patient?.plateletCount || "",
-//     redBloodCellCount: patient?.redBloodCellCount || "",
-//     hematocrit: patient?.hematocrit || "",
-//     meanCorpuscularVolume: patient?.meanCorpuscularVolume || "",
-//     meanCorpuscularHemoglobin: patient?.meanCorpuscularHemoglobin || "",
-//     meanCorpuscularHemoglobinConcentration: patient?.meanCorpuscularHemoglobinConcentration || "",
-//   });
-  
-
-//   const [isValid, setIsValid] = useState({
-//     emailValid: false,
-//     phoneValid: false,
-//     nameValid: false,
-//   });
-  
-
-//   // const handleNameChange = (e) => {
-//   //   setData({ ...data, username: e.target.value });
-//   // };
-//   const handleNameChange = (e) => {
-//     const updatedFormData = { ...formData, username: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, username: e.target.value });
-//   };
-//   const handlebloodgroupChange = (e) => {
-//     const updatedFormData = { ...formData, bloodgroup: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, bloodgroup: e.target.value });
-//   };
-
-//   const handleCollecteddateChange = (e) => {
-//     const updatedFormData = { ...formData, collecteddate: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, collecteddate: e.target.value });
-//   };
-
-
-//   const handleHemoGlobinhange = (e) => {
-//     const updatedFormData = { ...formData, hemoglobin: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, hemoglobin: e.target.value });
-//   };
-//   const handlewhiteBloodCellCountChange = (e) => {
-//     const updatedFormData = { ...formData, whiteBloodCellCount: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, whiteBloodCellCount: e.target.value });
-//   };
-//   const handleplateletCountChange = (e) => {
-//     const updatedFormData = { ...formData, plateletCount: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, plateletCount: e.target.value });
-//   };
-//   const handleredBloodCellCountChange = (e) => {
-//     const updatedFormData = { ...formData, redBloodCellCount: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, redBloodCellCount: e.target.value });
-//   };
-//   const handlehematocritChange = (e) => {
-//     const updatedFormData = { ...formData, hematocrit: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, hematocrit: e.target.value });
-//   };
-//   const handlemeanCorpuscularVolumeChange = (e) => {
-//     const updatedData = { ...data, meanCorpuscularVolume: e.target.value };
-//     setData(updatedData);
-//     const updatedFormData = { ...formData, meanCorpuscularVolume: e.target.value };
-//     setFormData(updatedFormData);
-//   };
-//   const handlemeanCorpuscularHemoglobinChange = (e) => {
-//     const updatedFormData = { ...formData, meanCorpuscularHemoglobin: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, meanCorpuscularHemoglobin: e.target.value });
-//   };
-//   const handlemeanCorpuscularHemoglobinConcentrationChange = (e) => {
-//     const updatedFormData = { ...formData, meanCorpuscularHemoglobinConcentration: e.target.value };
-//     setFormData(updatedFormData);
-//     setData({ ...data, meanCorpuscularHemoglobinConcentration: e.target.value });
-//   };
-  
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log("jj");
-//     let formData = new URLSearchParams();;
-//     formData.append("username", data.username);
-//     formData.append("bloodgroup", data.bloodgroup);
-//     formData.append("collecteddate", data.collecteddate);
-//     formData.append("hemoglobin", data.hemoglobin);
-//     formData.append("whiteBloodCellCount", data.whiteBloodCellCount);
-//     formData.append("plateletCount", data.plateletCount);
-//     formData.append("redBloodCellCount", data.redBloodCellCount);
-//     formData.append("hematocrit", data.hematocrit);
-//     formData.append("meanCorpuscularVolume", data.meanCorpuscularVolume);
-//     formData.append("meanCorpuscularHemoglobin", data.meanCorpuscularHemoglobin);
-//     formData.append("meanCorpuscularHemoglobinConcentration", data.meanCorpuscularHemoglobinConcentration);
-
-//     const config = {
-//       headers: { 
-//         "Content-Type": "application/x-www-form-urlencoded",
-//         auth: localStorage.getItem("access_token") },
-//     };
-//     axios
-//       .put(
-//         `http://localhost:5000/api/hbms/add_bloodtest/${data.id}`,
-//         formData,
-//         config
-//       )
-//       .then((res) => {
-//         console.log(res);
-//         if (res.status === 200) {
-//           onClose();
-//           setData({
-//             username: "",
-//             bloodgroup: "",
-//             collecteddate: "",
-//             hemoglobin: "",
-//             whiteBloodCellCount: "",
-//             plateletCount: "",
-//             redBloodCellCount: "",
-//             hematocrit: "",
-//             meanCorpuscularVolume: "",
-//             meanCorpuscularHemoglobin: "",
-//             meanCorpuscularHemoglobinConcentration: "",
-//           });
-//           // setData("");
-//           // setData("");
-//           // setData("");
-//           // setData("");
-//           // setData("");
-//           // setData("");
-//           // setData("");
-//           // setData("");
-//           // setData("");
-//           toast.success("Record is successfully updated");
-//         } else {
-//           console.log(res.data);
-//         }
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-
-//   return (
-//     <Modal
-//       isOpen={editModal}
-//       toggle={handleEdit}
-//       centered
-//       className="modal-right"
-//     >
-//       <ModalHeader toggle={handleEdit} onClick={() => onClose()}>
-//         Updating User
-//       </ModalHeader>
-//       <form className="container" onSubmit={handleSubmit}>
-//         <ModalBody>
-//           <div className="row">
-//             <div className="col-md-6">
-//               <Label>
-//                 Name:
-//                 <input
-//                   type="text"
-//                   value={data.username}
-//                   // name="username"
-//                   onChange={handleNameChange}
-//                   required
-//                 />
-//               </Label>
-//             </div>
-//             <div className="col-md-6">
-//               <Label>
-//                 BloodGroup:
-//                 <input
-//                   type="text"
-//                   value={data.bloodgroup}
-//                   name="bloodgroup"
-//                   onChange={handlebloodgroupChange}
-//                   required
-//                 />
-//               </Label>
-//             </div>
-//           </div>
-//           <div className="row">
-//            <div className="col-md-6" >
-//               <Label>
-//               Collecteddate:
-//                 <input
-//                   type="text"
-//                   value={data.collecteddate}
-//                   required
-//                   onChange={handleCollecteddateChange}
-//                 />
-//               </Label>
-//             </div>
-//             <div className="col-md-6">
-//               <Label>
-//               Hemoglobin:
-//                 <input
-//                   type="text"
-//                   value={data.hemoglobin}
-//                   onChange={handleHemoGlobinhange}
-//                   required
-//                 />
-//               </Label>
-//             </div>
-//           </div>
-//           <div className="row">
-//             <div className="col-md-6">
-//               <Label>
-//               WhiteBloodCellCount:
-//                 <input
-//                   type="text"
-//                   value={data.whiteBloodCellCount}
-//                   required
-//                   onChange={handlewhiteBloodCellCountChange}
-//                 />
-//               </Label>
-//             </div>
-//           </div>
-//           <div className="row">
-//             <div className="col-md-12">
-//             <Label>
-//             PlateletCount:
-//                 <input
-//                   type="text"
-//                   value={data.plateletCount}
-//                   required
-//                   onChange={handleplateletCountChange}
-//                 />
-//               </Label>
-//             </div>
-//           </div>
-//           <div className="row">
-//             <div className="col-md-6">
-//               <Label>
-//               RedBloodCellCount:
-//                 <input
-//                   type="text"
-//                   value={data.redBloodCellCount}
-//                   name="redBloodCellCount"
-//                   onChange={handleredBloodCellCountChange}
-//                   required
-//                 />
-//               </Label>
-//             </div>
-//             <div className="col-md-6">
-//               <Label>
-//               Hematocrit:
-//                 <input
-//                   type="text"
-//                   value={data.hematocrit}
-//                   name="hematocrit"
-//                   onChange={handlehematocritChange}
-//                   required
-//                 />
-//               </Label>
-//             </div>
-//           </div>
-//           <div className="row">
-//            <div className="col-md-6" >
-//               <Label>
-//               MeanCorpuscularVolume:
-//                 <input
-//                   type="text"
-//                   value={data.meanCorpuscularVolume}
-//                   required
-//                   onChange={handlemeanCorpuscularVolumeChange}
-//                 />
-//               </Label>
-//             </div>
-//             <div className="col-md-6">
-//               <Label>
-//               MeanCorpuscularHemoglobin:
-//                 <input
-//                   type="text"
-//                   value={data.meanCorpuscularHemoglobin}
-//                   onChange={handlemeanCorpuscularHemoglobinChange}
-//                   required
-//                 />
-//               </Label>
-//             </div>
-//           </div>
-//           <div className="row">
-//             <div className="col-md-6">
-//               <Label>
-//               MeanCorpuscularHemoglobinConcentration:
-//                 <input
-//                   type="text"
-//                   value={data.meanCorpuscularHemoglobinConcentration}
-//                   required
-//                   onChange={handlemeanCorpuscularHemoglobinConcentrationChange}
-//                 />
-//               </Label>
-//             </div>
-//           </div>
-//         </ModalBody>
-//         <ModalFooter>
-//           <Button color="primary" type="submit">
-//             Submit
-//           </Button>{" "}
-//           <Button color="secondary" onClick={() => onClose()}>
-//             Cancel
-//           </Button>
-//         </ModalFooter>
-//       </form>
-//     </Modal>
-//   );
-// }
-// export default PatientDetails;
-
-
 import React, { useState,useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
@@ -369,14 +11,10 @@ const PatientDetails = ({ open, onClose, patient }) => {
     username: "",
     bloodgroup: "",
     collecteddate: "",
-    hemoglobin: "",
-    whiteBloodCellCount: "",
-    plateletCount: "",
-    redBloodCellCount: "",
-    hematocrit: "",
-    meanCorpuscularVolume: "",
-    meanCorpuscularHemoglobin: "",
-    meanCorpuscularHemoglobinConcentration: "",
+    systolicPressure: "",
+    diastolicPressure: "",
+    meanArterialPressure: "",
+    pulsePressure: "",
   });
   useEffect(() => {
     if (patient) {
@@ -385,14 +23,10 @@ const PatientDetails = ({ open, onClose, patient }) => {
         username: patient.username || "",
         bloodgroup: patient.bloodgroup || "",
         collecteddate: patient.collecteddate || "",
-        hemoglobin: patient.hemoglobin || "",
-        whiteBloodCellCount: patient.whiteBloodCellCount || "",
-        plateletCount: patient.plateletCount || "",
-        redBloodCellCount: patient.redBloodCellCount || "",
-        hematocrit: patient.hematocrit || "",
-        meanCorpuscularVolume: patient.meanCorpuscularVolume || "",
-        meanCorpuscularHemoglobin: patient.meanCorpuscularHemoglobin || "",
-        meanCorpuscularHemoglobinConcentration: patient.meanCorpuscularHemoglobinConcentration || "",
+        systolicPressure: patient.systolicPressure || "",
+        diastolicPressure: patient.diastolicPressure || "",
+        meanArterialPressure: patient.meanArterialPressure || "",
+        pulsePressure: patient.pulsePressure || "",
       }));
     }
   }, [patient]);
@@ -413,6 +47,10 @@ const PatientDetails = ({ open, onClose, patient }) => {
     borderRadius: "8px",
   };
 
+  const formItemStyle = {
+    marginBottom: "20px",
+  };
+
   const handleClose = () => {
     onClose();
   };
@@ -424,29 +62,15 @@ const PatientDetails = ({ open, onClose, patient }) => {
     }));
   };
 
-  // const handleFormSubmit = async () => {
-  //   try {
-  //     await axios.put(`http://localhost:5000/api/hbms/add_bloodtest/${patient.id}`, formData);
-  //     // Handle success or show a notification
-  //     console.log("succes");
-  //     handleClose();
-  //   } catch (error) {
-  //     console.error("Error submitting data:", error);
-  //     // Handle error or show a notification
-  //   }
-  // };
   const handleFormSubmit = async () => {
     try {
       await axios.put(`http://localhost:5000/api/hbms/add_bptest/${patient.id}`, formData);
-      // Handle success or show a notification
       console.log("success");
   
       // Generate PDF
       const pdfResponse = await axios.get(`http://localhost:5000/api/hbms/bptest_report/${patient.id}`, {
-        responseType: "blob", // Important for handling binary data
+        responseType: "blob", 
       });
-  
-      // Create a blob URL to open the PDF in a new tab
       const pdfBlob = new Blob([pdfResponse.data], { type: "application/pdf" });
       const pdfUrl = URL.createObjectURL(pdfBlob);
       window.open(pdfUrl);
@@ -454,7 +78,6 @@ const PatientDetails = ({ open, onClose, patient }) => {
       handleClose();
     } catch (error) {
       console.error("Error submitting data:", error);
-      // Handle error or show a notification
     }
   };
   
@@ -470,42 +93,50 @@ const PatientDetails = ({ open, onClose, patient }) => {
           value={formData.username}
           onChange={(e) => handleFormChange("username", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
         <TextField
           label="Bloodgroup"
           value={formData.bloodgroup}
           onChange={(e) => handleFormChange("bloodgroup", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
         <TextField
           label="Collecteddate"
           value={formData.collecteddate}
           onChange={(e) => handleFormChange("collecteddate", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
          <TextField
           label="SystolicPressure"
           value={formData.systolicPressure}
           onChange={(e) => handleFormChange("systolicPressure", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
          <TextField
           label="DiastolicPressure"
           value={formData.diastolicPressure}
           onChange={(e) => handleFormChange("diastolicPressure", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
          <TextField
           label="MeanArterialPressure"
           value={formData.meanArterialPressure}
           onChange={(e) => handleFormChange("meanArterialPressure", e.target.value)}
           fullWidth
+          style={formItemStyle}
+
         />
         <TextField
           label="PulsePressure"
           value={formData.pulsePressure}
           onChange={(e) => handleFormChange("pulsePressure", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
         <Button onClick={handleFormSubmit} color="primary">
           Submit

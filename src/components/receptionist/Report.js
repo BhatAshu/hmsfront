@@ -64,8 +64,7 @@ const Report = () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>FirstName</th>
-              <th>LastName</th>
+              <th>Username</th>
               <th>Email</th>
               <th>Phone</th>
             </tr>
@@ -81,8 +80,7 @@ const Report = () => {
                     {patient.id}
                   </span>
                 </td>
-                <td>{patient.firstname}</td>
-                <td>{patient.lastname}</td>
+                <td>{patient.username}</td>
                 <td>{patient.email}</td>
                 <td>{patient.phone}</td>
               </tr>

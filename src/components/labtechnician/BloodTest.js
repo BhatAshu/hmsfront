@@ -33,7 +33,7 @@ function Patients() {
 
   const [data, setData] = useState({
     id: "",
-    name: "",
+    username: "",
     email: "",
     phone: "",
     gender: "",
@@ -42,7 +42,7 @@ function Patients() {
     bloodgroup: "",
     timeofregistration: "",
     address: "",
-    message: "",
+    testtype: "",
   });
 
   const header = {
@@ -124,7 +124,7 @@ function Patients() {
     bloodgroup,
     timeofregistration,
     address,
-    message
+    testtype,
   ) {
     setEditModal(true);
     setData({
@@ -139,7 +139,7 @@ function Patients() {
       bloodgroup: bloodgroup,
       timeofregistration: timeofregistration,
       address: address,
-      message: message,
+      testtype: testtype,
     });
   }
 
@@ -257,3 +257,6 @@ function Patients() {
 }
 
 export default Patients;
+
+
+

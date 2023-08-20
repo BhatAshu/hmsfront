@@ -10,8 +10,8 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "85%", // Increase modal width
-  maxWidth: "600px", // Increase maximum modal width
+  width: "85%", 
+  maxWidth: "600px", 
   bgcolor: "white",
   boxShadow: 24,
   p: 4,
@@ -20,13 +20,13 @@ const modalStyle = {
 const buttonContainerStyle = {
   display: "flex",
   justifyContent: "space-between",
-  marginTop: "15px", // Add margin between button container and content
+  marginTop: "15px", 
 };
 const PatientDetailsModal = ({ open, onClose, patient }) => {
   const [activeSection, setActiveSection] = useState(null);
   const [otherInfoModalOpen, setOtherInfoModalOpen] = useState(false);
   if (!patient) {
-    return null; // Return early if patient is null or undefined
+    return null; 
   }
 
   const toggleOtherInfoModal = () => {
@@ -45,7 +45,7 @@ const PatientDetailsModal = ({ open, onClose, patient }) => {
         return (
           <div>
             <Typography variant="body1">
-              <strong>Name:</strong> {patient.firstname}
+              <strong>Name:</strong> {patient.username}
             </Typography>
             <Typography variant="body1">
               <strong>Email:</strong> {patient.email}
@@ -100,7 +100,7 @@ const PatientDetailsModal = ({ open, onClose, patient }) => {
     <Modal open={open} onClose={handleClose}>
       <Box sx={modalStyle}>
         <Typography variant="h5" gutterBottom color="black">
-          {patient.firstname} Details
+          {patient.username} Details
         </Typography>
         <div style={buttonContainerStyle}>
           <Button

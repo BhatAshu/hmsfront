@@ -45,7 +45,7 @@ function Patients() {
     bloodgroup: "",
     timeofregistration: "",
     address: "",
-    message: "",
+    testtype: "",
   });
 
   const header = {
@@ -116,7 +116,7 @@ function Patients() {
     bloodgroup,
     timeofregistration,
     address,
-    message
+    testtype,
   ) {
     setEditModal(true);
     setData({
@@ -131,7 +131,7 @@ function Patients() {
       bloodgroup: bloodgroup,
       timeofregistration: timeofregistration,
       address: address,
-      message: message,
+      testtype: testtype,
     });
   }
 
@@ -199,7 +199,7 @@ function Patients() {
                     style={{ cursor: "pointer" }}
                     onClick={() => handlePatientClick(patient)} 
                   >
-                    {patient.firstname}
+                    {patient.username}
                   </span>
                 </TableCell>
                 <TableCell>{patient.email}</TableCell>
@@ -210,14 +210,14 @@ function Patients() {
                 {/* <TableCell>{patient.bloodgroup}</TableCell> */}
                 <TableCell>{patient.timeofregistration}</TableCell>
                 <TableCell>{patient.address}</TableCell>
-                <TableCell>{patient.message}</TableCell>
+                <TableCell>{patient.testtype}</TableCell>
                 <TableCell>
                   <IconButton
                     sx={editButtonStyle}
                     onClick={() =>
                       handleEdit(
                         patient.id,
-                        patient.name,
+                        patient.username,
                         patient.email,
                         patient.phone,
                         patient.gender,
@@ -226,7 +226,7 @@ function Patients() {
                         patient.bloodgroup,
                         patient.timeofregistration,
                         patient.address,
-                        patient.message
+                        patient.testtype
                       )
                     }
                   >

@@ -340,9 +340,9 @@ function EditPatients({
   });
 
   const handleNameChange = (e) => {
-    const updatedData = { ...data, name: e.target.value };
+    const updatedData = { ...data, username: e.target.value };
     setData(updatedData);
-    setFormData({ ...formData, name: e.target.value });
+    setFormData({ ...formData, username: e.target.value });
   };
 
   const handleEmailChange = (e) => {
@@ -417,7 +417,7 @@ function EditPatients({
     e.preventDefault();
     console.log("jj");
     const formData = new URLSearchParams();
-    formData.append("name", data.name);
+    formData.append("username", data.username);
     formData.append("email", data.email);
     formData.append("phone", data.phone);
     formData.append("gender", data.gender);
@@ -442,7 +442,7 @@ function EditPatients({
         if (res.status === 200) {
           onClose();
           setData({
-            name: "",
+            username: "",
             email: "",
             phone: "",
             gender: "",
@@ -481,7 +481,7 @@ function EditPatients({
                 Name:
                 <input
                   type="text"
-                  value={data.name}
+                  value={data.username}
                   name="name"
                   onChange={handleNameChange}
                   required

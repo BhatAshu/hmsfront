@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 
 const PatientForm = () => {
   const navigate = useNavigate();
-  // const storedSignupData = JSON.parse(localStorage.getItem("signupData")) || {};
   const loginfirstname = localStorage.getItem("loginDataF");
   const loginlastname = localStorage.getItem("loginDataL");
   const loginemail = localStorage.getItem("loginDataE");
@@ -29,8 +28,13 @@ const PatientForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
-
+  if (name === "dateofbirth") {
+    const birthDate = new Date(value);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    setFormData((prevFormData) => ({ ...prevFormData, age }));
+  }
+};
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -79,20 +83,6 @@ const PatientForm = () => {
           />
         </label>
         <br />
-        {/* <label>
-          Gender:
-          <select
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
-            required
-            disabled
-          >
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </label> */}
         <label>
           Gender:
           <input
@@ -106,12 +96,13 @@ const PatientForm = () => {
         </label>
         <br />
         <label>
-          Age:
+          Date of Birth:
           <input
-            type="number"
-            name="age"
-            value={formData.age}
+            type="date"
+            name="dateofbirth"
+            value={formData.dateofbirth}
             onChange={handleChange}
+            placeholder="dd/mm/yyyy"
             required
           />
         </label>
@@ -129,13 +120,12 @@ const PatientForm = () => {
         </label>
         <br />
         <label>
-          Date of Birth:
+          Age:
           <input
-            type="date"
-            name="dateofbirth"
-            value={formData.dateofbirth}
+            type="number"
+            name="age"
+            value={formData.age}
             onChange={handleChange}
-            placeholder="dd/mm/yyyy"
             required
           />
         </label>

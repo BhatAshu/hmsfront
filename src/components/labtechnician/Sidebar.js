@@ -31,6 +31,7 @@ import BloodTest from "./BloodTest";
 import UrineTest from "./UrineTest";
 import BloodPressureTest from "./BPTest";
 import BloodSugarTest from "./SugarlevelTest";
+import HandleRoleClick from "./HandleTest";
 
 const drawerWidth = 240;
 
@@ -305,3 +306,8 @@ ResponsiveDrawer.propTypes = {
 };
 
 export default ResponsiveDrawer;
+
+
+
+
+

@@ -8,13 +8,17 @@ import axios from "axios";
 
 const OtherInformationModal = ({ open, onClose, patient }) => {
   const [formData, setFormData] = useState({
-    firstname: patient.firstname,
-    email: patient.email,
-    age: patient.age,
-    chiefcomplaint: patient.chiefcomplaint, // Note the corrected field name here
-    bloodgroup: patient.bloodgroup, // Note the corrected field name here
-    message: patient.message,
+    username: patient.username || "",
+    email: patient.email || "",
+    age: patient.age || "",
+    chiefcomplaint: patient.chiefcomplaint || "",
+    bloodgroup: patient.bloodgroup || "",
+    testtype: patient.testtype || "",
   });
+
+  const handleClose = () => {
+    onClose();
+  };
 
   const modalStyle = {
     position: "absolute",
@@ -29,10 +33,6 @@ const OtherInformationModal = ({ open, onClose, patient }) => {
     borderRadius: "8px",
   };
 
-  const handleClose = () => {
-    onClose();
-  };
-
   const handleFormChange = (field, value) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -42,26 +42,42 @@ const OtherInformationModal = ({ open, onClose, patient }) => {
 
   const handleFormSubmit = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/hbms/send_lab/${patient.id}`, formData);
+      console.log("Form Data before submitting:", formData);
+  
+      // Create headers with the authorization token
+      const headers = {
+        auth: localStorage.getItem("access_token"),
+      };
+  
+      const response = await axios.put(
+        `http://localhost:5000/api/hbms/send_lab/${patient.id}`,
+        formData,
+        { headers } // Include the headers in the request
+      );
+  
+      // Log the response from the backend
+      console.log("Backend Response:", response.data);
+  
       // Handle success or show a notification
-      console.log("succes");
+      console.log("Success: Data updated");
       handleClose();
     } catch (error) {
       console.error("Error submitting data:", error);
       // Handle error or show a notification
     }
   };
+  
 
   return (
     <Modal open={open} onClose={handleClose}>
-    <Box sx={modalStyle}>
+      <Box sx={modalStyle}>
         <Typography variant="h5" gutterBottom>
           Other Information
         </Typography>
         <TextField
           label="Name"
-          value={formData.firstname}
-          onChange={(e) => handleFormChange("firstname", e.target.value)}
+          value={formData.username}
+          onChange={(e) => handleFormChange("username", e.target.value)}
           fullWidth
         />
         <TextField
@@ -88,13 +104,12 @@ const OtherInformationModal = ({ open, onClose, patient }) => {
           onChange={(e) => handleFormChange("bloodgroup", e.target.value)}
           fullWidth
         />
-         <TextField
-          label="Message"
-          value={formData.message}
-          onChange={(e) => handleFormChange("message", e.target.value)}
+        <TextField
+          label="Test Type"
+          value={formData.testtype}
+          onChange={(e) => handleFormChange("testtype", e.target.value)}
           fullWidth
         />
-        {/* Add more fields as needed */}
         <Button onClick={handleFormSubmit} color="primary">
           Submit
         </Button>

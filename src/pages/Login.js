@@ -67,8 +67,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: "dodgerblue", 
-    color:"black",
+    backgroundColor: "dodgerblue",
+    color: "black",
   },
   form: {
     width: "100%",
@@ -81,8 +81,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "lightblue",
     transition: "background-color 0.3s ease",
     "&:hover": {
-      backgroundColor: "dodgerblue", 
-      color:"white",
+      backgroundColor: "dodgerblue",
+      color: "white",
     },
     [theme.breakpoints.down("sm")]: {
       maxWidth: "300px",
@@ -94,7 +94,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
- 
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isEmail, setisEmail] = useState("");
@@ -114,14 +113,13 @@ const Login = () => {
   };
 
   const handleChangePasswordClick = () => {
-    navigate('/changepassword');
+    navigate("/changepassword");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
-      
       email: isEmail,
       password: isPassword,
     };
@@ -133,22 +131,19 @@ const Login = () => {
           if (res.data.role === "Admin") {
             navigate("/admin");
             localStorage.setItem("access_token", res.data.access_token);
-          } 
-          else if (res.data.role === "Doctor") {
+          } else if (res.data.role === "Doctor") {
+            localStorage.setItem("access_token", res.data.access_token);
             navigate("/doctor");
-            localStorage.setItem("access_token", res.data.access_token);
           } else if (res.data.role === "Nurse") {
+            localStorage.setItem("access_token", res.data.access_token);
             navigate("/nurse");
-            localStorage.setItem("access_token", res.data.access_token);
           } else if (res.data.role === "Receptionist") {
+            localStorage.setItem("access_token", res.data.access_token);
             navigate("/receptionist");
+          } else if (res.data.role === "LabTechnician") {
             localStorage.setItem("access_token", res.data.access_token);
-          } 
-          else if (res.data.role === "LabTechnician") {
             navigate("/labtech");
-            localStorage.setItem("access_token", res.data.access_token);
-          } 
-          else {
+          } else {
             // console.log(data);
             toast.error("Invalid role");
           }
@@ -232,11 +227,16 @@ const Login = () => {
           >
             Login
           </Button>
-          <Grid container spacing={2} justifyContent="center" alignItems="center">
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            alignItems="center"
+          >
             <Grid item>
-            <Link to="#" variant="body2" onClick={handleChangePasswordClick}>
+              <Link to="#" variant="body2" onClick={handleChangePasswordClick}>
                 Change password
-                </Link>
+              </Link>
             </Grid>
           </Grid>
         </form>

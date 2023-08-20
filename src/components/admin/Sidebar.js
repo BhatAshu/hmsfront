@@ -24,7 +24,6 @@ import React, { useState } from "react";
 import HandleRoleClick from "./HandleRoleClick";
 import AddModal from "./AddModal";
 import StaffDashboard from "./StaffDashboard";
-import ProfileModal from "./ProfileModal";
 import "./style.css";
 import Patients from "./Patients";
 const drawerWidth = 240;
