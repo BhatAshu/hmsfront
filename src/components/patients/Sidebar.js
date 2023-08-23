@@ -149,6 +149,7 @@ function PatientSidebar(props) {
           ml: { sm: `${drawerWidth}px` },
           backgroundColor: "whitesmoke",
           color: "black",
+          height:"70px",
         }}
       >
         <Toolbar>

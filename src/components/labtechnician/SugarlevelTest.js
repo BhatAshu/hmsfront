@@ -216,16 +216,6 @@ function Patients() {
                     </Select>
                   </FormControl>
                 </TableCell>
-                {/* <TableCell>
-                  <IconButton
-                    sx={editButtonStyle}
-                  >
-                    <EventNoteOutlinedIcon  />
-                  </IconButton>
-                  <IconButton sx={deleteButtonStyle}  >
-                    <DeleteIcon sx={deleteIconStyle} />
-                  </IconButton>
-                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
@@ -245,13 +235,6 @@ function Patients() {
         onClose={() => setPatientDetailsModalOpen(false)}
         patient={selectedPatient}
       />
-      {/* <EditModal
-        editModal={editModal}
-        handleEdit={handleEdit}
-        onClose={() => setEditModal(false)}
-        data={data}
-        setData={setData}
-      /> */}
     </div>
   );
 }

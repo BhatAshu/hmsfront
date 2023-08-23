@@ -73,15 +73,13 @@ const PatientDetails = ({ open, onClose, patient }) => {
   const handleFormSubmit = async () => {
     try {
       await axios.put(`http://localhost:5000/api/hbms/add_bloodtest/${patient.id}`, formData);
-      // Handle success or show a notification
       console.log("success");
   
       // Generate PDF
       const pdfResponse = await axios.get(`http://localhost:5000/api/hbms/bloodtest_report/${patient.id}`, {
-        responseType: "blob", // Important for handling binary data
+        responseType: "blob", 
       });
   
-      // Create a blob URL to open the PDF in a new tab
       const pdfBlob = new Blob([pdfResponse.data], { type: "application/pdf" });
       const pdfUrl = URL.createObjectURL(pdfBlob);
       window.open(pdfUrl);
@@ -89,7 +87,6 @@ const PatientDetails = ({ open, onClose, patient }) => {
       handleClose();
     } catch (error) {
       console.error("Error submitting data:", error);
-      // Handle error or show a notification
     }
   };
   

@@ -141,6 +141,7 @@ const UrineTestDetails = ({ open, onClose, patient }) => {
           value={formData.appearance}
           onChange={(e) => handleFormChange("appearance", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
          <TextField
           label="PHLevel"

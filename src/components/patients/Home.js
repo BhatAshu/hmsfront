@@ -11,12 +11,11 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import LogoDevIcon from "@mui/icons-material/LogoDev";
 import { Link, useNavigate } from "react-router-dom";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
-import Profile from "./Profile";
 
-const pages = ["Book An Appointment", "Track Medical", "Profile"];
-const settings = ["Profile", "Account", "Dashboard"];
+const pages = ["Book An Appointment", "MedicalHistory", "Profile"];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -47,38 +46,30 @@ function ResponsiveAppBar() {
     localStorage.removeItem("loginDataP");
     localStorage.removeItem("loginDataG");
     localStorage.removeItem("loginDataB");
-    setIsLoggedIn(false); 
+    localStorage.removeItem("loginDataU");
+    setIsLoggedIn(false);
     console.log("Logout");
-    navigate("/loginuser"); 
+    navigate("/loginuser");
   };
 
-  const [userData, setUserData] = React.useState(null); // State to store user data
-
+  const [userData, setUserData] = React.useState(null);
   const fetchUserProfile = async () => {
     try {
       const response = await fetch(
         "http://localhost:5000/api/hbms/profile_patient"
       );
       const data = await response.json();
-      setUserData(data); // Set user data in the state
+      setUserData(data);
     } catch (error) {
       console.error("Error fetching user profile:", error);
     }
-  };
-
-  const handleProfileClick = () => {
-    fetchUserProfile(); // Fetch user profile data
-    handleCloseUserMenu(); // Close the menu
-    navigate("/Profile"); //  Navigate to the Profile page
   };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <LocalHospitalIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
+          <LogoDevIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -97,23 +88,94 @@ function ResponsiveAppBar() {
             MEDIFACE
           </Typography>
 
-          <Box
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem
+                  key={page}
+                  component={Link}
+                  to={
+                    page === "Book An Appointment"
+                      ? "/patientform"
+                      : page === "Profile"
+                      ? "/userprofile"
+                      : page === "MedicalHistory"
+                      ? "/reporttrack"
+                      : "/"
+                  }
+                  onClick={() => {
+                    console.log(`Menu item "${page}" clicked`); // Add this line
+                    if (page === "Logout") {
+                      handleLogout();
+                    } else {
+                      handleCloseNavMenu();
+                    }
+                  }}
+                >
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <LogoDevIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
             sx={{
+              mr: 2,
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              justifyContent: "flex-end",
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
+            MEDIFACE
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                component={Link} // Use Link component for navigation
+                component={Link} // Use the Link component for navigation
                 to={
                   page === "Book An Appointment"
-                    ? "/patientform"
+                    ? "/patientform" // Navigate to /patientform when "Book An Appointment" is clicked
                     : page === "Profile"
                     ? "/userprofile"
+                    : page === "MedicalHistory"
+                    ? "/reporttrack"
                     : "/"
                 }
                 sx={{
@@ -127,7 +189,6 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -138,45 +199,19 @@ function ResponsiveAppBar() {
               sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-               {settings.map((setting) => (
-                 <MenuItem key={setting} onClick={setting === "Profile" ? handleProfileClick : handleCloseUserMenu}>
-                {setting === "Profile" ? (
+              {settings.map((setting) => (
+                <MenuItem
+                  key={setting}
+                  onClick={
+                    setting === "Logout" ? handleLogout : handleCloseUserMenu
+                  }
+                >
                   <Typography textAlign="center">{setting}</Typography>
-                ) : (
-                  <Typography textAlign="center">{setting}</Typography>
-                )}
-              </MenuItem>
-              ))}
-              {isLoggedIn ? (
-                settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    onClick={
-                      setting === "Profile"
-                        ? handleProfileClick
-                        : handleCloseUserMenu
-                    }
-                  >
-                    <Typography textAlign="center"></Typography>
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem onClick={handleLogout}>
-                  <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
-              )}
+              ))}
             </Menu>
           </Box>
         </Toolbar>
@@ -184,5 +219,4 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-
 export default ResponsiveAppBar;

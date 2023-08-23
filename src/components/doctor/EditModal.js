@@ -193,7 +193,7 @@ function EditModal({
                 Name:
                 <input
                   type="text"
-                  value={data.name}
+                  value={data.username}
                   name="name"
                   onChange={handleNameChange}
                   required
@@ -203,12 +203,18 @@ function EditModal({
             <div className="col-md-6" style={{ marginTop: "25px" }}>
               <Label>
                 Gender:
-                 <select value={data.gender} onChange={handleGenderChange} required>
+                 {/* <select value={data.gender} onChange={handleGenderChange} required>
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>
-                </select>
+                </select> */}
+                <input
+                  type="text"
+                  value={data.gender}
+                  required
+                  onChange={handleGenderChange}
+                />
               </Label>
             </div>
           </div>
@@ -252,7 +258,7 @@ function EditModal({
           <div className="row">
             <div className="col-md-12">
               <Label>
-                Message:
+                Prescribe:
                 <MDBTextArea
                   value={data.message}
                   onChange={handleTextAreaChange}

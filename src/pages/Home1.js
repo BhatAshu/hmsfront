@@ -11,15 +11,13 @@ const Home = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          /* Set other styling properties like background, padding, etc. */
         }}
       >
         <div
           style={{
             flex: 1,
             padding: "20px",
-            textAlign:"center",
-            /* Set other styling properties for the content area */
+            textAlign: "center",
           }}
         >
           <div className="headerContainer">
@@ -39,24 +37,25 @@ const Home = () => {
               style={{
                 fontSize: "1.7rem",
                 color: "light black",
-                marginBottom:"30px",
+                marginBottom: "30px",
                 paddingRight: "110px",
               }}
             >
               The Best Match Services For You
             </h1>
             <p
-             style={{
-              fontSize: "1.4rem",
-              color: "#666",
-              // paddingRight: "40px",
-            }}
-          >
-            Lorem, ipsum dolor sit amet consecteturadipisicing <br/>elit.
-            Totam, nulla odit esse necessitatibus
-             corporis<br/> voluptatem?
-               </p>
-               {/* <Link to="/home">
+              style={{
+                fontSize: "1.4rem",
+                color: "#666",
+              }}
+            >
+              Experience unmatched support and guidance on your health journey.
+              Our dedicated team is here to provide you with personalized
+              solutions tailored to your needs. Whether it's wellness advice,
+              medical consultations, or specialized treatments, we're committed
+              to your well-being. Embrace a healthier life with us. 
+            </p>
+            {/* <Link to="/home">
              <button>Sign In</button>
            </Link> */}
           </div>

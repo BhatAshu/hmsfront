@@ -5,6 +5,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const OtherInformationModal = ({ open, onClose, patient }) => {
   const [formData, setFormData] = useState({
@@ -25,12 +29,16 @@ const OtherInformationModal = ({ open, onClose, patient }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "85%", // Increase modal width
-    maxWidth: "600px", // Increase maximum modal width
+    width: "85%", 
+    maxWidth: "600px", 
     bgcolor: "white",
     boxShadow: 24,
     p: 4,
     borderRadius: "8px",
+  };
+
+  const formItemStyle = {
+    marginBottom: "20px",
   };
 
   const handleFormChange = (field, value) => {
@@ -43,30 +51,27 @@ const OtherInformationModal = ({ open, onClose, patient }) => {
   const handleFormSubmit = async () => {
     try {
       console.log("Form Data before submitting:", formData);
-  
-      // Create headers with the authorization token
       const headers = {
         auth: localStorage.getItem("access_token"),
-      };
-  
+      };  
       const response = await axios.put(
         `http://localhost:5000/api/hbms/send_lab/${patient.id}`,
         formData,
-        { headers } // Include the headers in the request
+        { headers } 
       );
-  
-      // Log the response from the backend
       console.log("Backend Response:", response.data);
-  
-      // Handle success or show a notification
       console.log("Success: Data updated");
       handleClose();
     } catch (error) {
       console.error("Error submitting data:", error);
-      // Handle error or show a notification
     }
   };
-  
+  const testOptions = [
+    "BloodTest",
+    "BloodPressureTest",
+    "UrineTest",
+    "SugarLevelTest",
+  ];
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -79,37 +84,49 @@ const OtherInformationModal = ({ open, onClose, patient }) => {
           value={formData.username}
           onChange={(e) => handleFormChange("username", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
         <TextField
           label="Email"
           value={formData.email}
           onChange={(e) => handleFormChange("email", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
         <TextField
           label="Age"
           value={formData.age}
           onChange={(e) => handleFormChange("age", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
          <TextField
           label="CheifComplaint"
           value={formData.chiefcomplaint}
           onChange={(e) => handleFormChange("chiefcomplaint", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
          <TextField
           label="BloodGroup"
           value={formData.bloodgroup}
           onChange={(e) => handleFormChange("bloodgroup", e.target.value)}
           fullWidth
+          style={formItemStyle}
         />
-        <TextField
-          label="Test Type"
-          value={formData.testtype}
-          onChange={(e) => handleFormChange("testtype", e.target.value)}
-          fullWidth
-        />
+        <FormControl fullWidth style={formItemStyle}>
+          <InputLabel>Test Type</InputLabel>
+          <Select
+            value={formData.testtype}
+            onChange={(e) => handleFormChange("testtype", e.target.value)}
+          >
+            {testOptions.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <Button onClick={handleFormSubmit} color="primary">
           Submit
         </Button>

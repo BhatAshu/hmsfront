@@ -68,10 +68,6 @@ function EditModal({
     setData({ ...data, phone: e.target.value });
   };
 
-  // const handleAddressChange = (e) => {
-  //   setData({ ...data, address: e.target.value });
-  // };
-
   const handleAddressChange = (e) => {
     const updatedData = { ...data, address: e.target.value };
     const updatedFormData = { ...formData, address: e.target.value };
@@ -122,12 +118,6 @@ function EditModal({
     formData.append("phone", data.phone);
     formData.append("address", data.address);
     formData.append("image", file);
-    // if (file) {
-    //   formData.append("image", file);
-    // } else {
-    //   toast.error("No file chosen");
-    //   return;
-    // }
     if (!file) {
       toast.error("No file chosen");
       return;
@@ -151,7 +141,7 @@ function EditModal({
             email: "",
             phone: "",
             address: "",
-            image: "", // Clear the image property
+            image: "", 
           });
           setFile(null);
           toast.success("Record is successfully updated");

@@ -106,6 +106,29 @@ function ResponsiveDrawer(props) {
           marginRight: "16px",
         }}
       >
+         <ListItem disablePadding>
+          <ListItemIcon sx={{ color: "black", margin: "-130px 0px 0px 0px" }}>
+            <img
+              src="https://media.istockphoto.com/id/1365830421/vector/hands-holding-house-symbol-with-heart-shape-thick-line-icon-with-pointed-corners-and-edges.jpg?s=612x612&w=0&k=20&c=OcBjtznQ1DKxk07kYzVxH-UC9-QC6HtKlRU5cNGcmfM="
+              alt="Logo"
+              style={{ width: "50px", height: "50px" }}
+            />
+          </ListItemIcon>
+          <ListItemText
+            primary="Mediface"
+            primaryTypographyProps={{
+              variant: "h6",
+              sx: {
+                fontWeight: "bolder",
+                color: "black",
+                margin: "-80px 5px",
+                // fontFamily: "cursive", // Apply a cursive font
+                textTransform: "uppercase", // Convert text to uppercase
+                letterSpacing: "2px", // Add letter spacing
+              },
+            }}
+          />
+        </ListItem>
         {[
           { text: "Patient", iconComponent: <PeopleIcon />, role: "Patients" },
           {
@@ -158,6 +181,7 @@ function ResponsiveDrawer(props) {
           ml: { sm: `${drawerWidth}px` },
           backgroundColor:"whitesmoke",
           color:"black",
+          height:"70px",
         }}
       >
         <Toolbar>

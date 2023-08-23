@@ -28,7 +28,7 @@ function Patients() {
   const [doctorId, setDoctorId] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null); 
   const [patientDetailsModalOpen, setPatientDetailsModalOpen] = useState(false); 
-
+  const [doctorName, setDoctorName] = useState("");
   const handlePatientClick = (patient) => {
     setSelectedPatient(patient);
     setPatientDetailsModalOpen(true);
@@ -45,6 +45,7 @@ function Patients() {
     bloodgroup: "",
     timeofregistration: "",
     address: "",
+    message: "",
     testtype: "",
   });
 
@@ -107,7 +108,7 @@ function Patients() {
 
   function handleEdit(
     id,
-    name,
+    username,
     email,
     phone,
     gender,
@@ -116,13 +117,14 @@ function Patients() {
     bloodgroup,
     timeofregistration,
     address,
+    message,
     testtype,
   ) {
     setEditModal(true);
     setData({
       ...data,
       id: id,
-      name: name,
+      username: username,
       email: email,
       phone: phone,
       gender: gender,
@@ -131,6 +133,7 @@ function Patients() {
       bloodgroup: bloodgroup,
       timeofregistration: timeofregistration,
       address: address,
+      message: message,
       testtype: testtype,
     });
   }
@@ -138,29 +141,36 @@ function Patients() {
   const handleAdd = () => {
     setAddModal(true); 
   };
-
   const fetchDoctorId = () => {
     const token = localStorage.getItem("access_token");
     if (token) {
       const decodedToken = jwtDecode(token);
-      console.log(decodedToken);
       setDoctorId(decodedToken.user_id);
     }
   };
+  
   useEffect(() => {
     fetchDoctorId();
   }, []);
-
+  
   useEffect(() => {
     if (doctorId) {
       axios
-        .get("http://localhost:5000/api/hbms/list_patient", header)
+        .get("http://localhost:5000/api/hbms/listpat_form", {
+          headers: {
+            auth: localStorage.getItem("access_token"),
+          },
+        })
         .then((response) => {
           const responseData = response.data;
+          console.log("All Patients:", responseData);
+  
+          // Filter patients based on doctorId
           const filteredPatients = responseData.filter(
-            (patient) => patient.doctorId === doctorId
+            (patient) => patient.doctorId === doctorId 
           );
-          console.log(filteredPatients);
+  
+          console.log("Filtered Patients:", filteredPatients);
           setPatients(filteredPatients);
         })
         .catch((error) => {
@@ -168,6 +178,7 @@ function Patients() {
         });
     }
   }, [doctorId]);
+  
 
   return (
     <div sx={tableContainerStyle}>

@@ -11,7 +11,7 @@ import {
   Row,
 } from "reactstrap";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import 'react-phone-input-2/lib/style.css';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -145,7 +145,7 @@ function AddModal({ modal, toggle, onClose, data, setData }) {
                 Phone:
                 <PhoneInput
                   international
-                  defaultCountry="IN" // Set the default country code
+                  defaultCountry="IN" 
                   value={isPhone}
                   onChange={handlePhoneChange}
                   required

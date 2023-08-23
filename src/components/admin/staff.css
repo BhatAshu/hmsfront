@@ -1,11 +1,9 @@
-/* Style for the main container */
 .c1 {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
   }
   
-  /* Style for role counts */
   .role-counts {
     display: flex;
     justify-content: space-between;
@@ -13,50 +11,54 @@
     max-width: 800px;
     margin: 20px 0;
   }
+  .role-card {
+    border: none; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+  }
+  /* Add these styles to your existing staff.css or a separate CSS file */
+.full-width-calendar {
+  width: 250%; /* Make the calendar full width */
+  max-width: none; /* Remove the default max-width */
+  height: 400px; /* Set the desired height */
+  margin-top: 20px; /* Add some spacing from the RoleCard components */
+}
+
   
-  /* Style for role count cards */
-  .role-count {
+  /* .role-count {
     flex: 1;
     margin: 0 10px;
-  }
+  } */
   
-  /* Style for calendar and notification section */
-  .calendar-and-notification {
+  /* .calendar-and-notification {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     max-width: 800px;
     margin-bottom: 20px;
-  }
+  } */
   
-  /* Style for calendar container */
-  .calendar-container {
+  /* .calendar-container {
     flex: 2;
     margin-right: 10px;
-  }
+  } */
   
-  /* Style for notification container */
-  .notification-container {
+  /* .notification-container {
     flex: 1;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-  }
-  
-  /* Style for role card container */
-  .role-card-container {
+  } */
+  /* .role-card-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
     max-width: 800px;
-  }
+  } */
   
-  /* Style for individual role card */
-  .role-card {
+  /* .role-card {
     flex: 1;
     margin: 0 10px;
-  }
+  } */
   
-  /* Additional styling for other elements as needed */
   

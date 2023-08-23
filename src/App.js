@@ -27,6 +27,7 @@ import Home1 from "./pages/Home1";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Menu from "./pages/Menu";
+import PatTrak from "./components/patients/PatTrack";
 import Pagenotfound from "./pages/Pagenotfound";
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/zzz" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/doctor" element={<Doctor />} />
@@ -42,8 +43,8 @@ function App() {
           <Route path="/receptionist" element={<Receptionist />} />
           <Route path="/changepassword" element={<ResetPassword />} />
           <Route path="/labtech" element={<Lab />} />
-          <Route path="loginuser" element={<LoginUser />} />
-          <Route path="signup" element={<Signup />} />
+          <Route path="/loginuser" element={<LoginUser />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/report" element={<Report />} />
           <Route path="/patientform" element={<PatientForm />} />
           <Route path="/patient" element={<Patient />} />
@@ -56,8 +57,9 @@ function App() {
           <Route path="/team" element={<Team />} />
           <Route path="/" element={<Home1 />} />
           <Route path="/about" element={<About />} />
-          {/* <Route path="/contact" element={<Contact />} /> */}
+          <Route path="/contact" element={<Contact />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/reporttrack" element={<PatTrak />}/>
           <Route path="*" element={<Pagenotfound />} />
         </Routes>
       </BrowserRouter>

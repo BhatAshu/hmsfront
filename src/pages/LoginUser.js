@@ -3,7 +3,6 @@ import {
   Avatar,
   Button,
   CssBaseline,
-  TextField,
   Link,
   Grid,
   Typography,
@@ -12,7 +11,8 @@ import {
   InputAdornment,
   IconButton,
 } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import TextField from '@mui/material/TextField';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
@@ -97,7 +97,9 @@ const LoginUser = () => {
           console.log(res.data);
           const loginData = { firstname: res.data.firstname };
           localStorage.setItem("access_token", res.data.access_token);
+          localStorage.setItem("loginDataID", res.data.user_id);
           localStorage.setItem("loginDataF", res.data.firstname);
+          localStorage.setItem("loginDataU", res.data.username);
           localStorage.setItem("loginDataL", res.data.lastname);
           localStorage.setItem("loginDataE", res.data.email);
           localStorage.setItem("loginDataP", res.data.phone);
@@ -127,9 +129,9 @@ const LoginUser = () => {
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <AccountCircleIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" gutterBottom>
             Sign in
           </Typography>
           {!showForgotPasswordForm ? (
@@ -139,7 +141,7 @@ const LoginUser = () => {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
+                id="outlined-basic"
                 label="Email Address"
                 name="email"
                 autoComplete="email"

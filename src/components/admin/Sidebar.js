@@ -13,6 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import {
   FaUserNurse,
   FaUserCog,
@@ -38,7 +39,6 @@ const buttonStyles = {
     color: "white", // Change the text and icon color to white on hover
   },
 };
-
 
 function ResponsiveDrawer(props) {
   const { window } = props;
@@ -80,6 +80,29 @@ function ResponsiveDrawer(props) {
           marginRight: "16px",
         }}
       >
+        <ListItem disablePadding>
+          <ListItemIcon sx={{ color: "black", margin: "-130px 0px 0px 0px" }}>
+            <img
+              src="https://media.istockphoto.com/id/1365830421/vector/hands-holding-house-symbol-with-heart-shape-thick-line-icon-with-pointed-corners-and-edges.jpg?s=612x612&w=0&k=20&c=OcBjtznQ1DKxk07kYzVxH-UC9-QC6HtKlRU5cNGcmfM="
+              alt="Logo"
+              style={{ width: "50px", height: "50px" }}
+            />
+          </ListItemIcon>
+          <ListItemText
+            primary="Mediface"
+            primaryTypographyProps={{
+              variant: "h6",
+              sx: {
+                fontWeight: "bolder",
+                color: "black",
+                margin: "-80px 5px",
+                // fontFamily: "cursive", // Apply a cursive font
+                textTransform: "uppercase", // Convert text to uppercase
+                letterSpacing: "2px", // Add letter spacing
+              },
+            }}
+          />
+        </ListItem>
         {[
           { text: "Doctor", iconComponent: <FaUserMd />, role: "Doctor" },
           { text: "Nurse", iconComponent: <FaUserNurse />, role: "Nurse" },
@@ -143,11 +166,12 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor:"whitesmoke",
-          color:"black",
+          backgroundColor: "whitesmoke",
+          color: "black",
+          height: "70px",
         }}
       >
-        <Toolbar>
+        <Toolbar className="sihe">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -157,9 +181,11 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            <FaUserCog  />
-            <span sx={{ ml: "8px" }}>Admin Dashboard</span>
+          <Typography variant="h6" noWrap component="div" className="sihe">
+            <FaUserCog />
+            <span sx={{ ml: "8px" }} className="sihe">
+              Admin Dashboard
+            </span>
           </Typography>
         </Toolbar>
       </AppBar>

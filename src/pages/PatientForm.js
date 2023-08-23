@@ -6,19 +6,22 @@ import { toast } from "react-toastify";
 
 const PatientForm = () => {
   const navigate = useNavigate();
+  const loginuserID = localStorage.getItem("loginDataID");
   const loginfirstname = localStorage.getItem("loginDataF");
   const loginlastname = localStorage.getItem("loginDataL");
+  const loginusername = localStorage.getItem("loginDataU");
   const loginemail = localStorage.getItem("loginDataE");
   const loginphone = localStorage.getItem("loginDataP");
   const logingender = localStorage.getItem("loginDataG");
   const loginbloodgroup = localStorage.getItem("loginDataB");
   const [formData, setFormData] = useState({
-    username: loginfirstname + " " + loginlastname,
+    username: loginusername,
     email: loginemail,
     gender: logingender,
     age: "",
     phone: loginphone,
     dateofbirth: "",
+    department: "",
     chiefcomplaint: "",
     bloodgroup: loginbloodgroup,
     date: "",
@@ -28,22 +31,28 @@ const PatientForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  if (name === "dateofbirth") {
-    const birthDate = new Date(value);
-    const today = new Date();
-    const age = today.getFullYear() - birthDate.getFullYear();
-    setFormData((prevFormData) => ({ ...prevFormData, age }));
-  }
-};
+    if (name === "dateofbirth") {
+      const birthDate = new Date(value);
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+      setFormData((prevFormData) => ({ ...prevFormData, age }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/hbms/patient_form",
-        formData
+      const config = {
+        headers: { auth: localStorage.getItem("access_token") },
+      };
+      const userId = localStorage.getItem("loginDataID"); // Get the logged-in user's ID
+      const response = await axios.put(
+        `http://localhost:5000/api/hbms/update_patform/${userId}`,
+        formData,config
       );
-
-      if (response.status === 201) {
+  
+      if (response.status === 200) {
+        console.log(response.data);
         navigate("/home");
       } else {
         console.log(response.data);
@@ -51,9 +60,10 @@ const PatientForm = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error registering patient");
+      toast.error("Error updating patient data");
     }
   };
+  
 
   return (
     <div>
@@ -96,18 +106,6 @@ const PatientForm = () => {
         </label>
         <br />
         <label>
-          Date of Birth:
-          <input
-            type="date"
-            name="dateofbirth"
-            value={formData.dateofbirth}
-            onChange={handleChange}
-            placeholder="dd/mm/yyyy"
-            required
-          />
-        </label>
-        <br />
-        <label>
           Phone:
           <input
             type="tel"
@@ -120,11 +118,46 @@ const PatientForm = () => {
         </label>
         <br />
         <label>
+          BloodGroup:
+          <input
+            type="text"
+            name="bloodgroup"
+            value={formData.bloodgroup}
+            onChange={handleChange}
+            required
+            disabled
+          />
+        </label>
+        <br />
+        <label>
+          Date of Birth:
+          <input
+            type="date"
+            name="dateofbirth"
+            value={formData.dateofbirth}
+            onChange={handleChange}
+            placeholder="dd/mm/yyyy"
+            required
+          />
+        </label>
+        <br />
+        <label>
           Age:
           <input
             type="number"
             name="age"
             value={formData.age}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Department:
+          <input
+            type="text"
+            name="department"
+            value={formData.department}
             onChange={handleChange}
             required
           />
@@ -141,18 +174,7 @@ const PatientForm = () => {
           />
         </label>
         <br />
-        <label>
-          BloodGroup:
-          <input
-            type="text"
-            name="bloodgroup"
-            value={formData.bloodgroup}
-            onChange={handleChange}
-            required
-            disabled
-          />
-        </label>
-        <br />
+
         <label>
           Date:
           <input
@@ -182,3 +204,7 @@ const PatientForm = () => {
 };
 
 export default PatientForm;
+
+
+
+

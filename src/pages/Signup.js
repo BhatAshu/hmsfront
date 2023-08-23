@@ -3,7 +3,6 @@ import {
   Avatar,
   Button,
   CssBaseline,
-  TextField,
   Link,
   Grid,
   Typography,
@@ -12,7 +11,8 @@ import {
   InputAdornment,
   IconButton,
 } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import TextField from '@mui/material/TextField';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
@@ -54,8 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const Signup = () => {
   const navigate = useNavigate();
   const classes = useStyles();
-  const [isFirstname, setisFirstname] = useState("");
-  const [isLastname, setisLastname] = useState("");
+  const [isUsername, setisUsername] = useState("");
   const [isEmail, setisEmail] = useState("");
   const [isPhone, setisPhone] = useState("");
   const [isGender, setisGender] = useState("");
@@ -66,11 +65,7 @@ const Signup = () => {
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
 
   const handleFirstnameChange = (e) => {
-    setisFirstname(e.target.value);
-  };
-
-  const handleLastnameChange = (e) => {
-    setisLastname(e.target.value);
+    setisUsername(e.target.value);
   };
 
   const handleEmailChange = (e) => {
@@ -111,8 +106,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      firstname: isFirstname,
-      lastname: isLastname,
+      username: isUsername,
       email: isEmail,
       phone: isPhone,
       gender: isGender,
@@ -124,7 +118,6 @@ const Signup = () => {
       .post("http://localhost:5000/api/hbms/sign_up", data)
       .then((res) => {
         if (res.status === 200) {
-          // localStorage.setItem("signupData", JSON.stringify(data));
           localStorage.setItem("access_token", res.data.access_token);
           navigate("/loginuser");
         } else {
@@ -143,44 +136,27 @@ const Signup = () => {
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <AccountCircleIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
           {!showForgotPasswordForm ? (
             <form className={classes.form} onSubmit={handleSubmit}>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
+              <Grid container spacing={1}>
                   <TextField
                     variant="outlined"
                     margin="normal"
                     required
                     fullWidth
-                    id="firstname"
-                    label="Firstname"
-                    name="firstname"
-                    autoComplete="firstname"
-                    value={isFirstname}
+                    id="username"
+                    label="username"
+                    name="username"
+                    autoComplete="username"
+                    value={isUsername}
                     onChange={handleFirstnameChange}
                     autoFocus
                   />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="lastname"
-                    label="Last Name "
-                    name="lastname"
-                    autoComplete="lastname"
-                    value={isLastname}
-                    onChange={handleLastnameChange}
-                    autoFocus
-                  />
-                </Grid>
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
@@ -190,7 +166,7 @@ const Signup = () => {
                     required
                     fullWidth
                     id="email"
-                    label="Email Address"
+                    label="Email"
                     name="email"
                     autoComplete="email"
                     value={isEmail}
@@ -205,7 +181,7 @@ const Signup = () => {
                     required
                     fullWidth
                     id="phone"
-                    label="Phone Address"
+                    label="Phone"
                     name="phone"
                     autoComplete="phone"
                     value={isPhone}
@@ -222,7 +198,7 @@ const Signup = () => {
                     required
                     fullWidth
                     id="gender"
-                    label="gender Address"
+                    label="Gender"
                     name="gender"
                     autoComplete="gender"
                     value={isGender}
@@ -237,7 +213,7 @@ const Signup = () => {
                     required
                     fullWidth
                     id="bloodgroup"
-                    label="bloodgroup Address"
+                    label="Bloodgroup"
                     name="bloodgroup"
                     autoComplete="bloodgroup"
                     value={isBloodgroup}

@@ -174,12 +174,6 @@ p {
   background-color: #f9f9f9;
   color: #777;
 }
-
-
-
-
-
-
 /* Reset default styles for consistency */
 body, h1, h2, h3, p, ul, li, a {
   margin: 0;
@@ -254,7 +248,15 @@ nav ul li.login-button {
   align-items: center;
   width: 200px;
 }
-
+.silo{
+  display: flex;
+    margin-top: 64px;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
 .ls{
   background-color: transparent;
   background: none;
@@ -278,14 +280,21 @@ footer {
   padding: 10px;
   text-align: center;
 }
-button:not(:disabled) {
-  cursor: pointer;
-  background-color: transparent;
-  color: blue;
-  text-decoration: underline;
+.MuiLink-underlineHover {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
 }
 
-/* Responsive styles */
+.makeStyles-paper-2 {
+  border-radius: 15px;
+  display: flex;
+  margin-top: 64px;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  padding: 15px;
+}
 @media screen and (max-width: 768px) {
   header {
     padding: 10px;

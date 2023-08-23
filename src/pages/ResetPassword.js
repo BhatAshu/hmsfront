@@ -12,6 +12,7 @@ import { Visibility, VisibilityOff,LockOpen  } from "@material-ui/icons";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import "./style.css";
+import { navigate } from "@reach/router";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -77,6 +78,7 @@ const ResetPassword = () => {
       .then((response) => {
         // setMessage(response.data.message);
         toast.success("Password is Updated");
+        navigate("/login");
       })
       .catch((error) => {
         // Handle the error response
@@ -148,10 +150,9 @@ const ResetPassword = () => {
               }}
             />
             {newPassword && !isValid.passwordValid && (
-            <p>
-              Please Enter a minimum eight character, atleast one letter,one
-              number and one special character
-            </p>
+            <p style={{ fontSize: '14px', color: 'red', marginTop: '4px' }}>
+            Please Enter a minimum eight characters, at least one letter, one number, and one special character
+          </p>
           )}
           </Grid>
           <Grid item xs={12}>
@@ -178,7 +179,7 @@ const ResetPassword = () => {
               }}
             />
             {confirmPasswordChanged &&newPassword !== confirmNewPassword && (
-        <p>Password and Confirm Password do not match.</p>
+        <p style={{ fontSize: '14px', color: 'red', marginTop: '4px' }}>Password and Confirm Password do not match.</p>
       )}
 
           </Grid>
