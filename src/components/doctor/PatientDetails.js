@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -10,8 +10,8 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "85%", 
-  maxWidth: "600px", 
+  width: "85%",
+  maxWidth: "600px",
   bgcolor: "white",
   boxShadow: 24,
   p: 4,
@@ -20,13 +20,18 @@ const modalStyle = {
 const buttonContainerStyle = {
   display: "flex",
   justifyContent: "space-between",
-  marginTop: "15px", 
+  marginTop: "15px",
 };
 const PatientDetailsModal = ({ open, onClose, patient }) => {
   const [activeSection, setActiveSection] = useState(null);
   const [otherInfoModalOpen, setOtherInfoModalOpen] = useState(false);
+  const handleEditComplete = (editedPatient) => {
+    // Update the patient data here with the edited patient object
+    setActiveSection(null);
+    onClose();
+  };
   if (!patient) {
-    return null; 
+    return null;
   }
 
   const toggleOtherInfoModal = () => {
@@ -70,10 +75,15 @@ const PatientDetailsModal = ({ open, onClose, patient }) => {
             <Typography variant="body1">
               <strong>ChiefComplaint:</strong> {patient.chiefcomplaint}
             </Typography>
-            {/* Add more medical information fields as needed */}
+            <Typography variant="body1">
+              <strong>Prescribe:</strong> {patient.message} {/* Updated here */}
+            </Typography>
+            <Typography variant="body1">
+              <strong>Description:</strong> {patient.description}{" "}
+              {/* Updated here */}
+            </Typography>
           </div>
         );
-      // ... (other cases)
       case "otherInformation":
         return (
           <div>

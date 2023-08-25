@@ -151,7 +151,7 @@ function Profile() {
                   startAdornment: <AccountCircleIcon />,
                 }}
                 disabled
-                className={classes.field} // Add margin to this field
+                className={classes.field} 
               />
               <TextField
                 fullWidth
@@ -162,7 +162,7 @@ function Profile() {
                   startAdornment: <AccountCircleIcon />,
                 }}
                 disabled
-                className={classes.field} // Add margin to this field
+                className={classes.field} 
               />
               <TextField
                 fullWidth
@@ -173,7 +173,7 @@ function Profile() {
                   startAdornment: <EmailIcon />,
                 }}
                 disabled
-                className={classes.field} // Add margin to this field
+                className={classes.field} 
               />
               <TextField
                 fullWidth
@@ -184,7 +184,7 @@ function Profile() {
                   startAdornment: <PhoneIcon />,
                 }}
                 disabled
-                className={classes.field} // Add margin to this field
+                className={classes.field} 
               />
               <Divider className={classes.divider} />
               <TextField
@@ -196,7 +196,7 @@ function Profile() {
                   startAdornment: <WcIcon />,
                 }}
                 disabled
-                className={classes.field} // Add margin to this field
+                className={classes.field} 
               />
               <TextField
                 fullWidth
@@ -207,7 +207,7 @@ function Profile() {
                   startAdornment: <CakeIcon />,
                 }}
                 disabled
-                className={classes.field} // Add margin to this field
+                className={classes.field} 
               />
               <TextField
                 fullWidth
@@ -218,7 +218,7 @@ function Profile() {
                   startAdornment: <LocationOnIcon />,
                 }}
                 disabled
-                className={classes.field} // Add margin to this field
+                className={classes.field} 
               />
             </Paper>
           </Grid>

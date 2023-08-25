@@ -29,6 +29,7 @@ import Contact from "./pages/Contact";
 import Menu from "./pages/Menu";
 import PatTrak from "./components/patients/PatTrack";
 import Pagenotfound from "./pages/Pagenotfound";
+import Billing from "./components/receptionist/Billing";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/reporttrack" element={<PatTrak />}/>
+          <Route path="/receptionist/billing" element={< Billing/>}/>
           <Route path="*" element={<Pagenotfound />} />
         </Routes>
       </BrowserRouter>

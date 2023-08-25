@@ -6,9 +6,6 @@ import { toast } from "react-toastify";
 
 const PatientForm = () => {
   const navigate = useNavigate();
-  const loginuserID = localStorage.getItem("loginDataID");
-  const loginfirstname = localStorage.getItem("loginDataF");
-  const loginlastname = localStorage.getItem("loginDataL");
   const loginusername = localStorage.getItem("loginDataU");
   const loginemail = localStorage.getItem("loginDataE");
   const loginphone = localStorage.getItem("loginDataP");
@@ -38,17 +35,53 @@ const PatientForm = () => {
       setFormData((prevFormData) => ({ ...prevFormData, age }));
     }
   };
+  
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const config = {
+  //       headers: { auth: localStorage.getItem("access_token") },
+  //     };
+  //     const userId = localStorage.getItem("loginDataID"); 
+  //     const response = await axios.put(
+  //       `http://localhost:5000/api/hbms/update_patform/${userId}`,
+  //       formData,config
+  //     );
+  
+  //     if (response.status === 200) {
+  //       console.log(response.data);
+  //       navigate("/home");
+  //     } else {
+  //       console.log(response.data);
+  //       toast.success(response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Error updating patient data");
+  //   }
+  // };
 
+  const formatToDDMMYYYY = (date) => {
+    const [year, month, day] = date.split("-");
+    return `${day}/${month}/${year}`;
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const config = {
         headers: { auth: localStorage.getItem("access_token") },
       };
-      const userId = localStorage.getItem("loginDataID"); // Get the logged-in user's ID
+  
+      // Format dates before sending them
+      const formattedDOB = formatToDDMMYYYY(formData.dateofbirth);
+      const formattedDate = formatToDDMMYYYY(formData.date);
+  
+      const userId = localStorage.getItem("loginDataID");
       const response = await axios.put(
         `http://localhost:5000/api/hbms/update_patform/${userId}`,
-        formData,config
+        { ...formData, dateofbirth: formattedDOB, date: formattedDate },
+        config
       );
   
       if (response.status === 200) {

@@ -98,7 +98,6 @@ const LoginUser = () => {
           const loginData = { firstname: res.data.firstname };
           localStorage.setItem("access_token", res.data.access_token);
           localStorage.setItem("loginDataID", res.data.user_id);
-          localStorage.setItem("loginDataF", res.data.firstname);
           localStorage.setItem("loginDataU", res.data.username);
           localStorage.setItem("loginDataL", res.data.lastname);
           localStorage.setItem("loginDataE", res.data.email);

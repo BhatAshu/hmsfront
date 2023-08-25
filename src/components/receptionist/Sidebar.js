@@ -29,6 +29,7 @@ import Interns from "./Intern";
 import Report from "./Report";
 import { useNavigate } from "react-router-dom";
 import Patients from "./Patients";
+import Billing from "./Billing";
 
 const drawerWidth = 240;
 
@@ -104,10 +105,9 @@ function ResponsiveDrawer(props) {
               sx: {
                 fontWeight: "bolder",
                 color: "black",
-                margin: "-80px 5px",
-                // fontFamily: "cursive", // Apply a cursive font
-                textTransform: "uppercase", // Convert text to uppercase
-                letterSpacing: "2px", // Add letter spacing
+                margin: "-80px 5px", 
+                textTransform: "uppercase", 
+                letterSpacing: "2px", 
               },
             }}
           />
@@ -120,14 +120,14 @@ function ResponsiveDrawer(props) {
           },
           { text: "Patient", iconComponent: <FaUserNurse />, role: "Patients" },
           {
+            text: "Billing",
+            iconComponent: <LocalHospitalIcon />,
+            role: "Billing",
+          },
+          {
             text: "Report Generate",
             iconComponent: <LocalHospitalIcon />,
             role: "Report",
-          },
-          {
-            text: "Interns",
-            iconComponent: <FaUserNurse />,
-            role: "Interns",
           },
           {
             text: "Profile",
@@ -165,9 +165,9 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor:"whitesmoke",
-          color:"black",
-          height:"70px",
+          backgroundColor: "whitesmoke",
+          color: "black",
+          height: "70px",
         }}
       >
         <Toolbar>
@@ -197,7 +197,7 @@ function ResponsiveDrawer(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -236,10 +236,10 @@ function ResponsiveDrawer(props) {
           <Patients />
         ) : selectedRole === "Profile" ? (
           <ProfileModal />
-        ) : selectedRole === "Interns" ? (
-          <Interns />
         ) : selectedRole === "Report" ? (
           <Report />
+        ) : selectedRole === "Billing" ? (
+          <Billing />
         ) : (
           <>
             {!selectedRole && (

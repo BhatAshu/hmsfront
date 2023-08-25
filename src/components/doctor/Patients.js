@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { IconButton } from "@mui/material";
-import {
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@mui/material";
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import TablePagination from "@mui/material/TablePagination";
 import DeleteIcon from "@mui/icons-material/Delete";
 import handleDelete from "./HandleDelete";
@@ -19,6 +18,25 @@ import jwtDecode from "jwt-decode";
 import PatientDetailsModal from "./PatientDetails";
 
 function Patients() {
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
   
   const [patients, setPatients] = useState([]);
   const [page, setPage] = useState(0);
@@ -47,6 +65,7 @@ function Patients() {
     address: "",
     message: "",
     testtype: "",
+    description: "",
   });
 
   const header = {
@@ -119,6 +138,7 @@ function Patients() {
     address,
     message,
     testtype,
+    description,
   ) {
     setEditModal(true);
     setData({
@@ -135,6 +155,7 @@ function Patients() {
       address: address,
       message: message,
       testtype: testtype,
+      description: description,
     });
   }
 
@@ -163,14 +184,14 @@ function Patients() {
         })
         .then((response) => {
           const responseData = response.data;
-          console.log("All Patients:", responseData);
+          // console.log("All Patients:", responseData);
   
           // Filter patients based on doctorId
           const filteredPatients = responseData.filter(
             (patient) => patient.doctorId === doctorId 
           );
   
-          console.log("Filtered Patients:", filteredPatients);
+          // console.log("Filtered Patients:", filteredPatients);
           setPatients(filteredPatients);
         })
         .catch((error) => {
@@ -189,40 +210,36 @@ function Patients() {
         <Table>
           <TableHead sx={{ backgroundColor: "black" }}>
             <TableRow>
-              <TableCell sx={{ color: "white" }}>Name</TableCell>
-              <TableCell sx={{ color: "white" }}>Email</TableCell>
-              <TableCell sx={{ color: "white" }}>Phone</TableCell>
-              <TableCell sx={{ color: "white" }}>Gender</TableCell>
-              <TableCell sx={{ color: "white" }}>Chief Complaint</TableCell>
-              <TableCell sx={{ color: "white" }}>Age</TableCell>
-              {/* <TableCell sx={{ color: "white" }}>Bloodgroup</TableCell> */}
-              <TableCell sx={{ color: "white" }}>AppointedTime</TableCell>
-              <TableCell sx={{ color: "white" }}>Address</TableCell>
-              <TableCell sx={{ color: "white" }}>Prescribe</TableCell>
-              <TableCell sx={{ color: "white" }}>Action</TableCell>
+              <StyledTableCell sx={{ color: "white" }}>Name</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Email</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Phone</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Gender</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Chief Complaint</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Age</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>AppointedTime</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Address</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {patients.map((patient, index) => (
-              <TableRow key={index}>
-                <TableCell>
+              <StyledTableRow key={index}>
+                <StyledTableCell>
                   <span
                     style={{ cursor: "pointer" }}
                     onClick={() => handlePatientClick(patient)} 
                   >
                     {patient.username}
                   </span>
-                </TableCell>
-                <TableCell>{patient.email}</TableCell>
-                <TableCell>{patient.phone}</TableCell>
-                <TableCell>{patient.gender}</TableCell>
-                <TableCell>{patient.chiefcomplaint}</TableCell>
-                <TableCell>{patient.age}</TableCell>
-                {/* <TableCell>{patient.bloodgroup}</TableCell> */}
-                <TableCell>{patient.timeofregistration}</TableCell>
-                <TableCell>{patient.address}</TableCell>
-                <TableCell>{patient.testtype}</TableCell>
-                <TableCell>
+                </StyledTableCell>
+                <StyledTableCell>{patient.email}</StyledTableCell>
+                <StyledTableCell>{patient.phone}</StyledTableCell>
+                <StyledTableCell>{patient.gender}</StyledTableCell>
+                <StyledTableCell>{patient.chiefcomplaint}</StyledTableCell>
+                <StyledTableCell>{patient.age}</StyledTableCell>
+                <StyledTableCell>{patient.timeofregistration}</StyledTableCell>
+                <StyledTableCell>{patient.address}</StyledTableCell>
+                <StyledTableCell>
                   <IconButton
                     sx={editButtonStyle}
                     onClick={() =>
@@ -237,20 +254,22 @@ function Patients() {
                         patient.bloodgroup,
                         patient.timeofregistration,
                         patient.address,
-                        patient.testtype
+                        patient.testtype,
+                        patient.message,
+                        patient.description,
                       )
                     }
                   >
                     <EventNoteOutlinedIcon />
                   </IconButton>
-                  <IconButton
+                  {/* <IconButton
                     sx={deleteButtonStyle}
                     onClick={() => handleDelete(patient.id, "patient")}
                   >
                     <DeleteIcon sx={deleteIconStyle} />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
+                  </IconButton> */}
+                </StyledTableCell>
+              </StyledTableRow>
             ))}
           </TableBody>
         </Table>

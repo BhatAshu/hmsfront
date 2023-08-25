@@ -1,15 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import {
-//   TableContainer,
-//   Table,
-//   TableHead,
-//   TableBody,
-//   TableRow,
-//   TableCell,
-//   Paper,
-// } from "@mui/material";
 import { IconButton } from "@mui/material";
 import ModalImage from "react-modal-image";
 import TablePagination from "@mui/material/TablePagination";

@@ -1,17 +1,45 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@mui/material";
+// import {
+//   TableContainer,
+//   Paper,
+//   Table,
+//   TableHead,
+//   TableRow,
+//   TableCell,
+//   TableBody,
+// } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 function Patients() {
   const [patients, setPatients] = useState([]);
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
 
   const header = {
     headers: {
@@ -37,30 +65,30 @@ function Patients() {
         <Table>
           <TableHead sx={{ backgroundColor: "black" }}>
             <TableRow>
-              <TableCell sx={{ color: "white" }}>Name</TableCell>
-              <TableCell sx={{ color: "white" }}>Email</TableCell>
-              <TableCell sx={{ color: "white" }}>Phone</TableCell>
-              <TableCell sx={{ color: "white" }}>Gender</TableCell>
-              <TableCell sx={{ color: "white" }}>Age</TableCell>
-              <TableCell sx={{ color: "white" }}>Chief Complaint</TableCell>
-              <TableCell sx={{ color: "white" }}>Bloodgroup</TableCell>
-              <TableCell sx={{ color: "white" }}>Time of Registration</TableCell>
-              <TableCell sx={{ color: "white" }}>Address</TableCell>
+              <StyledTableCell sx={{ color: "white" }}>Name</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Email</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Phone</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Gender</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Age</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Chief Complaint</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Bloodgroup</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Time of Registration</StyledTableCell>
+              <StyledTableCell sx={{ color: "white" }}>Address</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {patients.map((patient, index) => (
-              <TableRow key={index}>
-                <TableCell>{patient.username}</TableCell>
-                <TableCell>{patient.email}</TableCell>
-                <TableCell>{patient.phone}</TableCell>
-                <TableCell>{patient.gender}</TableCell>
-                <TableCell>{patient.age}</TableCell>
-                <TableCell>{patient.chiefcomplaint}</TableCell>
-                <TableCell>{patient.bloodgroup}</TableCell>
-                <TableCell>{patient.timeofregistration}</TableCell>
-                <TableCell>{patient.address}</TableCell>
-              </TableRow>
+              <StyledTableRow key={index}>
+                <StyledTableCell>{patient.username}</StyledTableCell>
+                <StyledTableCell>{patient.email}</StyledTableCell>
+                <StyledTableCell>{patient.phone}</StyledTableCell>
+                <StyledTableCell>{patient.gender}</StyledTableCell>
+                <StyledTableCell>{patient.age}</StyledTableCell>
+                <StyledTableCell>{patient.chiefcomplaint}</StyledTableCell>
+                <StyledTableCell>{patient.bloodgroup}</StyledTableCell>
+                <StyledTableCell>{patient.timeofregistration}</StyledTableCell>
+                <StyledTableCell>{patient.address}</StyledTableCell>
+              </StyledTableRow>
             ))}
           </TableBody>
         </Table>

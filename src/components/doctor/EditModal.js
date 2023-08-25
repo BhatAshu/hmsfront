@@ -102,10 +102,15 @@ function EditModal({
     const updatedFormData = { ...formData, address: e.target.value };
     setFormData(updatedFormData);
   };
-  const handleTextAreaChange = (e) => {
+  const handleTextAreaChangeM = (e) => {
     const updatedFormData = { ...formData, message: e.target.value };
     setFormData(updatedFormData);
     setData({ ...data, message: e.target.value });
+  };
+  const handleTextAreaChangeD = (e) => {
+    const updatedFormData = { ...formData, description: e.target.value };
+    setFormData(updatedFormData);
+    setData({ ...data, description: e.target.value });
   };
   
   const Gender = [
@@ -128,6 +133,7 @@ function EditModal({
     formData.append("timeofregistration", data.timeofregistration);
     formData.append("address", data.address);
     formData.append("message", data.message);
+    formData.append("description", data.description);
 
     const config = {
       headers: { 
@@ -155,16 +161,8 @@ function EditModal({
             timeofregistration: "",
             address: "",
             message: "",
+            description: "",
           });
-          // setData("");
-          // setData("");
-          // setData("");
-          // setData("");
-          // setData("");
-          // setData("");
-          // setData("");
-          // setData("");
-          // setData("");
           toast.success("Record is successfully updated");
         } else {
           console.log(res.data);
@@ -261,7 +259,19 @@ function EditModal({
                 Prescribe:
                 <MDBTextArea
                   value={data.message}
-                  onChange={handleTextAreaChange}
+                  onChange={handleTextAreaChangeM}
+                  labelClass="col-form-label"
+                />
+              </Label>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <Label>
+              Description:
+                <MDBTextArea
+                  value={data.description}
+                  onChange={handleTextAreaChangeD}
                   labelClass="col-form-label"
                 />
               </Label>
