@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { IconButton } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -16,25 +17,6 @@ import AddModal from "./AddPatient";
 import EditPatient from "./EditPatients";
 
 function Patients() {
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
   const [patients, setPatients] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -163,6 +145,7 @@ function Patients() {
       });
   }, [patients]);
 
+  // ... Other imports and component code ...
 
   const doctor = (department) => {
     console.log("Fetching doctors for department:", department);
@@ -201,37 +184,37 @@ function Patients() {
           Add Patients
         </button>
         <Table>
-          <TableHead sx={{ backgroundColor: "white" }}>
+          <TableHead sx={{ backgroundColor: "black" }}>
             <TableRow>
-              <StyledTableCell sx={{ color: "black" }}>Name</StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>Email</StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>Phone</StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>Gender</StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>Age</StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>Department</StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>Chief Complaint</StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>
+              <TableCell sx={{ color: "white" }}>Name</TableCell>
+              <TableCell sx={{ color: "white" }}>Email</TableCell>
+              <TableCell sx={{ color: "white" }}>Phone</TableCell>
+              <TableCell sx={{ color: "white" }}>Gender</TableCell>
+              <TableCell sx={{ color: "white" }}>Age</TableCell>
+              <TableCell sx={{ color: "white" }}>Department</TableCell>
+              <TableCell sx={{ color: "white" }}>Chief Complaint</TableCell>
+              <TableCell sx={{ color: "white" }}>
                 Time of Registration
-              </StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>Address</StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>Doctor</StyledTableCell>
-              <StyledTableCell sx={{ color: "black" }}>Action</StyledTableCell>
+              </TableCell>
+              <TableCell sx={{ color: "white" }}>Address</TableCell>
+              <TableCell sx={{ color: "white" }}>Doctor</TableCell>
+              <TableCell sx={{ color: "white" }}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {patients.map((patient, index) => (
-              <StyledTableRow key={index}>
-                <StyledTableCell>{patient.username}</StyledTableCell>
-                <StyledTableCell>{patient.email}</StyledTableCell>
-                <StyledTableCell>{patient.phone}</StyledTableCell>
-                <StyledTableCell>{patient.gender}</StyledTableCell>
-                <StyledTableCell>{patient.age}</StyledTableCell>
-                <StyledTableCell>{patient.department}</StyledTableCell>
-                <StyledTableCell>{patient.chiefcomplaint}</StyledTableCell>
-                <StyledTableCell>{patient.timeofregistration}</StyledTableCell>
-                <StyledTableCell>{patient.address}</StyledTableCell>
-                <StyledTableCell>{patient.doctorName}</StyledTableCell>
-                <StyledTableCell>
+              <TableRow key={index}>
+                <TableCell>{patient.username}</TableCell>
+                <TableCell>{patient.email}</TableCell>
+                <TableCell>{patient.phone}</TableCell>
+                <TableCell>{patient.gender}</TableCell>
+                <TableCell>{patient.age}</TableCell>
+                <TableCell>{patient.department}</TableCell>
+                <TableCell>{patient.chiefcomplaint}</TableCell>
+                <TableCell>{patient.timeofregistration}</TableCell>
+                <TableCell>{patient.address}</TableCell>
+                <TableCell>{patient.doctorName}</TableCell>
+                <TableCell>
                   <IconButton
                     sx={editButtonStyle}
                     onClick={() =>
@@ -256,8 +239,8 @@ function Patients() {
                   <IconButton sx={deleteButtonStyle}>
                     <DeleteIcon sx={deleteIconStyle} />
                   </IconButton>
-                </StyledTableCell>
-              </StyledTableRow>
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -289,3 +272,288 @@ function Patients() {
 }
 
 export default Patients;
+
+
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import { Link, useNavigate } from "react-router-dom";
+// // import AddModal from "./modal/AddModal";
+// // import EditModal from "./modal/EditModal";
+// // import { FaRegEdit, FaTrash } from "react-icons/fa";
+// // import ModalImage from "react-modal-image";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// import { DataGrid } from '@mui/x-data-grid';
+// import Profile from "./ProfileModal";
+// import { FaRegEdit, FaTrash } from "react-icons/fa";
+// // import { AiOutlineFileText } from "react-icons/ai"; 
+// import "../admin/style.css"
+// import EditPatient from "./EditPatients";
+// import AddModal from "./AddPatient";
+
+// function HandlePatient() {
+//   const navigate = useNavigate();
+//   const [columns, setColumns] = useState([]);
+//   const [patients, setPatients] = useState([]);
+//   const [doctors, setDoctors] = useState([]);
+//   const [role, setRole] = useState("Doctor");
+//   const [modal, setModal] = useState(false);
+//   const [editModal, setEditModal] = useState(false);
+//   const [selectedRole, setSelectedRole] = useState("");
+//   const [addModal, setAddModal] = useState(false);
+
+// //   const [columnsDataGrid, setColumnsDataGrid] = useState([]);
+
+//   const [data, setData] = useState({
+// 	id:"",
+// 	username: "",
+// 	email: "",
+// 	gender:"",
+// 	phone: "",
+// 	age:"",
+// 	department:"",
+// 	chiefcomplaint:"",
+// 	timeofregistration:"",
+// 	address:"",
+// 	doctorname:"",
+// 	// status:"",
+	
+//   });
+//   const header = {
+//     headers: {
+//       auth: localStorage.getItem("access_token"),
+//     },
+//   };
+  
+//   const handleAdd = () => {
+//     setAddModal(true);
+//   };
+  
+
+//   const handleDelete = (id) => {
+// 	if (window.confirm("Do you want to delete this user?")) {
+// 	  axios({
+// 		url: `http://localhost:3000/api/hbms/delete_patient/${id}`,
+// 		method: "delete",
+// 		headers: {
+// 		  auth: localStorage.getItem("access_token"),
+// 		},
+// 	  })
+// 		.then((res) => {
+// 		  console.log(res);
+// 		  toast.success("Item deleted successfully!");
+// 		})
+// 		.catch((err) => {
+// 		  console.log(err);
+// 		});
+// 	}
+//   };
+  
+
+//   function handleEdit(id, username, email,gender, phone, age,department,chiefcomplaint,timeofregistration,address,doctor) {
+// 	setEditModal(true);
+// 	setData({
+// 	  ...data,
+// 	  id: id,
+// 	  username: username,
+// 	  email: email,
+// 	  gender:gender,
+// 	  phone: phone,
+// 	  age:age,
+// 	  department: department,
+// 	  chiefcomplaint:chiefcomplaint,
+// 	  timeofregistration:timeofregistration,
+// 	  address: address,
+// 	  doctor:doctor,
+// 	//   status:status,
+// 	});
+//   }
+
+//   const toggle = () => setModal(!modal);
+
+//   useEffect(() => {
+// 	if (localStorage.getItem("access_token")) 
+// 	{
+// 	  navigate("/receptionist");
+// 	} else {
+// 	  navigate("/login");
+// 	}
+// 	// const doctorId = localStorage.getItem("doctorId");
+
+// 	const config = {
+// 	  headers: { auth: localStorage.getItem("access_token") },
+// 	};
+// 	// const doctorId = localStorage.getItem("doctorId");
+// 	// console.log("Doctor ID:", doctorId); 
+    
+// 	// if (doctorId) {
+// 	// const doctorId = localStorage.getItem("doctorId");
+
+// 	axios
+// 	.get("http://localhost:5000/api/hbms/listpat_form", config)
+// 	  .then((res) => {
+// 		setColumns(res.data);
+// 	  })
+// 	  .catch((err) => {
+// 		console.log(err);
+// 	  });
+
+//   }, [columns]);
+
+
+
+
+//   const doctor = (department) => {
+//     console.log("Fetching doctors for department:", department);
+//     if (role === "Doctor" && department) {
+//       const departmentApiMap = {
+//         General: "http://localhost:5000/api/hbms/list_general",
+//         Pediatrics: "http://localhost:5000/api/hbms/list_orthopedics",
+//         Orthopedics: "http://localhost:5000/api/hbms/list_dermatology",
+//         Dermatology: "http://localhost:5000/api/hbms/list_pediatrics",
+//       };
+
+//       const departmentApi = departmentApiMap[department];
+
+//       axios
+//         .get(departmentApi, header)
+//         .then((response) => {
+//           console.log("API Response:", response.data);
+//           setDoctors(response.data); // Update the doctors state
+//         })
+//         .catch((error) => console.error(error));
+//     }
+//   };
+
+//   useEffect(() => {
+//     doctor(data.department);
+//   }, [data.department]);
+
+//   useEffect(() => {
+//     doctor(data.department);
+//   }, [data.department]);
+
+//   const columnsDataGrid = [
+
+// 	{ id:"1",field: "username", headerName: "Name", width: 200 ,sortable:false,headerClassName: "header-black",},
+// 	{id:"2", field: "email", headerName: "Email", width: 200 ,sortable:false,headerClassName: "header-black",},
+// 	{id:"3", field: "gender", headerName: "Gender", width: 200 ,sortable:false,headerClassName: "header-black",},
+// 	{id:"4", field: "age", headerName: "Age", width: 200 ,sortable:false,headerClassName: "header-black",},
+// 	{id:"5", field: "department", headerName: "Department", width: 200 ,sortable:false,headerClassName: "header-black",},
+// 	{id:"6", field: "phone", headerName: "Phone", width: 150 ,sortable:false,headerClassName: "header-black",},
+// 	// { field: "bloodgroup", headerName: "Bloodgroup", width: 150 ,sortable:false,headerClassName: "header-black",},
+// 	{id:"7", field: "chiefcomplaint", headerName: "chiefcomplaint", width: 150 ,sortable:false,headerClassName: "header-black",},
+// 	{id:"8", field: "timeofregistration", headerName: "Time Of Registration", width: 200 ,sortable:false,headerClassName: "header-black",},
+// 	// { field: "bloodpressure", headerName: "BloodPressure", width: 200 ,sortable:false,headerClassName: "header-black",},
+// 	// { field: "sugarlevel", headerName: "SugarLevel", width: 200 ,sortable:false,headerClassName: "header-black",},
+// 	{ id:"9",field: "address", headerName: "Address", width: 150 ,sortable:false,headerClassName: "header-black",},
+// 	// { field: "message", headerName: "Message", width: 150 ,sortable:false,headerClassName: "header-black",},
+// 	{ id:"10",field: "doctorName", headerName: "DoctorName", width: 150 ,sortable:false,headerClassName: "header-black",},
+// 	// { field: "status", headerName: "status", width: 150 ,sortable:false,headerClassName: "header-black",},
+
+// 	{
+// 			field: "actions",
+// 			headerName: "Action",
+// 			width: 150,
+// 			headerClassName: "header-black",
+// 			renderCell: (params) => (
+// 			  <div>
+// 				<button
+// 				  className="btn-st edit-button"
+// 				  style={{ marginRight: "15px" }}
+				
+// 		onClick={() =>
+// 		  handleEdit(
+// 			params.row.id,
+// 			params.row.username,
+// 			params.row.email,
+// 			params.row.gender,
+// 			params.row.phone,
+// 			params.row.age,
+// 			params.row.department,
+// 			params.row.chiefcomplaint,
+// 			params.row.timeofregistration,
+// 			params.row.address,
+// 			params.row.doctor,
+// 			// params.row.status,
+			
+			
+// 		  )
+// 		}
+		
+// 	  >
+// 	  <FaRegEdit />
+// 	  </button>
+// 	  <button
+// 		className="btn-st delete-button"
+// 		onClick={() => handleDelete(params.row.id)}
+// 	  >
+// 		<FaTrash />
+// 	  </button>
+// 	</div>
+//   ),
+// },
+// ];
+
+// // console.log(columns);
+
+
+//   return (
+// 	<div className="bg1">
+// 		 <div>
+//           <button onClick={() => handleAdd()} className="addbtn">
+//             Add Patient
+//           </button>
+//         </div>
+// 	  <div className="container">
+	  
+// 		{selectedRole === "Profile" ? (
+// 	  <Profile/>
+// 	) : (
+// 		<div style={{  width: "100%", overflowX: "auto" }}>
+// 		  <DataGrid
+// 		  getRowId={(row) => row.id}
+// 			rows={columns}
+// 			columns={columnsDataGrid}
+// 			disableColumnFilter
+// 			  disableColumnMenu
+// 			// pageSize={5}
+			
+// 			initialState={{
+// 			  pagination: {
+// 				paginationModel: { page: 0, pageSize: 5 },
+// 			  },
+// 			}}
+// 			pageSizeOptions={[5, 10, 15]}
+		   
+// 			disableSelectionOnClick
+// 		  />
+			
+// 		</div>
+// 		)}
+// 	  </div>
+// 	  <AddModal
+//           modal={addModal}
+//           toggle={() => setAddModal(!addModal)}
+//           onClose={() => setAddModal(false)}
+//         />
+// 	  <EditPatient
+// 	editModal={editModal}
+// 	handleEdit={handleEdit}
+// 	onClose={() => setEditModal(false)}
+// 	data={data}
+// 	setData={setData}
+// 	doctors={doctors}
+//   />
+//  		{/* <AddModal
+//         modal={addModal}
+//         toggle={() => setAddModal(!addModal)}
+//         onClose={() => setAddModal(false)}
+// 		data={data}
+//         setData={setData}
+//       /> */}
+	  
+// 	</div>
+//   ); 
+// } 
+// export default HandlePatient;

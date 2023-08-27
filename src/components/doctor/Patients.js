@@ -177,7 +177,7 @@ function Patients() {
   useEffect(() => {
     if (doctorId) {
       axios
-        .get("http://localhost:5000/api/hbms/listpat_form", {
+        .get("http://localhost:5000/api/hbms/list_patient", {
           headers: {
             auth: localStorage.getItem("access_token"),
           },

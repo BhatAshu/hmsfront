@@ -63,6 +63,8 @@ function App() {
           <Route path="/reporttrack" element={<PatTrak />}/>
           <Route path="/receptionist/billing" element={< Billing/>}/>
           <Route path="*" element={<Pagenotfound />} />
+          {/* <Route path="/patientform/:doctorId" element={<PatientForm />} /> */}
+          <Route path="/patientform/:doctorId/:doctorName" element={<PatientForm />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

@@ -105,7 +105,7 @@ function ResponsiveDrawer(props) {
         </ListItem>
         {[
           { text: "Doctor", iconComponent: <FaUserMd />, role: "Doctor" },
-          { text: "Nurse", iconComponent: <FaUserNurse />, role: "Nurse" },
+          // { text: "Nurse", iconComponent: <FaUserNurse />, role: "Nurse" },
           {
             text: "Receptionist",
             iconComponent: <FaUserCheck />,

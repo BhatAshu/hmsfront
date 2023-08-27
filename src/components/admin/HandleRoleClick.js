@@ -1,6 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+} from "@mui/material";
 import { IconButton } from "@mui/material";
 import ModalImage from "react-modal-image";
 import TablePagination from "@mui/material/TablePagination";
@@ -8,42 +17,18 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import handleDelete from "./HandleDelete";
 import EditModal from "./EditModal";
+import EditDoctor from "./EditDoctor";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AddModal from "./AddModal";
+import AddDoctor from "./AddDoctor";
 import "./style.css";
 import ProfileModal from "./ProfileModal";
 import Lab from "../labtechnician/Lab";
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 
 const HandleRoleClick = ({ role }) => {
   const navigate = useNavigate();
   
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
+
   const [selectedRole, setSelectedRole] = useState("");
   const [doctors, setDoctors] = useState([]);
   const [nurses, setNurses] = useState([]);
@@ -54,6 +39,7 @@ const HandleRoleClick = ({ role }) => {
     username: "",
     email: "",
     phone: "",
+    specialist: "",
     address: "",
     image: "",
   });
@@ -198,7 +184,7 @@ const handleRowsPerPageChange = (event) => {
 
   const toggle = () => setModal(!modal);
 
-  function handleEdit(id, username, email, phone, address, image) {
+  function handleEdit(id, username, email, phone,address, image) {
     setEditModal(true);
     setData({
       ...data,
@@ -206,6 +192,7 @@ const handleRowsPerPageChange = (event) => {
       username: username,
       email: email,
       phone: phone,
+      // specialist: specialist,
       address: address,
       image: image,
     });
@@ -226,24 +213,24 @@ const handleRowsPerPageChange = (event) => {
           <Table>
             <TableHead sx={{ backgroundColor: "black" }}>
               <TableRow>
-                <StyledTableCell sx={{ color: "white" }}>Name</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Email</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Phone</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Department</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Address</StyledTableCell>
-                <StyledTableCell sx={{ color: "white", width: 150 }}>Image</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Action</StyledTableCell>
+                <TableCell sx={{ color: "white" }}>Name</TableCell>
+                <TableCell sx={{ color: "white" }}>Email</TableCell>
+                <TableCell sx={{ color: "white" }}>Phone</TableCell>
+                <TableCell sx={{ color: "white" }}>Department</TableCell>
+                <TableCell sx={{ color: "white" }}>Address</TableCell>
+                <TableCell sx={{ color: "white", width: 150 }}>Image</TableCell>
+                <TableCell sx={{ color: "white" }}>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {doctorsFiltered.map((doctor) => (
-                <StyledTableRow  key={doctor.id}>
-                  <StyledTableCell>{doctor.username}</StyledTableCell>
-                  <StyledTableCell>{doctor.email}</StyledTableCell>
-                  <StyledTableCell>{doctor.phone}</StyledTableCell>
-                  <StyledTableCell>{doctor.specialist}</StyledTableCell>
-                  <StyledTableCell>{doctor.address}</StyledTableCell>
-                  <StyledTableCell>
+                <TableRow key={doctor.id}>
+                  <TableCell>{doctor.username}</TableCell>
+                  <TableCell>{doctor.email}</TableCell>
+                  <TableCell>{doctor.phone}</TableCell>
+                  <TableCell>{doctor.specialist}</TableCell>
+                  <TableCell>{doctor.address}</TableCell>
+                  <TableCell>
                     {doctor.image ? (
                       <div>
                         <ModalImage
@@ -255,8 +242,8 @@ const handleRowsPerPageChange = (event) => {
                     ) : (
                       "No image available"
                     )}
-                  </StyledTableCell>
-                  <StyledTableCell>
+                  </TableCell>
+                  <TableCell>
                     <IconButton
                       sx={editButtonStyle}
                       onClick={() =>
@@ -265,6 +252,7 @@ const handleRowsPerPageChange = (event) => {
                           doctor.username,
                           doctor.email,
                           doctor.phone,
+                          // doctor.specialist,
                           doctor.address,
                           doctor.image
                         )
@@ -278,8 +266,8 @@ const handleRowsPerPageChange = (event) => {
                     >
                       <DeleteIcon sx={deleteIconStyle} />
                     </IconButton>
-                  </StyledTableCell>
-                </StyledTableRow >
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
@@ -293,7 +281,7 @@ const handleRowsPerPageChange = (event) => {
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
         />
-        <AddModal
+        <AddDoctor
           modal={addModal}
           toggle={() => setAddModal(!addModal)}
           onClose={() => setAddModal(false)}
@@ -320,22 +308,22 @@ const handleRowsPerPageChange = (event) => {
           <Table>
             <TableHead sx={{ backgroundColor: "black" }}>
               <TableRow>
-                <StyledTableCell sx={{ color: "white" }}>Username</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Email</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Phone</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Address</StyledTableCell>
-                <StyledTableCell sx={{ color: "white", width: 150 }}>Image</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Action</StyledTableCell>
+                <TableCell sx={{ color: "white" }}>Username</TableCell>
+                <TableCell sx={{ color: "white" }}>Email</TableCell>
+                <TableCell sx={{ color: "white" }}>Phone</TableCell>
+                <TableCell sx={{ color: "white" }}>Address</TableCell>
+                <TableCell sx={{ color: "white", width: 150 }}>Image</TableCell>
+                <TableCell sx={{ color: "white" }}>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {nursesFiltered.map((nurse) => (
-                <StyledTableRow key={nurse.id}>
-                  <StyledTableCell>{nurse.username}</StyledTableCell>
-                  <StyledTableCell>{nurse.email}</StyledTableCell>
-                  <StyledTableCell>{nurse.phone}</StyledTableCell>
-                  <StyledTableCell>{nurse.address}</StyledTableCell>
-                  <StyledTableCell>
+                <TableRow key={nurse.id}>
+                  <TableCell>{nurse.username}</TableCell>
+                  <TableCell>{nurse.email}</TableCell>
+                  <TableCell>{nurse.phone}</TableCell>
+                  <TableCell>{nurse.address}</TableCell>
+                  <TableCell>
                     {nurse.image ? (
                       <div>
                         <ModalImage
@@ -347,8 +335,8 @@ const handleRowsPerPageChange = (event) => {
                     ) : (
                       "No image available"
                     )}
-                  </StyledTableCell>
-                  <StyledTableCell>
+                  </TableCell>
+                  <TableCell>
                     <IconButton
                       sx={editButtonStyle}
                       onClick={() =>
@@ -370,8 +358,8 @@ const handleRowsPerPageChange = (event) => {
                     >
                       <DeleteIcon sx={deleteIconStyle} />
                     </IconButton>
-                  </StyledTableCell>
-                </StyledTableRow>
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
@@ -414,22 +402,22 @@ const handleRowsPerPageChange = (event) => {
           <Table>
             <TableHead sx={{ backgroundColor: "black" }}>
               <TableRow>
-                <StyledTableCell sx={{ color: "white" }}>Username</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Email</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Phone</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Address</StyledTableCell>
-                <StyledTableCell sx={{ color: "white", width: 150 }}>Image</StyledTableCell>
-                <StyledTableCell sx={{ color: "white" }}>Action</StyledTableCell>
+                <TableCell sx={{ color: "white" }}>Username</TableCell>
+                <TableCell sx={{ color: "white" }}>Email</TableCell>
+                <TableCell sx={{ color: "white" }}>Phone</TableCell>
+                <TableCell sx={{ color: "white" }}>Address</TableCell>
+                <TableCell sx={{ color: "white", width: 150 }}>Image</TableCell>
+                <TableCell sx={{ color: "white" }}>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {receptionistsFiltered.map((receptionist) => (
-                <StyledTableRow key={receptionist.id}>
-                  <StyledTableCell>{receptionist.username}</StyledTableCell>
-                  <StyledTableCell>{receptionist.email}</StyledTableCell>
-                  <StyledTableCell>{receptionist.phone}</StyledTableCell>
-                  <StyledTableCell>{receptionist.address}</StyledTableCell>
-                  <StyledTableCell>
+                <TableRow key={receptionist.id}>
+                  <TableCell>{receptionist.username}</TableCell>
+                  <TableCell>{receptionist.email}</TableCell>
+                  <TableCell>{receptionist.phone}</TableCell>
+                  <TableCell>{receptionist.address}</TableCell>
+                  <TableCell>
                     {receptionist.image ? (
                       <div>
                         <ModalImage
@@ -441,8 +429,8 @@ const handleRowsPerPageChange = (event) => {
                     ) : (
                       "No image available"
                     )}
-                  </StyledTableCell>
-                  <StyledTableCell>
+                  </TableCell>
+                  <TableCell>
                     <IconButton
                       sx={editButtonStyle}
                       onClick={() =>
@@ -466,8 +454,8 @@ const handleRowsPerPageChange = (event) => {
                     >
                       <DeleteIcon sx={deleteIconStyle} />
                     </IconButton>
-                  </StyledTableCell>
-                </StyledTableRow>
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
@@ -508,22 +496,22 @@ const handleRowsPerPageChange = (event) => {
             <Table>
               <TableHead sx={{ backgroundColor: "black" }}>
                 <TableRow>
-                  <StyledTableCell sx={{ color: "white" }}>Username</StyledTableCell>
-                  <StyledTableCell sx={{ color: "white" }}>Email</StyledTableCell>
-                  <StyledTableCell sx={{ color: "white" }}>Phone</StyledTableCell>
-                  <StyledTableCell sx={{ color: "white" }}>Address</StyledTableCell>
-                  <StyledTableCell sx={{ color: "white", width: 150 }}>Image</StyledTableCell>
-                  <StyledTableCell sx={{ color: "white" }}>Action</StyledTableCell>
+                  <TableCell sx={{ color: "white" }}>Username</TableCell>
+                  <TableCell sx={{ color: "white" }}>Email</TableCell>
+                  <TableCell sx={{ color: "white" }}>Phone</TableCell>
+                  <TableCell sx={{ color: "white" }}>Address</TableCell>
+                  <TableCell sx={{ color: "white", width: 150 }}>Image</TableCell>
+                  <TableCell sx={{ color: "white" }}>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
               {labTechniciansFiltered.map((technician) => (
-                  <StyledTableRow key={technician.id}>
-                    <StyledTableCell>{technician.username}</StyledTableCell>
-                    <StyledTableCell>{technician.email}</StyledTableCell>
-                    <StyledTableCell>{technician.phone}</StyledTableCell>
-                    <StyledTableCell>{technician.address}</StyledTableCell>
-                    <StyledTableCell>
+                  <TableRow key={technician.id}>
+                    <TableCell>{technician.username}</TableCell>
+                    <TableCell>{technician.email}</TableCell>
+                    <TableCell>{technician.phone}</TableCell>
+                    <TableCell>{technician.address}</TableCell>
+                    <TableCell>
                       {technician.image ? (
                         <div>
                           <ModalImage
@@ -535,8 +523,8 @@ const handleRowsPerPageChange = (event) => {
                       ) : (
                         "No image available"
                       )}
-                    </StyledTableCell>
-                    <StyledTableCell>
+                    </TableCell>
+                    <TableCell>
                       <IconButton
                         sx={editButtonStyle}
                         onClick={() =>
@@ -558,8 +546,8 @@ const handleRowsPerPageChange = (event) => {
                       >
                         <DeleteIcon sx={deleteIconStyle} />
                       </IconButton>
-                    </StyledTableCell>
-                  </StyledTableRow>
+                    </TableCell>
+                  </TableRow>
                 ))}
               </TableBody>
             </Table>

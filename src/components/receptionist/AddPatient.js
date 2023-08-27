@@ -24,6 +24,7 @@ function AddModal({ modal, toggle, onClose, data, setData }) {
   const [isBloodGroup, setIsBloodGroup] = useState("");
   const [isChiefcomplaint, setIsChiefcomplaint] = useState("");
   const [isTimeofregistration, setIsTimeofregistration] = useState("");
+  const [isDepartment,setIsDepartment]=useState("");
   const [isBloodpressure, setIsBloodpressure] = useState("");
   const [isSugarlevel, setIsSugarlevel] = useState("");
   const [isAddress, setIsAddress] = useState("");
@@ -63,8 +64,8 @@ function AddModal({ modal, toggle, onClose, data, setData }) {
     setIsAge(e.target.value);
   };
 
-  const handleBloodGroupChange = (e) => {
-    setIsBloodGroup(e.target.value);
+  const handleDepartmentChange = (e) => {
+    setIsDepartment(e.target.value);
   };
 
   const handleTimeofregistrationChange = (e) => {
@@ -104,6 +105,13 @@ function AddModal({ modal, toggle, onClose, data, setData }) {
         .catch((error) => console.error(error));
     }
   };
+
+  const departmentOptions = [
+    "General",
+    "Pediatrics",
+    "Orthopedics",
+    "Dermatology",
+  ];
 
   useEffect(() => {
     fetchDoctors();
@@ -150,6 +158,7 @@ function AddModal({ modal, toggle, onClose, data, setData }) {
           setIsGender("");
           setIsAge("");
           setIsChiefcomplaint("");
+          setIsDepartment("");
           // setIsBloodGroup("");
           setIsTimeofregistration("");
           // setIsSugarlevel("");
@@ -255,17 +264,6 @@ function AddModal({ modal, toggle, onClose, data, setData }) {
                 />
               </Label>
             </Col>
-            {/* <Col md={6}>
-              <Label>
-                Blood Group:
-                <input
-                  type="text"
-                  placeholder="Enter the Blood Group"
-                  value={isBloodGroup}
-                  onChange={handleBloodGroupChange}
-                />
-              </Label>
-            </Col> */}
           </Row>
           <Row>
             <Col md={6}>
@@ -293,56 +291,19 @@ function AddModal({ modal, toggle, onClose, data, setData }) {
               </Label>
             </Col>
           </Row>
-          {/* <Row>
-            <Col md={6}>
-              <Label>
-                Blood Pressure:
-                <input
-                  type="text"
-                  placeholder="Enter the blood pressure"
-                  value={isBloodpressure}
-                  onChange={handleBloodpressureChange}
-                />
-              </Label>
-            </Col>
-            <Col md={6}>
-              <Label>
-                Sugar Level:
-                <input
-                  type="text"
-                  placeholder="Enter the sugar level"
-                  value={isSugarlevel}
-                  onChange={handleSugarlevelChange}
-                />
-              </Label>
-            </Col>
-          </Row> */}
           <Row>
-            {/* <Col md={6}>
+            <Col md={6}>
               <Label>
-                Address:
+                Department:
                 <input
                   type="text"
-                  placeholder="Enter the Address"
-                  value={isAddress}
-                  onChange={handleAddressChange}
+                  placeholder="Enter the Department"
+                  value={isDepartment}
+                  onChange={handleDepartmentChange}
                   required
                 />
               </Label>
-            </Col> */}
-            {/* <Col md={6}>
-              <Label>
-                Message:
-                <input
-                  type="text"
-                  placeholder="Enter the Message"
-                  value={isMessage}
-                  onChange={handleMessageChange}
-                  required
-                />
-              </Label>
-            </Col> */}
-          </Row>
+            </Col>
           <Col md={6}>
             <Label>
               Doctor:
@@ -354,7 +315,6 @@ function AddModal({ modal, toggle, onClose, data, setData }) {
                 >
                   <option value="">Select Doctor</option>
                   {doctors.map((username, index) => {
-                    // console.log(username);
                     return (
                       <option key={index} value={username.id}>
                         {username.username}
@@ -365,6 +325,7 @@ function AddModal({ modal, toggle, onClose, data, setData }) {
               </div>
             </Label>
           </Col>
+          </Row>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" type="submit">

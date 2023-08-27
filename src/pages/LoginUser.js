@@ -110,7 +110,8 @@ const LoginUser = () => {
           if (registrationComplete === "true") {
             navigate("/patientform");
           } else {
-            navigate("/home");
+            navigate("/");
+            // navigate("/home");
           }
         } else {
           console.log(res.data);

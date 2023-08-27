@@ -74,6 +74,13 @@ function EditModal({
     setData(updatedData);
     setFormData(updatedFormData);
   };
+
+  const handleDepartmentChange = (e) => {
+    const updatedData = { ...data, specialist: e.target.value };
+    const updatedFormData = { ...formData, specialist: e.target.value };
+    setData(updatedData);
+    setFormData(updatedFormData);
+  };
   
   
 
@@ -212,6 +219,17 @@ function EditModal({
               </Label>
             </div>
           </div>
+          <div className="col-md-6">
+              <Label>
+                Department:
+                <input
+                  type="text"
+                  value={data.specialist}
+                  onChange={handleDepartmentChange}
+                  required
+                />
+              </Label>
+            </div>
           <div className="row">
             <div className="col-md-6">
               <Label>
