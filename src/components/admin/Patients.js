@@ -73,7 +73,7 @@ function Patients() {
               <StyledTableCell sx={{ color: "white" }}>Chief Complaint</StyledTableCell>
               <StyledTableCell sx={{ color: "white" }}>Bloodgroup</StyledTableCell>
               <StyledTableCell sx={{ color: "white" }}>Time of Registration</StyledTableCell>
-              <StyledTableCell sx={{ color: "white" }}>Address</StyledTableCell>
+              {/* <StyledTableCell sx={{ color: "white" }}>Address</StyledTableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -86,8 +86,8 @@ function Patients() {
                 <StyledTableCell>{patient.age}</StyledTableCell>
                 <StyledTableCell>{patient.chiefcomplaint}</StyledTableCell>
                 <StyledTableCell>{patient.bloodgroup}</StyledTableCell>
-                <StyledTableCell>{patient.timeofregistration}</StyledTableCell>
-                <StyledTableCell>{patient.address}</StyledTableCell>
+                <StyledTableCell>{patient.time}</StyledTableCell>
+                {/* <StyledTableCell>{patient.address}</StyledTableCell> */}
               </StyledTableRow>
             ))}
           </TableBody>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Form, FormGroup, FormControl, Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
+
 const Report = () => {
   const [username, setUsername] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -40,14 +41,16 @@ const Report = () => {
     }
   };
 
-  const handlePatientSelect = (patientId) => {
-    setSelectedPatientId(patientId);
-    handleGenerateReport(patientId); 
+  const handleNameClick = async (patientId) => {
+    try {
+      await handleGenerateReport(patientId);
+    } catch (error) {
+      console.error('Error generating report:', error);
+    }
   };
-
   return (
     <div>
-      <h2>Generate Patient Report</h2>
+       <h2 style={{ textAlign: 'center' }}>Generate Patient Report</h2>
       <Form>
         <FormGroup>
           <FormControl
@@ -63,8 +66,7 @@ const Report = () => {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Username</th>
+              <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
             </tr>
@@ -72,16 +74,15 @@ const Report = () => {
           <tbody>
             {searchResults.map((patient) => (
               <tr key={patient.id}>
+                <td>{patient.username}</td>
                 <td>
                   <span
                     style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                    onClick={() => handlePatientSelect(patient.id)}
+                    onClick={() => handleNameClick(patient.id)}
                   >
-                    {patient.id}
+                    {patient.email}
                   </span>
                 </td>
-                <td>{patient.username}</td>
-                <td>{patient.email}</td>
                 <td>{patient.phone}</td>
               </tr>
             ))}

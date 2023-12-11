@@ -1,68 +1,35 @@
 import React from "react";
 import Layout from "../components/Layout/Layout";
+import "./Home.css";
 import { Box, Typography } from "@mui/material";
 
-
-const About = () => {
+function About() {
   return (
     <Layout>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          my: 15,
-          flexDirection: "row", // Ensure horizontal alignment
-          "@media (max-width:600px)": {
-            flexDirection: "column",
-            textAlign: "center",
-          },
-        }}
-      >
-        {/* Image */}
-        <Box
-          sx={{
-            flex: 1,
-            background: "url('https://thumbs.dreamstime.com/b/young-team-group-doctors-picture-32588094.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            height: "600px", // Adjust the height as needed
-          }}
-        />
-        
-        {/* Content */}
-        <Box
-          sx={{
-            flex: 1,
-            p: 2,
-            backgroundColor: "rgba(255, 255, 255, 0.8)", // Add a semi-transparent background
-          }}
-        >
-          <Typography variant="h4"
-          style={{
-            fontSize: "4rem",
-            color: "#222",
-            marginBottom: "50px",
-          }}
-          >About Us</Typography>
-
-          <p
-          style={{
-            fontSize: "1.2rem",
-            color: "#333",
-            lineHeight: "1.6",
-            
-          }}
-        >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias delectus facilis,
-            temporibus eum consectetur, a debitis exercitationem quae distinctio aliquid ea ipsam vitae esse amet soluta maxime dolorem?
-            Inventore ut maiores illo ipsum nisi, nulla eligendi unde reiciendis quod voluptas velit sit voluptate perferendis cum pariatur molestiae
-            tenetur repellat!
+      <div className="homec">
+        <div className="paragraphs">
+          <p className="pa1">About Us</p>
+          <p className="pab2">
+            Our mission is to provide compassionate and cutting-edge healthcare
+            to our community. With a team of skilled medical professionals and
+            state-of-the-art facilities, we are dedicated to delivering
+            personalized care that addresses your unique health needs. We take
+            pride in our commitment to innovation, research, and continuous
+            improvement, all with the goal of ensuring your well-being. We are
+            here to be your trusted partner in health. Your health and comfort
+            are at the heart of everything we do, and we look forward to serving
+            you with excellence.
           </p>
-        </Box>
-      </Box>
+        </div>
+        <div className="image">
+          <img
+            src="https://thumbs.dreamstime.com/b/young-team-group-doctors-picture-32588094.jpg"
+            alt="Doctor"
+          />
+        </div>
+      </div>
     </Layout>
   );
-};
+}
 
 export default About;

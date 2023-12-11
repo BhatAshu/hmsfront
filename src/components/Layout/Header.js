@@ -12,14 +12,14 @@ import {
 } from "@mui/material";
 import Logo from "../../images/logo1.jpg";
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"; 
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 import "../../styles/HeaderStyles.css";
-// import home from "../../pages/Home";
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState(null);
+  const [showSignInOptions, setShowSignInOptions] = useState(false);
   // hndle menu click
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -31,6 +31,14 @@ const Header = () => {
   const handleMenuClose = () => {
     setMenuAnchor(null);
   };
+  const handleSignUpClick = (event) => {
+    event.stopPropagation(); 
+    setShowSignInOptions(!showSignInOptions);
+  };
+  
+  const toggleSignInOptions = () => {
+    setShowSignInOptions(!showSignInOptions);
+  };
   //menu drawer
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -40,29 +48,55 @@ const Header = () => {
         component="div"
         sx={{ flexGrow: 1, my: 2 }}
       >
-        <img src="Logo" alt="logo" height={"70"} width="100" />
+        {/* <img src="Logo" alt="logo" height={"70"} width="100" /> */}
       </Typography>
       <Divider />
+     
       <ul className="mobile-navigation">
         <li>
-          <NavLink activeClassName="active" to={"/"}>
+          <NavLink activeClassName="active" to="/">
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink to={"/menu"}>Doctors</NavLink>
+          <NavLink to="/about">About</NavLink>
         </li>
         <li>
-          <NavLink to={"/about"}>About</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
         </li>
         <li>
-          <NavLink to={"/contact"}>Contact</NavLink>
-        </li>
-        <li>
-          <NavLink to={"/"}>SignIn</NavLink>
+          <div>
+            <IconButton
+              className="signup-button"
+              onClick={handleSignUpClick}
+              sx={{
+                color: "black",
+                "&:hover": {
+                  backgroundColor: "black", 
+                },
+              }}
+              >
+              SignUp
+            </IconButton>
+            {showSignInOptions && (
+              <div className="signin-options">
+                <MenuItem>
+                  <NavLink to="/loginuser" style={{ color: "black", textDecoration: "none" }}>
+                    Sign as User
+                  </NavLink>
+                </MenuItem>
+                <MenuItem>
+                  <NavLink to="/login" style={{ color: "black", textDecoration: "none" }}>
+                    Sign as Staff
+                  </NavLink>
+                </MenuItem>
+              </div>
+            )}
+          </div>
         </li>
       </ul>
     </Box>
+  
   );
   return (
     <>
@@ -89,15 +123,13 @@ const Header = () => {
             >
               <img src={Logo} alt="logo" height={"90"} width="110" />
             </Typography>
+            <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               <ul className="navigation-menu">
                 <li>
                   <NavLink activeClassName="active" to={"/"}>
                     Home
                   </NavLink>
-                </li>
-                <li>
-                  <NavLink to={"/menu"}>Doctors</NavLink>
                 </li>
                 <li>
                   <NavLink to={"/about"}>About</NavLink>
@@ -121,15 +153,24 @@ const Header = () => {
                       onClose={handleMenuClose}
                     >
                       <MenuItem onClick={handleMenuClose}>
-                        <NavLink to={"/loginuser"}style={{ color: "black", textDecoration: "none" }}>Sign as User</NavLink>
+                        <NavLink
+                          to={"/loginuser"}
+                          style={{ color: "black", textDecoration: "none" }}
+                        >
+                          Sign as User
+                        </NavLink>
                       </MenuItem>
                       <MenuItem onClick={handleMenuClose}>
-                        <NavLink to={"/login"}style={{ color: "black", textDecoration: "none" }}>Sign as Staff</NavLink>
+                        <NavLink
+                          to={"/login"}
+                          style={{ color: "black", textDecoration: "none" }}
+                        >
+                          Sign as Staff
+                        </NavLink>
                       </MenuItem>
                     </Menu>
                   </div>
                 </li>
-              
               </ul>
             </Box>
           </Toolbar>

@@ -107,7 +107,7 @@ const handleFormSubmit = (event) => {
 
 const handleRowsPerPageChange = (event) => {
   setRowsPerPage(parseInt(event.target.value, 10));
-  setPage(0); // Reset the page when the number of rows per page changes
+  setPage(0); 
 };
 
   const tableContainerStyle = {
@@ -464,10 +464,10 @@ const handleRowsPerPageChange = (event) => {
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
           count={receptionistsFiltered.length}
-          rowsPerPage={5}
-          page={0}
-          onPageChange={() => {}}
-          onRowsPerPageChange={() => {}}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
         />
         <AddModal
           modal={addModal}
@@ -553,14 +553,14 @@ const handleRowsPerPageChange = (event) => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 15]}
-            component="div"
-            count={labTechniciansFiltered.length}
-            rowsPerPage={5}
-            page={0}
-            onPageChange={() => {}}
-            onRowsPerPageChange={() => {}}
-          />
+          rowsPerPageOptions={[5, 10, 15]}
+          component="div"
+          count={labTechniciansFiltered.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+        />
           <AddModal
             modal={addModal}
             toggle={() => setAddModal(!addModal)}

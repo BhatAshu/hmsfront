@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import "../admin/style.css"
+// import "../admin/style.css"
 
 function Profile() {
   const [profile, setProfile] = useState(null);

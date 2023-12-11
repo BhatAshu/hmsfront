@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import "react-phone-input-2/lib/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css"
+// import "./style.css"
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 const imageMimeType = /image\/(jpg|jpeg)/i;

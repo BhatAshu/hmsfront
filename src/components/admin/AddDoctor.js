@@ -12,25 +12,49 @@ import {
   Input,
 } from "reactstrap";
 import PhoneInput from "react-phone-input-2";
-import 'react-phone-input-2/lib/style.css';
+import "react-phone-input-2/lib/style.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./modal.css";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
 const imageMimeType = /image\/(jpg|jpeg)/i;
+const styles = `
+  .password-input {
+    position: relative;
+  }
 
+  .password-field {
+    padding-right: 35px; /* Adjust as needed to make space for the eye icon */
+  }
+
+  .toggle-password {
+    position: absolute;
+    top: 20%;
+    right: 0px; /* Adjust as needed to position the icon */
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }`;
 function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
-  const [isEmail, setIsEmail] = useState("");
+  const [isEmail, setisEmail] = useState("");
   const [isUsername, setIsUsername] = useState("");
   const [isPhone, setIsPhone] = useState("");
   const [isAddress, setIsAddress] = useState("");
   const [isImage, setIsImage] = useState("");
   const [isRole, setIsRole] = useState("");
   const [isSpecialist, setIsSpecialist] = useState("");
-  const [isPassword, setIsPassword] = useState("");
+  const [isPassword, setisPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setIsMessage] = useState("");
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [selectedRole, setSelectedRole] = useState(null);
+  const [isImageSizeValid, setIsImageSizeValid] = useState(true);
+  const [imageSizeErrorMessage, setImageSizeErrorMessage] = useState("");
 
   const departmentOptions = [
     "General",
@@ -38,9 +62,20 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
     "Orthopedics",
     "Dermatology",
   ];
-
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle the state
+  };
+  const [isValid, setisValid] = useState({
+    emailValid: false,
+    passwordValid: false,
+  });
   const handleEmailChange = (e) => {
-    setIsEmail(e.target.value);
+    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e.target.value)) {
+      setisValid({ ...isValid, emailValid: true });
+    } else {
+      setisValid({ ...isValid, emailValid: false });
+    }
+    setisEmail(e.target.value);
   };
 
   const handleUsernameChange = (e) => {
@@ -56,8 +91,30 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
   };
 
   const handleImageChange = (e) => {
-    setIsImage(e.target.files[0]);
     const file = e.target.files[0];
+
+    // Check if the selected image exceeds 2MB
+    if (file.size > 2 * 1024 * 1024) {
+      setIsImageSizeValid(false);
+      setImageSizeErrorMessage("Image size should be 2MB or less.");
+      return;
+    }
+
+    // Check if the selected image format is valid
+    const allowedFormats = [".jpg", ".jpeg", ".heic", ".png"];
+    const fileExtension = file.name.split(".").pop().toLowerCase();
+    if (!allowedFormats.includes(`.${fileExtension}`)) {
+      setIsImageSizeValid(false);
+      setImageSizeErrorMessage(
+        "Invalid image format. Allowed formats: JPEG, HEIC, PNG."
+      );
+      return;
+    }
+
+    setIsImage(file);
+    setIsImageSizeValid(true);
+    setImageSizeErrorMessage(""); // Clear the error message
+
     // Preview the selected image
     const reader = new FileReader();
     reader.onload = () => {
@@ -66,8 +123,13 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
     reader.readAsDataURL(file);
   };
 
-  const handleRoleChange = (e) => {
-    setIsRole(e.target.value);
+  const roleOptions = [
+    { value: "Doctor", label: "Doctor" },
+    { value: "LabTechnician", label: "Lab Technician" },
+    { value: "Receptionist", label: "Receptionist" },
+  ];
+  const handleRoleChange = (selectedOption) => {
+    setSelectedRole(selectedOption);
   };
 
   const handleDepartmentChange = (e) => {
@@ -75,12 +137,22 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
   };
 
   const handlePasswordChange = (e) => {
-    setIsPassword(e.target.value);
+    if (e.target.type === "password") {
+      if (
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+          e.target.value
+        )
+      ) {
+        setisValid({ ...isValid, passwordValid: true });
+      } else {
+        setisValid({ ...isValid, passwordValid: false });
+      }
+    }
+    setisPassword(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
 
     let formData = new FormData();
     formData.append("username", isUsername);
@@ -88,7 +160,7 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
     formData.append("phone", isPhone);
     formData.append("address", isAddress);
     formData.append("image", isImage);
-    formData.append("role", isRole);
+    formData.append("role", selectedRole ? selectedRole.value : ""); // Use selectedRole instead of isRole
     formData.append("specialist", isSpecialist);
     formData.append("password", isPassword);
 
@@ -104,12 +176,12 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
         if (res.status === 200) {
           onClose();
           setIsUsername("");
-          setIsEmail("");
+          setisEmail("");
           setIsPhone("");
           setIsAddress("");
           setIsImage(null);
           setIsRole("");
-          setIsPassword("");
+          setisPassword("");
           setImagePreview(null);
 
           toast.success("Item added successfully!");
@@ -126,7 +198,7 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
     <Modal isOpen={modal} toggle={toggle} centered>
       <ModalHeader toggle={toggle}>Adding Staff</ModalHeader>
       <form className="container" onSubmit={handleSubmit}>
-      <ModalBody>
+        <ModalBody>
           <Row>
             <Col md={6}>
               <Label>
@@ -150,16 +222,21 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
                   required
                   onChange={handleEmailChange}
                 />
+                {isEmail && !isValid.emailValid && (
+                  <p style={{ fontSize: "13px", color: "red" }}>
+                    Please Enter a Valid Email
+                  </p>
+                )}
               </Label>
             </Col>
           </Row>
-          <Row >
+          <Row>
             <Col md={6}>
-              <Label >
+              <Label>
                 Phone:
                 <PhoneInput
                   international
-                  defaultCountry="IN" 
+                  country={"in"}
                   value={isPhone}
                   onChange={handlePhoneChange}
                   required
@@ -184,17 +261,25 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
             <Col md={6}>
               <Label>
                 Role:
-                <input
-                  type="text"
-                  placeholder="Enter the role"
-                  value={isRole}
+                <Select
+                  options={roleOptions}
+                  isSearchable={true}
+                  value={selectedRole}
                   onChange={handleRoleChange}
+                  components={makeAnimated()}
+                  placeholder="Select Role"
+                  inputStyle={{
+                    width: "100%",
+                    height: "0rem",
+                    fontSize: "1rem",
+                    padding: "0.5rem",
+                  }}
                   required
                 />
               </Label>
             </Col>
             <Col md={6}>
-            <Label>
+              <Label>
                 Department:
                 <Input
                   type="select"
@@ -213,17 +298,41 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
             </Col>
           </Row>
           <Row>
-          <Col md={6}>
-              <Label>
+            <Col md={6}>
+            <Label>
                 Password:
-                <input
-                  type="password"
-                  placeholder="Enter the password"
-                  value={isPassword}
-                  onChange={handlePasswordChange}
-                  required
-                />
+                <div className="password-input">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter the password"
+                    value={isPassword}
+                    onChange={handlePasswordChange}
+                    required
+                    className="password-field" // Apply the CSS class here
+                  />
+                  <button
+                    type="button"
+                    className="toggle-password"
+                    onClick={togglePasswordVisibility}
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      paddingLeft:"20px",
+                      marginTop:"9px",
+                      fontSize: "1.3rem", // Adjust the size as needed
+                    }}
+                  >
+                    {showPassword ? "👁️" : "👁️"} {/* Eye icon */}
+                  </button>
+                </div>
               </Label>
+              {isPassword && !isValid.passwordValid && (
+                  <p>
+                    Please Enter a minimum eight-character, at least one letter,
+                    one number, and one special character
+                  </p>
+                )}
             </Col>
             <Col md={6}>
               <Label>
@@ -235,7 +344,12 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
                   accept=".jpg, .jpeg"
                   onChange={handleImageChange}
                 />
-                {imagePreview && (
+                {!isImageSizeValid && (
+                  <p style={{ fontSize: "13px", color: "red" }}>
+                    {imageSizeErrorMessage}
+                  </p>
+                )}
+                {imagePreview && isImageSizeValid && (
                   <img
                     src={imagePreview}
                     alt="Preview"
@@ -257,6 +371,7 @@ function AddModalDoctor({ modal, toggle, onClose, data, setData }) {
         </ModalFooter>
       </form>
       <ToastContainer />
+      <style>{styles}</style>
     </Modal>
   );
 }

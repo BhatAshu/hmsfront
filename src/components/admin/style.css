@@ -10,7 +10,8 @@
     margin-bottom: 3%;
     border-radius: 9px;
     padding: 8px;
-    background-color: #6CB1C9;
+    background-color: black;
+    color: white;
     cursor: pointer;
   }
   .react-tel-input .form-control{
@@ -31,15 +32,11 @@
     margin-left: 100px;
     box-shadow: #e9ecef;
   }
-
-
-
   .c1 {
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
   }
-  
   .role-card {
     width:280px;
     height: 260px;
@@ -52,9 +49,6 @@
     align-items: center;
     padding: 10px;
   }
-
-
-  
 .card-content {
   display: flex;
   align-items: center;
@@ -62,216 +56,25 @@
   width: 100%;
   padding: 0 10px;
 }
-
 .left-content {
   flex-grow: 1;
   padding-right: 10px;
   padding-left: 25px;
 }
-
 .right-content {
   margin-left: auto;
   display: flex;
-  /* align-items: center; */
   justify-content: flex-end;
   flex-grow: 1;
   padding: 0;
 }
-
-
 .card-image {
   width: 170px;
   height: 260px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* object-fit: cover; */
 }
-
-/* profile-style.css */
-
-/* Profile Container */
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f4f5f7;
-}
-
-/* Profile Image */
-.profile-image {
-  text-align: center;
-}
-
-.profile-image img {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-/* Profile Info */
-.profile-info {
-  width: 100%;
-  max-width: 600px;
-}
-
-.profile-form {
-  margin-top: 20px;
-}
-
-.profile-form h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-}
-
-.form-group .label-left {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.form-group .form-control {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  font-size: 16px;
-}
-
-.form-group .form-control[disabled] {
-  background-color: #f9f9f9;
-  color: #777;
-}
-
-/* Modal Profile Details */
-.modal-profile-details {
-  display: flex;
-}
-
-.modal-profile-details .profile-image {
-  text-align: center;
-  margin-right: 20px;
-}
-
-.modal-profile-details img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-}
-
-.modal-profile-details .profile-info {
-  flex: 1;
-}
-
-.modal-profile-form {
-  margin-top: 20px;
-}
-
-.modal-profile-form .form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-}
-
-.modal-profile-form .label-top {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.modal-profile-form .form-control {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  font-size: 16px;
-}
-
-.modal-profile-form .form-control[disabled] {
-  background-color: #f9f9f9;
-  color: #777;
-}
-.sihe{
-  height: 70px;
-}
-
-
-
-
-/* Staff Dashboard calender and notification icon */
-
-
-.calendar-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: 20px;
-  margin-right: 20px;
-}
-
-.mui-calendar {
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  max-width: 300px;
-}
-
-
-.circle {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: #6dbef0;
-  margin: -21px auto 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  pointer-events: none; 
-  z-index: 1; 
-}
-
-.role-card-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.calendar-and-notification {
-  display: flex;
-  align-items: flex-end;
-}
-
-.notification-container {
-  margin-left: 10px;
-}
-
-/* ... (your existing styles) */
-
-.role-counts {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.role-count {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-/* ... (your existing styles) */
-
-
-
-
-
-
 
 
 

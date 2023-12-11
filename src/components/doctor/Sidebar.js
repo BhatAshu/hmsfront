@@ -13,26 +13,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
-import BloodtypeIcon from "@mui/icons-material/Bloodtype";
-import SendIcon from "@mui/icons-material/Send";
 import PeopleIcon from "@mui/icons-material/People";
-import ChildCareIcon from "@mui/icons-material/ChildCare";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 import { FaUserNurse, FaUserCog, FaUserMd, FaUserCircle } from "react-icons/fa";
-import MedicalServicesIcon  from '@mui/icons-material/MedicalServices';
 import React, { useState, useEffect } from "react";
 import StaffDashboard from "../admin/StaffDashboard";
 import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router-dom";
 import Patients from "./Patients";
-import Bloodbank from "./Bloodbank";
-import BloodDonor from "./BloodDonor";
-import DispatchBlood from "./DispatchBlood";
-// import BirthReport from "./BirthReport";
-// import DeathReport from "./DeathReport";
 
 const drawerWidth = 240;
 
@@ -40,7 +29,7 @@ const buttonStyles = {
   width: "100%",
   color: "black",
   borderRadius: "15px 15px",
-  backgroundColor: "lightsteelblue",
+  backgroundColor: "whitesmoke",
   "&:hover": {
     backgroundColor: "blue",
     color: "white", // Change the text and icon color to white on hover
@@ -60,13 +49,6 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  // const handleRoleClick = (role) => {
-  //   setSelectedRole(role);
-  //   setProfileModalOpen(role === "Profile");
-  //   if (role === "Logout") {
-  //     handleLogout();
-  //   }
-  // };
   const handleRoleClick = (role) => {
     setSelectedRole(role);
     setProfileModalOpen(role === "Profile");
@@ -122,20 +104,14 @@ function ResponsiveDrawer(props) {
                 fontWeight: "bolder",
                 color: "black",
                 margin: "-80px 5px",
-                // fontFamily: "cursive", // Apply a cursive font
-                textTransform: "uppercase", // Convert text to uppercase
-                letterSpacing: "2px", // Add letter spacing
+                textTransform: "uppercase", 
+                letterSpacing: "2px", 
               },
             }}
           />
         </ListItem>
         {[
           { text: "Patient", iconComponent: <PeopleIcon />, role: "Patients" },
-          {
-            text: "Test Requsest",
-            iconComponent: <MedicalServicesIcon />,
-            role: "TestRequest",
-          },
           {
             text: "Profile",
             iconComponent: <AccountCircleIcon />,
@@ -150,7 +126,7 @@ function ResponsiveDrawer(props) {
           <ListItem key={text} disablePadding>
             <ListItemButton
               sx={text !== "Logout" ? buttonStyles : buttonStyles}
-              onClick={() => handleRoleClick(role)} // Update the onClick handler
+              onClick={() => handleRoleClick(role)} 
             >
               <ListItemIcon
                 sx={{
@@ -195,8 +171,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <FaUserCog sx={{ marginRight: "0.5rem" }} />
-            <span sx={{ ml: "8px" }}>Doctor Dashboard</span>
+            <span sx={{ ml: "8px" }}>Doctor </span>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -212,7 +187,7 @@ function ResponsiveDrawer(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },

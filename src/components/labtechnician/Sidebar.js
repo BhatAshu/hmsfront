@@ -24,13 +24,14 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { FaUserNurse, FaUserCog, FaUserMd, FaUserCircle } from "react-icons/fa";
 import MedicalServicesIcon  from '@mui/icons-material/MedicalServices';
 import React, { useState, useEffect } from "react";
-// import StaffDashboard from "../admin/StaffDashboard";
+import StaffDashboard from "../admin/StaffDashboard";
 import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router-dom";
 import BloodTest from "./BloodTest";
 import UrineTest from "./UrineTest";
 import BloodPressureTest from "./BPTest";
 import BloodSugarTest from "./SugarlevelTest";
+import Profile from "./ProfileModal";
 import HandleRoleClick from "./HandleTest";
 
 const drawerWidth = 240;
@@ -39,7 +40,7 @@ const buttonStyles = {
   width: "100%",
   color: "black",
   borderRadius: "15px 15px",
-  backgroundColor: "lightsteelblue",
+  backgroundColor: "whitesmoke",
   "&:hover": {
     backgroundColor: "blue",
     color: "white", 
@@ -214,8 +215,8 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <FaUserCog sx={{ marginRight: "0.5rem" }} />
-            <span sx={{ ml: "8px" }}>Lab Technician Dashboard</span>
+            {/* <FaUserCog sx={{ marginRight: "0.5rem" }}  */}
+            <span sx={{ ml: "8px" }}>Lab Technician</span>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -299,9 +300,10 @@ function ResponsiveDrawer(props) {
         : selectedRole === "BloodSugarTest" ? (
           <BloodSugarTest />
         ) 
-        // : selectedRole === "Blood Bank" ? (
-        //   <Bloodbank />
-        // ) : selectedRole === "Birth Report" ? (
+        : selectedRole === "Profile" ? (
+          <Profile />
+        ) 
+        // : selectedRole === "Birth Report" ? (
         //   <BirthReport />
         // ) : selectedRole === "Death Report" ? (
         //   <DeathReport />
@@ -311,7 +313,7 @@ function ResponsiveDrawer(props) {
             {!selectedRole && (
               <>
                 <Typography paragraph></Typography>
-                {/* <StaffDashboard /> */}
+                <StaffDashboard />
               </>
             )}
           </>

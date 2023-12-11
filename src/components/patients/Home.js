@@ -1,4 +1,118 @@
-import * as React from "react";
+// import React, { useState, useEffect } from "react";
+// import { Card, CardActionArea, CardContent, CardMedia } from "@mui/material";
+
+// import  Header  from "./Header";
+// import { Link, useNavigate } from "react-router-dom";
+
+// const DoctorList = () => {
+//   const [doctorList, setDoctorList] = useState([]);
+//   const navigate = useNavigate();
+//   useEffect(() => {
+//     const header = {
+//       headers: {
+//         auth: localStorage.getItem("access_token"),
+//       },
+//     };
+//     fetch("http://localhost:5000/api/hbms/list_doctor", header)
+//       .then((response) => response.json())
+//       .then((data) => setDoctorList(data))
+//       .catch((error) => console.error("Error fetching data:", error));
+//   }, []);
+
+//   useEffect(() => {
+//         if (localStorage.getItem("access_token")) {
+//           navigate("/home");
+//         } else {
+//           navigate("/loginuser");
+//         }
+//       }, []);
+//   return (
+//     <div>
+//       <Header /> 
+//       <div
+//         style={{
+//           display: "flex",
+//           flexWrap: "wrap",
+//           justifyContent: "center",
+//           padding: "20px",
+//         }}
+//       >
+//         {doctorList.map((doctor, index) => (
+//           <Card
+//             key={`${doctor._id}-${index}`}
+//             style={{
+//               maxWidth: "390px",
+//               display: "flex",
+//               flexDirection: "column",
+//               margin: "10px",
+//               borderRadius: "10px",
+//               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+//               textDecoration: "none",
+//               color: "black",
+//               "&:hover": {
+//                 backgroundColor: "#1976D2",
+//                 color: "white",
+//                 transform: "scale(1.02)",
+//               },
+//             }}
+//           >
+//             <Link
+//               to={`/patientform/${doctor.username}`}
+//               style={{ textDecoration: "none" }}
+//             >
+//               <CardActionArea>
+//                 <CardMedia
+//                   style={{ minHeight: "400px", objectFit: "cover" }}
+//                   component="img"
+//                   src={`http://localhost:5000${doctor.image}`}
+//                   alt={doctor.username}
+//                 />
+//                 <CardContent
+//                   style={{
+//                     display: "flex",
+//                     flexDirection: "column",
+//                     alignItems: "center",
+//                     textAlign: "center",
+//                     transition: "color 0.3s ease-in-out",
+//                     color: "black",
+//                     padding: "20px",
+//                   }}
+//                 >
+//                   <div
+//                     style={{
+//                       color: "inherit",
+//                       marginBottom: "10px",
+//                       fontWeight: 600,
+//                     }}
+//                   >
+//                     {doctor.username}
+//                   </div>
+//                   <div
+//                     style={{
+//                       color: "inherit",
+//                       fontSize: "14px",
+//                     }}
+//                   >
+//                     {doctor.specialist}
+//                   </div>
+//                 </CardContent>
+//               </CardActionArea>
+//             </Link>
+//           </Card>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default DoctorList;
+
+
+
+import React, { useState, useEffect } from "react";
+import { Card, CardActionArea, CardContent, CardMedia } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import LogoDevIcon from "@mui/icons-material/LogoDev";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,35 +125,21 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import LogoDevIcon from "@mui/icons-material/LogoDev";
-import { Link, useNavigate } from "react-router-dom";
+import Header from"./Header";
 
-const pages = ["Book An Appointment", "MedicalHistory", "Profile"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+const ResponsiveAppBar = () => {
+  const [doctorList, setDoctorList] = useState([]);
   const navigate = useNavigate();
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const header = {
+    headers: {
+      auth: localStorage.getItem("access_token"),
+    },
   };
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("loginDataID");
     localStorage.removeItem("loginDataF");
     localStorage.removeItem("loginDataL");
     localStorage.removeItem("loginDataE");
@@ -47,176 +147,124 @@ function ResponsiveAppBar() {
     localStorage.removeItem("loginDataG");
     localStorage.removeItem("loginDataB");
     localStorage.removeItem("loginDataU");
-    setIsLoggedIn(false);
     console.log("Logout");
     navigate("/loginuser");
   };
 
-  const [userData, setUserData] = React.useState(null);
-  const fetchUserProfile = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/hbms/profile_patient"
-      );
-      const data = await response.json();
-      setUserData(data);
-    } catch (error) {
-      console.error("Error fetching user profile:", error);
-    }
-  };
-
+  useEffect(() => {
+    // Fetch the doctor data from the API
+    fetch("http://localhost:5000/api/hbms/list_doctor", header)
+      .then((response) => response.json())
+      .then((data) => setDoctorList(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+  useEffect(() => {
+            if (localStorage.getItem("access_token")) {
+              navigate("/home");
+            } else {
+              navigate("/loginuser");
+            }
+          }, []);
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <LogoDevIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+    <div>
+    <Box>
+    <Header/>
+    <Container maxWidth="xl">
           <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
+            variant="h4"
             sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              textAlign: "center",
+              margin: "20px 0",
+              fontWeight: "bold",
             }}
           >
-            MEDIFACE
+            Our Doctors
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+        >
+          {doctorList.map((doctor) => (
+            <Card
+              key={doctor._id}
               sx={{
-                display: { xs: "block", md: "none" },
+                maxWidth: "390px",
+                display: "flex",
+                flexDirection: "column",
+                margin: "10px",
+                borderRadius: "10px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                "& a": {
+                  textDecoration: "none",
+                  color: "black",
+                  "&:hover": {
+                    color: "white",
+                  },
+                },
+                "&:hover": {
+                  backgroundColor: "#1976D2",
+                  color: "white",
+                  transform: "scale(1.02)",
+                },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  component={Link}
-                  to={
-                    page === "Book An Appointment"
-                      ? "/patientform"
-                      : page === "Profile"
-                      ? "/userprofile"
-                      : page === "MedicalHistory"
-                      ? "/reporttrack"
-                      : "/"
-                  }
-                  onClick={() => {
-                    console.log(`Menu item "${page}" clicked`); // Add this line
-                    if (page === "Logout") {
-                      handleLogout();
-                    } else {
-                      handleCloseNavMenu();
-                    }
-                  }}
-                >
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <LogoDevIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            MEDIFACE
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                component={Link} // Use the Link component for navigation
-                to={
-                  page === "Book An Appointment"
-                    ? "/patientform" // Navigate to /patientform when "Book An Appointment" is clicked
-                    : page === "Profile"
-                    ? "/userprofile"
-                    : page === "MedicalHistory"
-                    ? "/reporttrack"
-                    : "/"
-                }
-                sx={{
-                  my: 2,
-                  color: "white",
-                  display: "block",
-                  marginLeft: 2,
-                }}
+              <Link
+                to={`/patientform/${doctor.id}/${doctor.username}`}
+                style={{ textDecoration: "none" }}
               >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={
-                    setting === "Logout" ? handleLogout : handleCloseUserMenu
-                  }
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
+                <CardActionArea>
+                  <CardMedia
+                    sx={{ minHeight: "400px", objectFit: "cover" }}
+                    component="img"
+                    src={`http://localhost:5000${doctor.image}`}
+                    alt={doctor.username}
+                  />
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      textAlign: "center",
+                      transition: "color 0.3s ease-in-out",
+                      color: "black",
+                      padding: "20px",
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      component="div"
+                      sx={{
+                        color: "inherit",
+                        marginBottom: "10px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {doctor.username}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "inherit",
+                        fontSize: "14px",
+                      }}
+                    >
+                      {doctor.specialist}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Link>
+            </Card>
+          ))}
+        </Box>
       </Container>
-    </AppBar>
+    </Box>
+    </div>
   );
-}
+};
+
 export default ResponsiveAppBar;

@@ -14,7 +14,7 @@ import "react-phone-input-2/lib/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import "../admin/style.css"
+// import "../admin/style.css"
 
 
 function EditModal({

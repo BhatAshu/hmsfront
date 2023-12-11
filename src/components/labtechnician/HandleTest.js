@@ -16,7 +16,7 @@ import TablePagination from "@mui/material/TablePagination";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
+// import "./style.css";
 import ProfileModal from "./ProfileModal";
 import Lab from "../labtechnician/Lab";
 

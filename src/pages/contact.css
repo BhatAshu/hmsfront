@@ -1,0 +1,49 @@
+.contact-container {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .contact-heading {
+    font-weight: bolder;
+    font-size: 50px;
+    margin-bottom: 20px;
+    padding-top: 30px;
+  }
+  
+  .contact-text {
+    font-size: 1.4rem;
+    color: #666;
+    margin-bottom: 40px;
+  }
+  
+  .contact-table {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .table-header {
+    background-color: black;
+    color: white;
+  }
+  
+  .icon {
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  
+  .red-icon {
+    color: red;
+  }
+  
+  .blue-icon {
+    color: skyblue;
+  }
+  
+  .green-icon {
+    color: green;
+  }
+  

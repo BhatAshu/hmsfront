@@ -17,7 +17,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import ForgetPasswordForm from "./ResetPassword";
-import "./style.css";
+// import "./style.css";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -110,8 +110,7 @@ const LoginUser = () => {
           if (registrationComplete === "true") {
             navigate("/patientform");
           } else {
-            navigate("/");
-            // navigate("/home");
+            navigate("/home");
           }
         } else {
           console.log(res.data);

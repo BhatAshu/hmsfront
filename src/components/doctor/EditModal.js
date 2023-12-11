@@ -14,7 +14,7 @@ import "react-phone-input-2/lib/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import "../admin/style.css"
+// import "../admin/style.css"
 import { MDBTextArea } from "mdb-react-ui-kit";
 const imageMimeType = /image\/(jpg|jpeg)/i;
 
@@ -181,7 +181,7 @@ function EditModal({
       className="modal-right"
     >
       <ModalHeader toggle={handleEdit} onClick={() => onClose()}>
-        Updating User
+        Prescibe Details
       </ModalHeader>
       <form className="container" onSubmit={handleSubmit}>
         <ModalBody>
@@ -198,7 +198,7 @@ function EditModal({
                 />
               </Label>
             </div>
-            <div className="col-md-6" style={{ marginTop: "25px" }}>
+            <div className="col-md-6" >
               <Label>
                 Gender:
                  {/* <select value={data.gender} onChange={handleGenderChange} required>

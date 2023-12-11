@@ -13,8 +13,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
-import EventIcon from "@mui/icons-material/Event";
 import {
   FaUserNurse,
   FaUserCog,
@@ -24,12 +22,16 @@ import {
 } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import StaffDashboard from "../admin/StaffDashboard";
-import ProfileModal from "./ProfileModal";
+import ProfileModal from "../admin/ProfileModal";
 import Interns from "./Intern";
 import Report from "./Report";
 import { useNavigate } from "react-router-dom";
 import Patients from "./Patients";
 import Billing from "./Billing";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import DescriptionIcon from "@mui/icons-material/Description";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+
 
 const drawerWidth = 240;
 
@@ -37,7 +39,7 @@ const buttonStyles = {
   width: "100%",
   color: "black",
   borderRadius: "15px 15px",
-  backgroundColor: "lightsteelblue",
+  backgroundColor: "whitesmoke",
   "&:hover": {
     backgroundColor: "cornflowerblue",
   },
@@ -113,20 +115,15 @@ function ResponsiveDrawer(props) {
           />
         </ListItem>
         {[
-          {
-            text: "Appointment",
-            iconComponent: <EventIcon />,
-            role: "Appointment",
-          },
           { text: "Patient", iconComponent: <FaUserNurse />, role: "Patients" },
           {
             text: "Billing",
-            iconComponent: <LocalHospitalIcon />,
+            iconComponent: <ReceiptIcon />,
             role: "Billing",
           },
           {
             text: "Report Generate",
-            iconComponent: <LocalHospitalIcon />,
+            iconComponent: <DescriptionIcon />,
             role: "Report",
           },
           {
@@ -181,8 +178,8 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <FaUserCog sx={{ marginRight: "0.5rem" }} />
-            <span sx={{ ml: "8px" }}>Receptionist Dashboard</span>
+            {/* <FaUserCog sx={{ marginRight: "0.5rem" }} /> */}
+            <span sx={{ ml: "8px" }}>Receptionist</span>
           </Typography>
         </Toolbar>
       </AppBar>

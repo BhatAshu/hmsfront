@@ -15,11 +15,13 @@ const Billing = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [time, setTime] = useState("");
   const [consultationFee, setConsultationFee] = useState("");
   const [laboratoryFee, setLaboratoryFee] = useState("");
   const [pdfBlob, setPdfBlob] = useState(null);
+  const [date, setDate] = useState("");
   const [selectedPatientName, setSelectedPatientName] = useState("");
+
+  const [addedBilling, setAddedBilling] = useState(null);
 
   const handleSearch = async () => {
     try {
@@ -38,12 +40,12 @@ const Billing = () => {
       console.error("Error fetching search results:", error);
     }
   };
+
   const handleGeneratePDF = async () => {
     try {
       const response = await axios.put(
         `http://localhost:5000/api/hbms/add_billing/${selectedPatientId}`,
         {
-          time,
           consultationFee,
           laboratoryFee,
         }
@@ -81,9 +83,35 @@ const Billing = () => {
     }
   };
 
+  const handleViewPreviousBillingReport = async (patientId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/hbms/list_billing/${patientId}`,
+        { responseType: "arraybuffer" }
+      );
+
+      if (response.status === 200) {
+        const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+        setPdfBlob(pdfBlob);
+
+        if (pdfBlob) {
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+          window.open(pdfUrl);
+        }
+      } else {
+        toast.error("Error fetching previous billing data");
+      }
+    } catch (error) {
+      console.error("Error fetching previous billing data:", error);
+      toast.error("Error fetching previous billing data");
+    }
+  };
+  
+  
+  
   return (
     <div>
-      <h2>Patient Invoices</h2>
+       <h2 style={{ textAlign: 'center' }}>Patient Invoices</h2>
       <Form>
         <FormGroup>
           <FormControl
@@ -99,31 +127,43 @@ const Billing = () => {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Username</th>
               <th>Email</th>
               <th>Phone</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {searchResults.map((patient) => (
-              <tr
-                key={patient.id}
-                onClick={() => {
-                  setSelectedPatientId(patient.id);
-                  setSelectedPatientName(patient.username);
-                  setShowModal(true);
-                }}
-              >
-                <td>{patient.id}</td>
+              <tr key={patient.id}>
                 <td>{patient.username}</td>
                 <td>{patient.email}</td>
                 <td>{patient.phone}</td>
+                <td>
+                  <Button
+                    variant="success"
+                    onClick={() => {
+                      setSelectedPatientId(patient.id);
+                      setSelectedPatientName(patient.username);
+                      setShowModal(true);
+                    }}
+                  >
+                    Add
+                  </Button>{" "}
+                  <Button
+                    variant="info"
+                    onClick={() => handleViewPreviousBillingReport(patient.id)}
+                      
+                  >
+                    View
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
         </Table>
       )}
+      
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Generate PDF Report</Modal.Title>
@@ -136,14 +176,6 @@ const Billing = () => {
             </span>
           </p>
           <Form>
-            <FormGroup>
-              <FormControl
-                type="text"
-                placeholder="Time"
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-              />
-            </FormGroup>
             <FormGroup>
               <FormControl
                 type="number"
@@ -167,17 +199,6 @@ const Billing = () => {
           <Button onClick={handleGeneratePDF}>Generate PDF</Button>
         </Modal.Footer>
       </Modal>
-      {/* {pdfBlob && (
-        <div>
-          <h2>Generated PDF</h2>
-          <embed
-            src={URL.createObjectURL(pdfBlob)}
-            type="application/pdf"
-            width="100%"
-            height="500px"
-          />
-        </div>
-      )} */}
     </div>
   );
 };

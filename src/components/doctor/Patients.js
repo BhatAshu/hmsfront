@@ -134,7 +134,7 @@ function Patients() {
     chiefcomplaint,
     age,
     bloodgroup,
-    timeofregistration,
+    time,
     address,
     message,
     testtype,
@@ -151,7 +151,7 @@ function Patients() {
       chiefcomplaint: chiefcomplaint,
       age: age,
       bloodgroup: bloodgroup,
-      timeofregistration: timeofregistration,
+      time: time,
       address: address,
       message: message,
       testtype: testtype,
@@ -217,7 +217,6 @@ function Patients() {
               <StyledTableCell sx={{ color: "white" }}>Chief Complaint</StyledTableCell>
               <StyledTableCell sx={{ color: "white" }}>Age</StyledTableCell>
               <StyledTableCell sx={{ color: "white" }}>AppointedTime</StyledTableCell>
-              <StyledTableCell sx={{ color: "white" }}>Address</StyledTableCell>
               <StyledTableCell sx={{ color: "white" }}>Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -237,8 +236,7 @@ function Patients() {
                 <StyledTableCell>{patient.gender}</StyledTableCell>
                 <StyledTableCell>{patient.chiefcomplaint}</StyledTableCell>
                 <StyledTableCell>{patient.age}</StyledTableCell>
-                <StyledTableCell>{patient.timeofregistration}</StyledTableCell>
-                <StyledTableCell>{patient.address}</StyledTableCell>
+                <StyledTableCell>{patient.time}</StyledTableCell>
                 <StyledTableCell>
                   <IconButton
                     sx={editButtonStyle}
@@ -252,7 +250,7 @@ function Patients() {
                         patient.chiefcomplaint,
                         patient.age,
                         patient.bloodgroup,
-                        patient.timeofregistration,
+                        patient.time,
                         patient.address,
                         patient.testtype,
                         patient.message,

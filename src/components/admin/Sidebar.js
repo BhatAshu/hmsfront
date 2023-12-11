@@ -13,9 +13,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import ScienceIcon from "@mui/icons-material/Science";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import {
-  FaUserNurse,
   FaUserCog,
   FaUserMd,
   FaUserCheck,
@@ -25,18 +26,18 @@ import React, { useState } from "react";
 import HandleRoleClick from "./HandleRoleClick";
 import AddModal from "./AddModal";
 import StaffDashboard from "./StaffDashboard";
-import "./style.css";
+// import "./style.css";
 import Patients from "./Patients";
 const drawerWidth = 240;
-
+// .css-hyum1k-MuiToolbar-root 2
 const buttonStyles = {
   width: "100%",
   color: "black",
   borderRadius: "15px 15px",
-  backgroundColor: "lightsteelblue",
+  backgroundColor: "whitesmoke",
   "&:hover": {
     backgroundColor: "blue",
-    color: "white", // Change the text and icon color to white on hover
+    color: "white", 
   },
 };
 
@@ -44,8 +45,6 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState(null);
-  // const [isAddModalOpen, setAddModalOpen] = useState(false);
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -53,18 +52,10 @@ function ResponsiveDrawer(props) {
   const handleRoleClick = (role) => {
     setSelectedRole(role);
   };
-
-  // const handleRoleClick = (role) => {
-  //   setSelectedRole(role);
-  //   if (role === "AddStaff") {
-  //     setAddModalOpen(true);
-  //   }
-  // };
-
   const drawer = (
     <div
       sx={{
-        backgroundColor: "blue",
+        backgroundColor: "whitesmoke",
       }}
     >
       <Toolbar />
@@ -96,24 +87,22 @@ function ResponsiveDrawer(props) {
                 fontWeight: "bolder",
                 color: "black",
                 margin: "-80px 5px",
-                // fontFamily: "cursive", // Apply a cursive font
-                textTransform: "uppercase", // Convert text to uppercase
-                letterSpacing: "2px", // Add letter spacing
+                textTransform: "uppercase", 
+                letterSpacing: "2px", 
               },
             }}
           />
         </ListItem>
         {[
           { text: "Doctor", iconComponent: <FaUserMd />, role: "Doctor" },
-          // { text: "Nurse", iconComponent: <FaUserNurse />, role: "Nurse" },
           {
             text: "Receptionist",
-            iconComponent: <FaUserCheck />,
+            iconComponent: <BusinessCenterIcon />,
             role: "Receptionist",
           },
           {
             text: "LabTechnician",
-            iconComponent: <FaUserCheck />,
+            iconComponent:  <ScienceIcon />,
             role: "LabTechnician",
           },
           {
@@ -123,7 +112,7 @@ function ResponsiveDrawer(props) {
           },
           {
             text: "Profile",
-            iconComponent: <FaUserPlus />,
+            iconComponent: <AccountCircleIcon />,
             role: "Profile",
           },
           {
@@ -171,7 +160,7 @@ function ResponsiveDrawer(props) {
           height: "70px",
         }}
       >
-        <Toolbar className="sihe">
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -181,20 +170,26 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" className="sihe">
-            <FaUserCog />
-            <span sx={{ ml: "8px" }} className="sihe">
-              Admin Dashboard
-            </span>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            // sx={{ display: "flex"}}
+          >
+            {/* <FaUserCog /> */}
+            <span>ADMIN</span>
           </Typography>
         </Toolbar>
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{
+          width: { sm: drawerWidth },
+          flexShrink: { sm: 0 },
+          bgcolor: "whitesmoke",
+        }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
@@ -250,11 +245,6 @@ function ResponsiveDrawer(props) {
             )}
           </>
         )}
-
-        {/* <AddModal
-          open={isAddModalOpen}
-          onClose={() => setAddModalOpen(false)}
-        /> */}
         <AddModal />
       </Box>
     </Box>

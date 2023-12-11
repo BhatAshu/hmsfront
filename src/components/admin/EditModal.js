@@ -12,11 +12,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import "react-phone-input-2/lib/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css"
+// import "./style.css"
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 const imageMimeType = /image\/(jpg|jpeg)/i;
-
+const MAX_IMAGE_SIZE_MB = 2;
+const allowedImageFormats = ["image/jpeg", "image/jpg", "image/heic"];
 
 function EditModal({
   editModal,
@@ -28,6 +29,10 @@ function EditModal({
 }) {
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
+  const [imageErrorMessage, setImageErrorMessage] = useState(""); // Add this line
+  const isEmail = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
   useEffect(() => {
     if (editModal) {
       setFileDataURL(existingImage ? URL.createObjectURL(existingImage) : null);
@@ -51,12 +56,18 @@ function EditModal({
   };
 
   const handleEmailChange = (e) => {
-    if (/\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(e.target.value)) {
-      setIsValid({ ...isValid, emailValid: true });
+    const email = e.target.value;
+    const isValidEmail = isEmail.test(email);
+
+    setEmailTouched(true); 
+
+    if (!isValidEmail) {
+      setIsEmailValid(false);
     } else {
-      setIsValid({ ...isValid, emailValid: false });
+      setIsEmailValid(true);
     }
-    setData({ ...data, email: e.target.value });
+
+    setData({ ...data, email });
   };
 
   const handlePhoneChange = (e) => {
@@ -74,16 +85,33 @@ function EditModal({
     setData(updatedData);
     setFormData(updatedFormData);
   };
-  
-  
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setFormData({ ...formData, image: file });
-    if (!file.type.match(imageMimeType)) {
-      alert("Image mime type is not valid");
+
+    if (!file) {
+      setFormData({ ...formData, image: null });
+      setFile(null);
+      setImageErrorMessage(""); 
       return;
     }
+
+    if (file.size > MAX_IMAGE_SIZE_MB * 1024 * 1024) {
+      setImageErrorMessage(
+        `Image size should be less than ${MAX_IMAGE_SIZE_MB}MB.`
+      );
+      return;
+    }
+
+    if (!allowedImageFormats.includes(file.type)) {
+      setImageErrorMessage(
+        "Invalid image format. Allowed formats: JPEG, HEIC."
+      );
+      return;
+    }
+
+    setImageErrorMessage("");
+
+    setFormData({ ...formData, image: file });
     setFile(file);
     setData({ ...data, image: file });
   };
@@ -143,7 +171,7 @@ function EditModal({
             phone: "",
             specialist: "",
             address: "",
-            image: "", 
+            image: "",
           });
           setFile(null);
           toast.success("Record is successfully updated");
@@ -157,7 +185,12 @@ function EditModal({
   };
 
   return (
-    <Modal isOpen={editModal} toggle={handleEdit} centered className="modal-right">
+    <Modal
+      isOpen={editModal}
+      toggle={handleEdit}
+      centered
+      className="modal-right"
+    >
       <ModalHeader toggle={handleEdit} onClick={() => onClose()}>
         Updating User
       </ModalHeader>
@@ -186,6 +219,11 @@ function EditModal({
                   onChange={handleEmailChange}
                 />
               </Label>
+              {emailTouched && !isEmailValid && (
+                <p style={{ fontSize: "13px", color: "red" }}>
+                  Please Enter a Valid Email
+                </p>
+              )}
             </div>
           </div>
           <div className="row">
@@ -230,6 +268,9 @@ function EditModal({
                   onChange={handleImageChange}
                 />
               </Label>
+              {imageErrorMessage && (
+                <p style={{ color: "red" }}>{imageErrorMessage}</p>
+              )}
             </div>
             <div className="col-md-6">
               {data.image && (

@@ -92,7 +92,7 @@ const PatientDetailsModal = ({ open, onClose, patient }) => {
               color="primary"
               onClick={toggleOtherInfoModal}
             >
-              Open Other Information Modal
+              Intiate Test
             </Button>
             <OtherInformationModal
               open={otherInfoModalOpen}
@@ -138,9 +138,10 @@ const PatientDetailsModal = ({ open, onClose, patient }) => {
             onClick={() => handleButtonClick("otherInformation")}
             sx={{ marginBottom: 2 }}
           >
+            
             Other Information
           </Button>
-          <Button onClick={handleButtonClick}>Attachment</Button>
+          {/* <Button onClick={handleButtonClick}>Attachment</Button> */}
         </div>
         <Button onClick={handleClose} color="secondary">
           Close
